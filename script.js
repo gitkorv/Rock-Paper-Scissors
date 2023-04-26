@@ -1,5 +1,4 @@
-// function for computer choice
-
+// Get computer choice
 function getComputerChoice(){
     let RPSNumber = Math.floor(Math.random() * 3);
     let computerChoice = "";
@@ -13,30 +12,108 @@ function getComputerChoice(){
     }
     return computerChoice;
 }
+// Get player name
+function getPlayerName() {
+    let name = prompt("What is your name?")
+    return name;
+}
+// Get player choice
+function getPlayerChoice(name, i) {
+    let playerChoice = "";
 
-function getPlayerChoice() {
-    let playerChoice = prompt("Rock, Paper or Scissor?");
+    let round = i+1;
+
+    switch (round) {
+        case 1:
+            playerChoice = prompt(`Ok ${name}, let's play the ${round}st round...${'\n'}Will it be Rock, Paper or Scissor?`);
+        break;
+        case 2:
+            playerChoice = prompt(`Let's play Round ${round}.${'\n'}Rock, Paper or Scissor?`);
+        break;
+        case 3:
+            playerChoice = prompt(`Round ${round}.${'\n'}Choose wisely now.`);
+        break;
+        case 4:
+            playerChoice = prompt(`Round ${round}.${'\n'}It's getting hot in here`);
+        break;
+        case 5:
+            playerChoice = prompt(`One final time will it be Rock Paper or Scissor?`);
+        break;
+    }
+
+    if (playerChoice == null) alert("Game ended");
+
+    let lowerCase = playerChoice.toLowerCase();
+    
+    // console.log(lowerCase);
+
+    if (lowerCase.includes("ro") || lowerCase.charAt(0) == "r") {
+        playerChoice = "Rock";
+    } else if (lowerCase.includes("pa") || lowerCase.charAt(0) == "p") {
+        playerChoice = "Paper";
+    } else if (lowerCase.includes("is") || lowerCase.charAt(0) == "s" || lowerCase.charAt(0) == "c" || lowerCase.charAt(0) == "z") {
+        playerChoice = "Scissor";
+    }
+    // console.log(playerChoice);
     playerChoice = playerChoice.charAt(0).toUpperCase()+playerChoice.slice(1).toLowerCase();
+    // console.log(playerChoice);
+    // console.log(playerChoice);
     return playerChoice;
+
+    
 }
 
-// Function for playing one round and returning a message including what hands was played
 function game() {
+
+    let name = getPlayerName();
+    // console.log(name);
+
+    if (name == "" || name == " ") {
+        name = null;
+        console.log(name);
+        alert("Speak louder please, I did not hear that.")
+        game();
+    } else if (name == null) {
+        console.log(name);
+        alert(`Game canceled`);
+    } else {
+        alert(`Welcome ${name}!${'\n'}Let's play a game of Rock, Paper Scissor - best of five rounds.${'\n'}Press OK to start.`);
+
+    }
+
 
     let playerScore = 0;
     let computerScore = 0;
-    let roundsLeft = 5;
+    let currentScore = [];
+    let rounds = 5;
+    let round = 0;
+    let roundsLeft = rounds;
     let scoreUp = 0;
     let playerSelection = undefined;
     let computerSelection = undefined;
     let roundTie = undefined;
     let playerWinRound = undefined;
     let computerWinRound = undefined;
+    let validSelection = undefined;
 
-    function evaluateHands(playerSelection, computerSelection) {
+    // Check players hand for validity
+    function evaluatePlayerSelection(playerSelection) {
+        if (playerSelection == "Rock" || playerSelection == "Paper" || playerSelection == "Scissor") {
+            validSelection = true;
+        } else {
+            validSelection = false;
+        }
+        return validSelection;
+    }
+
+    // Play hands against each other
+    function playRound(playerSelection, computerSelection) {
         roundTie = false;
         playerWinRound = false;
         computerWinRound = false;
+        roundError = false;
+
+        // console.log(playerSelection, computerSelection);
 
         if (playerSelection == "Rock" && computerSelection == "Scissor" || playerSelection == "Paper" && computerSelection == "Rock" || playerSelection == "Scissor" && computerSelection == "Paper") {
             playerWinRound = true;
@@ -44,107 +121,126 @@ function game() {
             computerWinRound = true;
         } else if (playerSelection == computerSelection) {
             roundTie = true;
-        } 
+        } else {
+            roundError = true;
+        }
     }
 
-    for (let i = 0; i < 5; i++) {
-
-        playerSelection = getPlayerChoice();
-        // console.log("player choice", playerSelection);
+    // Return a unique message depending on round result
+    function makeRoundMessage(playerSelection, computerSelection, i, round) {
+        let roundMessages = {};
         
-        // computerSelection = getComputerChoice();
-        computerSelection = "Rock";
-        // console.log("cpu choice", computerSelection );
+        if (roundError) {
+            console.log("Sorry I did not get that");
+            // playerSelection = prompt("spell corectly!")
+            // playRound(playerSelection, computerSelection);
+        } else if (roundTie) {
+            roundMessages = {
+                top: `Round ${round} is a tie!`,
+                bottom: `${playerSelection} vs ${computerSelection}.`
+            };
+        }  else if (playerWinRound) {
+            playerScore++;
+            roundMessages = {
+                top: `You win round ${round}!`,
+                bottom: `${playerSelection} beats ${computerSelection}.`
+            };
+        } else if (computerWinRound) {
+            computerScore++;
+            roundMessages = {
+                top: `Haha! You lost round ${round}!`,
+                bottom: `${computerSelection} beats ${playerSelection}.`
+            };
+        } 
+        
+        return roundMessages;
+    }
 
-        evaluateHands(playerSelection, computerSelection);
+    for (let i = 0; i < rounds; i++) {
 
-        function playRound(playerSelection, computerSelection) {
-            let roundMessage = "";
-            
-            if (roundTie && scoreUp + 1 > roundsLeft) {
-                roundMessage = `It's a tie! ${playerSelection} vs ${computerSelection}.`;
-            } else if (roundTie) {
-                // console.log("this");
-                roundMessage = `It's a tie! ${playerSelection} vs ${computerSelection}, please try again.`;
-            }  else if (playerWinRound) {
-                playerScore++;
-                roundMessage = `You win! ${playerSelection} beats ${computerSelection}`;
-            } else if (computerWinRound) {
-                computerScore++;
-                roundMessage = `You loose! ${computerSelection} beats ${playerSelection}`;
-            }
-            return roundMessage;
+        let approvedSelection;
+
+        if (name == null) {
+            return;
+        } else {
+             // Get player selection
+            playerSelection = getPlayerChoice(name, i);        
+            computerSelection = getComputerChoice();
+            // computerSelection = "Rock";
+
+            // console.log(playerSelection, computerSelection);
+            approvedSelection = evaluatePlayerSelection(playerSelection);
+            // console.log(approvedSelection);
         }
-
-        console.log("ROUND " + (i+1) + "/5" + ": ");
-        console.log(playRound(playerSelection, computerSelection));
-
-        roundsLeft--;
-        if (playerScore > computerScore) scoreUp = playerScore - computerScore;
-        if (playerScore < computerScore) scoreUp = computerScore - playerScore;
-        if (playerScore == computerScore) scoreUp = 0;
        
-        // console.log("PL score: ", playerScore,"CPU score: ", computerScore,"scoreUp ", scoreUp,"rounds left: ", roundsLeft);
 
-        if (playerScore - computerScore > roundsLeft || computerScore - playerScore > roundsLeft) {
-            i = 5;
-            console.log("Game Over");
-        }   else if (scoreUp == 0 && roundsLeft == 1) {
-            console.log(`Player: ${playerScore} Computer: ${computerScore}`);
-            console.log("The next round wins the game!");           
-            console.log("--------"); 
-        }   else if (scoreUp == roundsLeft || scoreUp == roundsLeft - 1) {
-            console.log(`Player: ${playerScore} Computer: ${computerScore}`);
-            if (playerScore > computerScore) console.log("Let's go! One more will win you the game.");
-            if (playerScore < computerScore) console.log("Focus now! The Computer will win if it takes the next round.");
-            console.log("--------");
-        }   else {
-            console.log(`Player: ${playerScore} Computer: ${computerScore}`);
-            console.log("Get ready for next round");
-            console.log("--------");
+        
+
+        if (approvedSelection) {
+            playRound(playerSelection, computerSelection);
+            round = i + 1;
+            let roundResultMessage = makeRoundMessage(playerSelection, computerSelection, i, round);
+            
+            roundsLeft--;
+            if (playerScore > computerScore) scoreUp = playerScore - computerScore;
+            if (playerScore < computerScore) scoreUp = computerScore - playerScore;
+            if (playerScore == computerScore) scoreUp = 0;
+        
+            currentScore = ["Player:", playerScore,"Computer:", computerScore,"ScoreUp", scoreUp,"Rounds Left:", roundsLeft]
+            // console.log(round);
+            let scoreDependantMessage = "";
+
+            if (playerScore - computerScore > roundsLeft || computerScore - playerScore > roundsLeft) {
+                i = rounds;
+                console.log("Final Score:");
+
+                console.log(currentScore[0], currentScore[1], currentScore[2], currentScore[3]);
+                // scoreDependantMessage = "Game Over";
+            }   else if (scoreUp == 0 && roundsLeft == 1) {
+                console.log("Round " + round + " Score:");
+                console.log(currentScore[0], currentScore[1], currentScore[2], currentScore[3]);
+                console.log("--------"); 
+                scoreDependantMessage = "The next round wins the game!";           
+            }   else if (scoreUp == roundsLeft || scoreUp == roundsLeft - 1) {
+                console.log("Round " + round + " Score:");
+                console.log(currentScore[0], currentScore[1], currentScore[2], currentScore[3]);
+                console.log("--------");
+                if (playerScore > computerScore) scoreDependantMessage = "Let's go! One more will win you the game.";
+                if (playerScore < computerScore) scoreDependantMessage = "Focus now! The Computer will win if it takes the next round.";
+            }   else {
+                console.log("Round " + round + " Score:");
+                console.log(currentScore[0], currentScore[1], currentScore[2], currentScore[3]);
+                console.log("--------");
+                scoreDependantMessage = "Next round coming up...";
+            }
+
+            alert(`${roundResultMessage.top}${'\n'}${roundResultMessage.bottom}${'\n'}${scoreDependantMessage}`);
+            // alert(roundResultMessage.bottom);
+        } else {
+            alert("Sorry, I didn't get that, please try again.");
+            i--;
         }
+
     }
 
     let endPhrase = "";
 
     if (playerScore > computerScore) {
-        endPhrase = `The final score is ${playerScore}-${computerScore}. You won the game!`;
+        endPhrase = `The final score is ${playerScore}-${computerScore}. You won the game ${name}!`;
     }   else if (playerScore < computerScore) {
         endPhrase = `The final score is ${playerScore}-${computerScore}. The mighty Computer wins the game!`;
     } else {
-        knockOutRound(playerScore, computerScore);
+        console.log("even");
+        // for (let i = 0; i < 3; i++) {
+        //     playRound(playerScore, computerScore);
+        // }
     }
 
-    function knockOutRound(playerScore, computerScore) {
-        console.log(`The game is still tied at ${playerScore}-${computerScore}, we need to play a final knock out round!`);
-        
-        for (let i = 0; i < 3; i++) {
-        playerSelection = prompt("Choose your weapon!");
-        computerSelection = getComputerChoice();
-        
-        // choicesAndRuleDefinitions();
-    
-        if (roundTie) {
-            console.log(playerSelection + " vs " + computerSelection);
-            // knockOutRound(playerScore, computerScore);
-        } else if (playerWinRound) {
-            playerScore++;
-            console.log(`You won the game after a thrilling knock-out!!! ${playerSelection} beats ${computerSelection}, the final score is ${playerScore}-${computerScore}`);
-        } else if (computerWinRound) {
-            computerScore++;
-            console.log(`You lost the knock-out! ${computerSelection} beats ${playerSelection}. The Computer is victorious in this game! Final score is ${playerScore}-${computerScore}`);
-        }
-            
-        }
-        
-        
-    }
-
-    return endPhrase;
+    alert(endPhrase);
 }
 
-// game()
-console.log(game());
+game()
+// alert(game());
 
 // console.log("hello");
 
