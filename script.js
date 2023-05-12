@@ -2,19 +2,6 @@ function game() {
 
     let name = prompt("What is your name?");
     // console.log(name);
-
-    if (name == "" || name == " ") {
-        name = "blank";
-        console.log(1, name);
-        alert("Speak louder please, I did not hear that.")
-        game();
-    } else if (name == null) {
-        console.log(2, name);
-        alert(`Game canceled`);
-    } else {
-        alert(`Welcome ${name}!${'\n'}Let's play a game of Rock, Paper Scissor - best of five rounds.${'\n'}Press OK to start.`);
-    }
-
     let playerScore = 0;
     let computerScore = 0;
     let currentScore;
@@ -27,7 +14,18 @@ function game() {
     let roundTie = undefined;
     let playerWinRound = undefined;
     let computerWinRound = undefined;
-    let validSelection = undefined;    
+
+    if (name == "" || name == " ") {
+        name = "blank";
+        console.log(1, name);
+        alert("Speak louder please, I did not hear that.")
+        game();
+    } else if (name == null) {
+        console.log(2, name);
+        alert(`Game canceled`);
+    } else {
+        alert(`Welcome ${name}!${'\n'}Let's play a game of Rock, Paper Scissor - best of ${rounds} rounds.${'\n'}Press OK to start.`);
+    }
 
     for (let i = 0; i < rounds; i++) {
 
@@ -47,10 +45,10 @@ function game() {
                 choiceMessage = `Round ${round}.${'\n'}It's getting hot in here`;
             break;
             case 5:
-                choiceMessage = `One final time, will it be Rock, Paper or Scissor?`;
+                choiceMessage = `One final round, will it be Rock, Paper or Scissor?`;
             break;
             case 6:
-                choiceMessage = `This is special`;
+                choiceMessage = `The winner takes it all!`;
             break;
         }
 
@@ -74,9 +72,9 @@ function game() {
                 }
                 return computerChoice;
             }
-            // computerSelection = getComputerChoice();
+            computerSelection = getComputerChoice();
             // computerSelection = "Scissor";
-            computerSelection = "Rock";
+            // computerSelection = "Rock";
         }
 
         let approvedSelection;
@@ -163,15 +161,19 @@ function game() {
             let scoreDependantMessage = "";
             let roundCountMessage = `Round ${round} Score:`;
 
-            console.log(round, rounds, roundsLeft);
+            // console.log(round, rounds, roundsLeft);
 
             if (playerScore - computerScore > roundsLeft || computerScore - playerScore > roundsLeft) {
                 i = rounds;
                 roundCountMessage = `The final Score after ${round} rounds are:`;
-            }   else if (round >= 5 && playerScore == computerScore) {
+            }   else if (round == 5 && playerScore == computerScore) {
                 rounds++;
                 roundsLeft++;
                 scoreDependantMessage = "We're heading to a knock-out round"
+            }   else if (round > 5 && playerScore == computerScore) {
+                rounds++;
+                roundsLeft++;
+                scoreDependantMessage = "We go yet another round!"
             }   else if (scoreUp == 0 && roundsLeft == 1) {
                 scoreDependantMessage = "The next round wins the game!";           
             }   else if (scoreUp == roundsLeft) {
