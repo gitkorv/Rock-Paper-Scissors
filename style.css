@@ -292,7 +292,7 @@ h2 {
 .current-score-para.show {
     /* left: 20px; */
     width: 250px;
-    background-color: red;
+    /* background-color: red; */
     opacity: 1;
 }
 
