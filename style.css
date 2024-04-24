@@ -133,12 +133,14 @@ h2 {
 }
 
 .center-area__h2Text {
+    color: #f72585;
     position: relative;
     margin: 0px auto 0px auto;
     left: 0px;
-    color: black;
+    /* color: black; */
     width: fit-content;
     text-wrap: nowrap;
+    mix-blend-mode: difference;
     
 
 }
@@ -178,8 +180,10 @@ h2 {
 }
 
 .center-area__h1Text {
+    color: #4cc9f0;
     position: relative;
     margin-top: 6px;
+    mix-blend-mode: difference;
 }
 
 .center-area__h1Text--rotate-in {
@@ -337,6 +341,23 @@ h2 {
         transform: translateX(0%);
     }
 }
+
+.curtain-element {
+    position: absolute;
+    width: 100%;
+    pointer-events: none;
+    z-index: -200;
+    background-color: #3a0ca3;
+    height: 0px;
+    transition: height 1s ease-out;
+}
+
+.curtain-element.roll-down {
+    height: 100%;
+    /* transition: height 2s; */
+
+}
+
 .fireworks-container {
     position: absolute;
     display: block;

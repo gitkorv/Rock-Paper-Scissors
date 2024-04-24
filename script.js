@@ -133,6 +133,11 @@ currentScorePara.classList.add("current-score-para");
 let h1TextAnimDuration;
 let h1TextAnimDelay;
 
+// Create curtain element
+let curtainElement = document.createElement("div");
+curtainElement.classList.add("curtain-element")
+mainContainer.appendChild(curtainElement);
+
 function setH1AnimTimesAndMessages(resultMessage) {
     // console.log(resultMessage);
     h1Text.classList.toggle("center-area__h1Text--rotate-in")
@@ -209,6 +214,10 @@ function setCurrentScoreMessages(playerScore, cpuScore) {
 }
 
 function newGame() {
+    setTimeout(() => {
+        curtainElement.classList.remove("roll-down");
+    }, 500);
+
     topAreaWrapper.classList.remove("hi-there-effect")
     letsPlayButton.style.display = "none";
     setTimeout(() => {
@@ -216,7 +225,6 @@ function newGame() {
             topAreaTextContainer.removeChild(hiThere);
         }
         topAreaTextContainerChildren.forEach(child => child.classList.remove("hidden"));
-
     }, 1000);
 
     playerChoice;
@@ -298,8 +306,8 @@ function getCpuChoice() {
 function playRound(playerChoice) {
     roundsPlayed++;
 
-    let computerChoice = getCpuChoice();
-    // let computerChoice = "Rock";
+    // let computerChoice = getCpuChoice();
+    let computerChoice = "Rock";
 
     h2Text.innerHTML = lastPlayedHandsElementsStructure;
 
@@ -356,15 +364,15 @@ function playRound(playerChoice) {
             scoreContainer.removeChild(currentScorePara)
             keepGoing = false;
             startFireWork(2);
-            restartGame()
+            restartGame();
 
         } else if (playerScore < cpuScore) {
             resultMessage = `The Computer won the game!`;
             h2Text.textContent = `Final Score: ${playerScore} - ${cpuScore}`
             scoreContainer.removeChild(currentScorePara)
             keepGoing = false;
-
-            restartGame()
+            cpuWonGame();
+            restartGame();
         } else {
             h2Text.textContent = `It's a tie: ${playerScore} - ${cpuScore}`
             resultMessage = `Let's play a knock-out round!`;
@@ -378,6 +386,14 @@ function playRound(playerChoice) {
     setH1AnimTimesAndMessages(resultMessage)
     setCurrentScoreMessages(playerScore, cpuScore);
     currentRound++;
+}
+
+function cpuWonGame(params) {
+    // curtainElement.classList.remove("roll-up")
+    setTimeout(() => {
+        curtainElement.classList.add("roll-down");
+
+    }, 200);
 }
 
 // Restart game, hide hands buttons, show play again button
