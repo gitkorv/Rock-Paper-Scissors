@@ -268,6 +268,15 @@ allButtons.forEach(button => {
     button.addEventListener('touchstart', handleTouchStart);
     button.addEventListener('touchend', handleTouchEnd);
     button.addEventListener('touchcancel', handleTouchCancel);
+
+    button.addEventListener('click', function(event) {
+        // Prevent the default action of the click event
+        event.preventDefault();
+        // Remove the "hovered" class after a delay to allow time for the touch event to complete
+        setTimeout(() => {
+            this.classList.remove('hovered');
+        }, 300); // Adjust the delay as needed
+    });
 });
 
 
