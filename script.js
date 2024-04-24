@@ -25,6 +25,21 @@ const centerArea = document.querySelector(".center-area")
 let h2Text = document.querySelector(".center-area__h2Text")
 let h2TextElements = Array.from(h2Text.children)
 const h1Text = document.querySelector(".center-area__h1Text")
+let h1TextRPSAllChildren = Array.from(h1Text.querySelectorAll("span"));
+
+// Set animation delays for ROCK, PAPER, SCISSOR,
+// And also time for showing PLAY BUTTON
+let timeDelay = 1.75;
+let timeDelayIncrementor = 0.5;
+
+let showPlayButtonTime = (timeDelayIncrementor * 3 + timeDelay + 0.25) * 1000;
+
+for (let i = 0; i < h1TextRPSAllChildren.length; i++) {
+    h1TextRPSAllChildren[i].style.animationDelay = timeDelay + "s";
+    timeDelay = timeDelay + timeDelayIncrementor;
+    
+}
+
 const lastPlayedHandsElementsStructure = h2Text.innerHTML;
 
 /* 
@@ -62,7 +77,7 @@ window.onload = function () {
         h2Text.style.visibility = "";
 
         h2Text.classList.toggle("center-area__h2Text--wayOffLeft");
-    }, 300);
+    }, 750);
 
     setTimeout(() => {
         h2Text.classList.toggle("center-area__h2Text--wayOffLeft");
@@ -75,7 +90,7 @@ window.onload = function () {
             letsPlayButton.style.position = "relative";
             letsPlayButton.style.left = "0px";
         }, letsPlayTransitionDuration);
-    }, 3000);
+    }, showPlayButtonTime);
 }
 
 /* 
@@ -137,10 +152,10 @@ function setTopRoundTicker(keepGoing) {
     if (keepGoing === true) {
         topAreaWrapper.classList.add("show-rounds");
         let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
-        console.log(roundTextHeight);
+        // console.log(roundTextHeight);
         let topAreaRoundNumberContainer = document.querySelector(".top-area__text-container__number")
         topAreaRoundNumberContainer.style.height = roundTextHeight * 2 + "px" ;
-        console.log(topAreaRoundNumberContainer.style.height);
+        // console.log(topAreaRoundNumberContainer.style.height);
         let topAreaTopRoundNumber = document.querySelector(".top-area__text-container__number--top")
         let topAreaBottomRoundNumber = document.querySelector(".top-area__text-container__number--bottom")
         topAreaTopRoundNumber.textContent = 1;
@@ -184,7 +199,7 @@ function setCurrentScoreMessages(playerScore, cpuScore) {
         scoreContainer.appendChild(dummyCurrentScorePara);
         dummyCurrentScorePara.classList.add(...["current-score-para", "show"]);
         let dummyCurrentScoreParaWidth = parseInt(window.getComputedStyle(dummyCurrentScorePara).width);
-        console.log(dummyCurrentScoreParaWidth);
+        // console.log(dummyCurrentScoreParaWidth);
 
         currentScorePara.textContent = `Current Score: Player ${playerScore}, Cpu ${cpuScore}`;
         currentScorePara.classList.add("show");
@@ -231,14 +246,31 @@ function newGame() {
 }
 const allButtons = document.querySelectorAll("button")
 
+function handleMouseOver() {
+    this.classList.add("hovered")
+}
+function handleMouseOut() {
+    this.classList.remove("hovered")
+}
+function handleTouchStart() {
+    this.classList.add("hovered")
+}
+function handleTouchEnd() {
+    this.classList.remove("hovered")
+}
+function handleTouchCancel() {
+    this.classList.remove("hovered")
+}
+
 allButtons.forEach(button => {
-    button.addEventListener("mouseover", () => {
-        button.classList.add("hovered");
-    })
-    button.addEventListener("mouseout", () => {
-        button.classList.remove("hovered");
-    })
+    button.addEventListener('mouseover', handleMouseOver);
+    button.addEventListener('mouseout', handleMouseOut);
+    button.addEventListener('touchstart', handleTouchStart);
+    button.addEventListener('touchend', handleTouchEnd);
+    button.addEventListener('touchcancel', handleTouchCancel);
 });
+
+
 
 function pickHand(event) {
     playerChoice = event.target.textContent;
