@@ -1,14 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.typekit.net/qwk3mla.css">
+    <link rel="stylesheet" href="style.css">
     <title>Rock Paper Scissors Game</title>
 </head>
+
 <body>
-    
+    <div class="main-container">
+        <div class="top-area">
+            <div class="top-area--wrapper">
+                <div class="top-area__text-container">
+                    <span class="top-area__text-container__round">Round </span>
+                    <div class="top-area__text-container__number">
+                        <div class="top-area__text-container__number--top"></div>
+                        <div class="top-area__text-container__number--bottom"></div>
+                    </div>
+                    <span class="top-area__text-container__result">Result:</span>
+                </div>
+            </div>
+        </div>
+        <div class="center-area">
+            <h2 class="center-area__h2Text">
+                <span class="center-area__h2Text__player-span">Player Hand</span>
+                <span class="center-area__h2Text__vs-span">vs</span>
+                <span class="center-area__h2Text__cpu-span">CPU Hand</span>
+            </h2>
+            <h1 class="center-area__h1Text">
+                <span class="center-area__h1Text__Rock center-area__h1Text-rpsAllText">Rock, </span>
+                <span class="center-area__h1Text__paper center-area__h1Text-rpsAllText">Paper, </span>
+                <span class="center-area__h1Text__scissor center-area__h1Text-rpsAllText">Scissor!</span>
+            </h1>
+        </div>
+        <div class="btn-container">
+            <button class="hand-btn__rock play-button">Rock</button>
+            <button class="hand-btn__paper play-button">Paper</button>
+            <button class="hand-btn__scissor play-button">Scissor</button>
+        </div>
+        <div class="score-container">
+        </div>
+
+        <div class="fireworks-container">
+            <svg id="svg-container">
+                <path class="fireworks-path"></path>
+            </svg>
+        </div>
+            
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>
