@@ -128,8 +128,12 @@ let roundsToPlay
 let roundsLeftToPlay
 let currentRound
 
-let currentScorePara = document.createElement("p");
-currentScorePara.classList.add("current-score-para");
+let currentScorePara = document.querySelector(".current-score-para");
+let currentScorePlayer = currentScorePara.firstElementChild;
+let currentScoreCpu = currentScorePara.lastElementChild;
+let currentScoreParaWidth = currentScorePara.getBoundingClientRect().width;
+currentScorePara.style.left = (windowWidth - currentScoreParaWidth) / 2 + "px";
+
 let h1TextAnimDuration;
 let h1TextAnimDelay;
 
@@ -199,21 +203,24 @@ function setH2TextEffects(keepGoing, boldTextNumber) {
     }
 }
 
-function setCurrentScoreMessages(playerScore, cpuScore) {
+function setCurrentScoreMessages(playerScore, cpuScore, keepGoing) {
 
-    currentScorePara.classList.remove("show");
-    setTimeout(() => {
-        let dummyCurrentScorePara = document.createElement("div"); 
-        scoreContainer.appendChild(dummyCurrentScorePara);
-        dummyCurrentScorePara.classList.add(...["current-score-para", "show"]);
-        let dummyCurrentScoreParaWidth = parseInt(window.getComputedStyle(dummyCurrentScorePara).width);
-        console.log(dummyCurrentScoreParaWidth);
+    // currentScorePara.classList.remove("not-visible");
+    currentScorePara.classList.add("zero-width");
+    currentScorePara.style.width = "0px";
 
-        currentScorePara.textContent = `Current Score: Player ${playerScore}, Cpu ${cpuScore}`;
-        currentScorePara.classList.add("show");
-        // currentScorePara.style.width = dummyCurrentScoreParaWidth + "px";
-        currentScorePara.style.left = (windowWidth - dummyCurrentScoreParaWidth) / 2 + "px";
-    }, 500);
+    if (keepGoing) {
+        setTimeout(() => {
+            currentScorePara.style.width = currentScoreParaWidth + "px";
+    
+            currentScorePara.classList.remove("zero-width");
+            console.log(currentScorePara);
+            currentScorePlayer.textContent = playerScore;
+            currentScoreCpu.textContent = cpuScore;
+        }, 500);
+    }
+
+    
 }
 
 function newGame() {
@@ -223,9 +230,7 @@ function newGame() {
         playerChoiceButtonArray.forEach(button => {
             button.addEventListener("click", pickHand);
             button.style.display = "";
-    
         })
-
     }, 500);
 
     topAreaWrapper.classList.remove("hi-there-effect")
@@ -244,9 +249,8 @@ function newGame() {
     roundsToPlay = 5;
     roundsLeftToPlay
     currentRound = 1;
-    currentScorePara.textContent = `Current Score: Player ${playerScore}, Cpu ${cpuScore}`;
-    scoreContainer.appendChild(currentScorePara);
-    currentScorePara.classList.remove("show");
+
+    // currentScorePara.classList.remove("show");
 
     resultMessage = `Choose Your Weapon!`;
     setH1AnimTimesAndMessages(resultMessage);
@@ -374,7 +378,6 @@ function playRound(playerChoice) {
         if (playerScore > cpuScore) {
             resultMessage = `You won the game!`;
             h2Text.textContent = `Final Score: ${playerScore} - ${cpuScore}`
-            scoreContainer.removeChild(currentScorePara)
             keepGoing = false;
             startFireWork(12);
             restartGame();
@@ -382,7 +385,6 @@ function playRound(playerChoice) {
         } else if (playerScore < cpuScore) {
             resultMessage = `The Computer won the game!`;
             h2Text.textContent = `Final Score: ${playerScore} - ${cpuScore}`
-            scoreContainer.removeChild(currentScorePara)
             keepGoing = false;
             cpuWonGame();
             restartGame();
@@ -397,7 +399,7 @@ function playRound(playerChoice) {
     setTopRoundTicker(keepGoing);
     setH2TextEffects(keepGoing, boldTextNumber)
     setH1AnimTimesAndMessages(resultMessage)
-    setCurrentScoreMessages(playerScore, cpuScore);
+    setCurrentScoreMessages(playerScore, cpuScore, keepGoing);
     currentRound++;
 }
 
@@ -417,6 +419,8 @@ function restartGame() {
     letsPlayButton.textContent = "Play again!"
     letsPlayButton.style.display = "";
     letsPlayButton.addEventListener("click", newGame);
+    // currentScorePara.classList.add("zero-width");
+    // currentScorePara.style.width = "0px";
 }
 
 
@@ -578,5 +582,6 @@ function startFireWork(number) {
 window.addEventListener('resize', function () {
     windowWidth = window.innerWidth;
     windowHeight = window.innerHeight;
+    currentScorePara.style.left = (windowWidth - currentScoreParaWidth) / 2 + "px";
 
 })

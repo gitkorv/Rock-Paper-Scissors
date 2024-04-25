@@ -123,15 +123,15 @@ body {
 
 h1 {
     font-family: "scale-variable", sans-serif;
-    font-variation-settings: "wght"433, "wdth"96;
+    font-variation-settings: "wght"300, "wdth"96;
     text-align: center;
-    font-size: 3em;
+    font-size: 2em;
 }
 
 h2 {
     font-family: "scale-variable", sans-serif;
-    font-variation-settings: "wght"200, "wdth"96;
-    font-size: 2em;
+    font-variation-settings: "wght"200, "wdth"75;
+    font-size: 2.3em;
 }
 
 .center-area__h2Text {
@@ -186,7 +186,7 @@ h2 {
     position: relative;
     margin-top: 6px;
     mix-blend-mode: difference;
-    
+
 }
 
 .center-area__h1Text--rotate-in {
@@ -306,22 +306,28 @@ h2 {
 
 .score-container {
     flex: 1;
+    display: flex;
+    /* display: flex;
+    justify-content: center;
+    align-items: start; */
 }
 .current-score-para {
+    display: block;
     position: relative;
-
-    opacity: 0;
-    width: 0px;
+    /* background-color: #4cc9f0; */
+    opacity: 1;
+    /* width: auto; */
+    /* height: 20px; */
     overflow: hidden;
     text-wrap: nowrap;
     transition: width 1s;
 
 }
-.current-score-para.show {
-    /* left: 20px; */
-    width: 210px;
-    /* background-color: red; */
-    opacity: 1;
+.current-score-para.zero-width {
+    opacity: 0;
+}
+.current-score-para.show.not-visible {
+    visibility: hidden;
 }
 
 .score-container p {
