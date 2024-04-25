@@ -564,6 +564,8 @@ class Firework {
         this.explosionArray.forEach(explosion => explosion.update());
     }
     reset() {
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
         this.fireworkPathArray = [];
         this.pathAnimTimeArray = [];
         this.explosionArray = [];
@@ -582,6 +584,7 @@ function startFireWork(number) {
 window.addEventListener('resize', function () {
     windowWidth = window.innerWidth;
     windowHeight = window.innerHeight;
+    firework.reset();
     currentScorePara.style.left = (windowWidth - currentScoreParaWidth) / 2 + "px";
 
 })
