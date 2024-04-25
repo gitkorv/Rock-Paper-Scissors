@@ -32,7 +32,7 @@ let h1TextRPSAllChildren = Array.from(h1Text.querySelectorAll("span"));
 let timeDelay = 1.75;
 let timeDelayIncrementor = 0.5;
 
-let showPlayButtonTime = (timeDelayIncrementor * 3 + timeDelay + 0.25) * 1000;
+let showPlayButtonTimeDelay = (timeDelayIncrementor * 3 + timeDelay + 0.25) * 1000;
 
 for (let i = 0; i < h1TextRPSAllChildren.length; i++) {
     h1TextRPSAllChildren[i].style.animationDelay = timeDelay + "s";
@@ -58,9 +58,55 @@ const btnContainer = document.querySelector(".btn-container")
 const playerChoiceButtons = document.querySelectorAll(".play-button")
 const playerChoiceButtonArray = Array.from(playerChoiceButtons)
 /* 
-Create initial button "Lets play"
+Hide Playing Hands Buttons 
+*/
+playerChoiceButtonArray.forEach(button => button.style.display = "none");
+
+/* 
+Create initial button "Lets play" and add it to layout
 */
 const letsPlayButton = document.createElement("button");
+
+
+function setLetsPLayButton(params) {
+    // Add classes, content and append letsPlayButton
+    letsPlayButton.classList.add(...["lets-play-button", "not-visible"]);
+    btnContainer.appendChild(letsPlayButton)
+    letsPlayButton.textContent = "Sure, let's do this!";
+    // get with of letsPlayButton
+    let letsPlayButtonWidth = letsPlayButton.getBoundingClientRect().width;
+    console.log(letsPlayButtonWidth);
+    // Hide letsPlayButton
+    letsPlayButton.classList.add("hidden");
+    // Make button container display: block
+    btnContainer.classList.add("letsPlaySetting");
+
+
+    setTimeout(() => {
+        // Show letsPlayButton
+        letsPlayButton.classList.remove("not-visible");
+        letsPlayButton.classList.remove("hidden");
+        letsPlayButton.style.left = (windowWidth - letsPlayButtonWidth) / 2 + "px";
+        // Find out transition time for button
+        let letsPlayTransitionDuration = parseFloat(window.getComputedStyle(letsPlayButton).transitionDuration.split(", ")[0]) * 1000;
+        console.log(window.getComputedStyle(letsPlayButton).transitionDuration);
+        console.log(letsPlayTransitionDuration);
+        // After letPlayButton has transitioned... 
+        setTimeout(() => {
+            // remove btnContainer class to make it flex again
+            btnContainer.classList.remove("letsPlaySetting");
+            // remove left position to work with flex again
+            letsPlayButton.style.left = "";
+        }, letsPlayTransitionDuration);
+    }, showPlayButtonTimeDelay);
+    // Add click function to button
+    letsPlayButton.addEventListener("click", newGame);
+    
+}
+
+setLetsPLayButton()
+
+
 /* 
 Select Score Tracker
 */
@@ -72,7 +118,6 @@ On window load, Bring in h2Text etc
 window.onload = function () {
     topAreaWrapper.classList.add("hi-there-effect");
     h2Text.style.visibility = "hidden";
-
     setTimeout(() => {
         h2Text.style.visibility = "";
 
@@ -82,43 +127,10 @@ window.onload = function () {
     setTimeout(() => {
         h2Text.classList.toggle("center-area__h2Text--wayOffLeft");
 
-        letsPlayButton.classList.remove("hidden");
-        letsPLayButtonSetting(dummyComputedStyleWidth);
         // Get transition duration for LetsPlay button
-        let letsPlayTransitionDuration = parseFloat(window.getComputedStyle(letsPlayButton).transitionDuration.split(", ")[0]) * 1000;
-        setTimeout(() => {
-            letsPlayButton.style.position = "relative";
-            letsPlayButton.style.left = "0px";
-        }, letsPlayTransitionDuration);
-    }, showPlayButtonTime);
+        
+    }, showPlayButtonTimeDelay);
 }
-
-/* 
-Hide Playing Hands Buttons 
-*/
-
-playerChoiceButtonArray.forEach(button => button.style.display = "none");
-
-/* 
-Add temporary Lets Play button
-*/
-btnContainer.appendChild(letsPlayButton)
-letsPlayButton.classList.add(...["lets-play-button", "hidden"]);
-
-let dummyLetsPLayButton = document.createElement("div");
-dummyLetsPLayButton.classList.add("lets-play-button");
-btnContainer.appendChild(dummyLetsPLayButton);
-let dummyComputedStyleWidth = parseInt(window.getComputedStyle(dummyLetsPLayButton).width);
-btnContainer.removeChild(dummyLetsPLayButton);
-let letsPlayButtonPositionFromLeft
-
-function letsPLayButtonSetting(dummyComputedStyleWidth) {
-    letsPlayButtonPositionFromLeft = (windowWidth - dummyComputedStyleWidth) / 2;
-    letsPlayButton.style.left = letsPlayButtonPositionFromLeft + "px";
-}
-
-letsPlayButton.textContent = "Sure, let's do this!"
-letsPlayButton.addEventListener("click", newGame);
 
 let playerChoice
 let playerScore
@@ -184,7 +196,6 @@ function setTopRoundTicker(keepGoing) {
                 topAreaTopRoundNumber.textContent = currentRound - 1;
                 topAreaRoundNumberContainer.classList.remove("slide-up");
                 slideUpElement.style.transform = `translateY(-0px)`
-
             }, 950);
         }
     }
@@ -219,13 +230,13 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing) {
             currentScoreCpu.textContent = cpuScore;
         }, 500);
     }
-
-    
 }
 
 function newGame() {
+
     setTimeout(() => {
         curtainElement.classList.remove("roll-down");
+
         letsPlayButton.style.display = "none";
         playerChoiceButtonArray.forEach(button => {
             button.addEventListener("click", pickHand);
@@ -288,7 +299,7 @@ allButtons.forEach(button => {
 
     button.addEventListener('click', function(event) {
         // this.classList.remove("hovered");
-        this.style.border = "4px solid #f72585";
+        this.style.outline = "4px solid #f72585";
         this.style.color = "#f72585";
         // this.style.borderColor = "blue";
         // this.style.borderWidth = "10px";
@@ -296,11 +307,11 @@ allButtons.forEach(button => {
         event.preventDefault();
         // Remove the "hovered" class after a delay to allow time for the touch event to complete
         setTimeout(() => {
-            this.style.border = "";
+            this.style.outline = "";
             this.style.color = "";
 
             this.classList.remove('hovered');
-        }, 300); // Adjust the delay as needed
+        }, 200); // Adjust the delay as needed
     });
 });
 

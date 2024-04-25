@@ -115,10 +115,14 @@ body {
 }
 
 .center-area {
-    display: block;
-    padding-top: 10px;
-    height: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    /* justify-content: space-evenly; */
+    padding: 10px 0px 10px 0px;
     width: 100vw;
+    overflow: hidden;
+    /* background-color: #654553; */
 }
 
 h1 {
@@ -131,20 +135,31 @@ h1 {
 h2 {
     font-family: "scale-variable", sans-serif;
     font-variation-settings: "wght"200, "wdth"75;
-    font-size: 2.3em;
+    font-size: 2em;
+}
+
+.center-area__h2Text-container {
+    position: relative;
+    display: block;
+    width: 200%;
+    /* height: 20px; */
+    left: -50%;
+    /* background-color: antiquewhite; */
 }
 
 .center-area__h2Text {
     color: #f72585;
     position: relative;
     margin: 0px auto 0px auto;
-    left: 0px;
+    /* left: 0px; */
     /* color: black; */
-    width: fit-content;
+    left: 0px;
+    width: 100%;
+    text-align: center;
     text-wrap: nowrap;
     mix-blend-mode: difference;
-    
-
+    overflow: hidden;
+    /* background-color: #4cc9f0; */
 }
 
 .center-area__h2Text.h2Text-fade-in {
@@ -182,11 +197,14 @@ h2 {
 }
 
 .center-area__h1Text {
+    display: block;
+    /* justify-content: center; */
+    /* align-items: center; */
     color: #4cc9f0;
     position: relative;
-    margin-top: 6px;
+    /* margin-top: 6px; */
     mix-blend-mode: difference;
-
+    /* background-color: #bcb0b5; */
 }
 
 .center-area__h1Text--rotate-in {
@@ -253,25 +271,30 @@ h2 {
 .btn-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: start; */
     gap: 10px;
     /* background-color: blueviolet; */
     width: 100%;
-    height: 50px;
+    height: 32px;
     /* height: 100%; */
+}
+.btn-container.letsPlaySetting {
+    display: block;
 }
 
 .btn-container button {
+    position: relative;
     font-family: trade-gothic-next, sans-serif;
     font-weight: 300;
     /* vertical-align: bottom; */
     font-size: 1em;
     color: white;
-    /* height: 30px; */
+    height: 100%;
     border-radius: 8px;
-    padding: .5em .5em .6em .5em;
+    padding: .2em .2em .4em .2em;
     background-color: black;
-    width: 100px;
+    width: 80px;
+    transform-origin: center;
     /* height: 100px; */
     transition: all .1s;
 }
@@ -287,16 +310,19 @@ h2 {
 }
 
 
-.btn-container .lets-play-button {
-    /* position: absolute; */
-    /* left: 10px; */
-    /* padding: 15px 15px 15px 15px; */
+.btn-container button.lets-play-button {
+    /* position: relative;
+    display: block;
+    left: 0px; */
     width: 160px;
-    /* background-color: aqua; */
-    /* transform-origin: center left; */
     text-wrap: nowrap;
     overflow: hidden;
-    transition: width .5s ease, padding 0.2s;
+    /* transition-duration: 1s; */
+    transition: width .5s ease-out, padding 0.1s,
+    outline .2s ease, color .1s ease;
+}
+.btn-container .lets-play-button.not-visible {
+    visibility: hidden;
 }
 .btn-container .lets-play-button.hidden {
     width: 0px;
@@ -314,6 +340,7 @@ h2 {
 .current-score-para {
     display: block;
     position: relative;
+    margin-top: 8px;
     /* background-color: #4cc9f0; */
     opacity: 1;
     /* width: auto; */
@@ -378,6 +405,7 @@ h2 {
     left: 0;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
     /* background-color: rgb(212, 110, 43); */
     z-index: -200;
 
