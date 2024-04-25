@@ -16,7 +16,7 @@ body {
     font-family: "trade-gothic-next", sans-serif;
     font-weight: 300;
     font-style: normal;
-    /* font-size: 12px; */
+    /* font-size: 1em; */
     height: 100vh;
     width: 100vw;
 }
@@ -41,7 +41,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: end;
-    align-items: center;
+    /* align-items: center; */
     flex: 1;
     overflow: hidden;
     /* background-color: rgb(255, 168, 127); */
@@ -70,11 +70,11 @@ body {
 .top-area__text-container {
     display: flex;
     justify-content: center;
-    /* align-items: center; */
+    /* align-items: end; */
     font-weight: 600;
     /* background-color: aqua; */
-    height: 20px;
-    font-size: 16px;
+    /* height: 26px; */
+    font-size: 1.2em;
     overflow: hidden;
 }
 
@@ -117,7 +117,7 @@ body {
 .center-area {
     display: block;
     padding-top: 10px;
-    height: 75px;
+    height: 100px;
     width: 100vw;
 }
 
@@ -125,11 +125,13 @@ h1 {
     font-family: "scale-variable", sans-serif;
     font-variation-settings: "wght"433, "wdth"96;
     text-align: center;
+    font-size: 3em;
 }
 
 h2 {
     font-family: "scale-variable", sans-serif;
     font-variation-settings: "wght"200, "wdth"96;
+    font-size: 2em;
 }
 
 .center-area__h2Text {
@@ -184,6 +186,7 @@ h2 {
     position: relative;
     margin-top: 6px;
     mix-blend-mode: difference;
+    
 }
 
 .center-area__h1Text--rotate-in {
@@ -259,32 +262,36 @@ h2 {
 }
 
 .btn-container button {
+    font-family: trade-gothic-next, sans-serif;
+    font-weight: 300;
+    /* vertical-align: bottom; */
+    font-size: 1em;
     color: white;
-    height: 30px;
+    /* height: 30px; */
     border-radius: 8px;
-    /* padding: 10px; */
+    padding: .5em .5em .6em .5em;
     background-color: black;
-    width: 70px;
-    height: 25px;
+    width: 100px;
+    /* height: 100px; */
     transition: all .1s;
-
 }
 
 .btn-container button.hovered {
-    background-color: chartreuse;
-    box-shadow: inset 0em 0em 0em 1.1em black;
-    box-decoration-break: slice;
-    color: chartreuse;
+    background-color: #f72585;
+    box-shadow: inset 0em 0em 0em 1.2em black;
+    /* 0 0 .5em red; */
+    /* box-decoration-break: slice; */
+    color: #f72585;
     scale: 110%;
     transition: all .3s ease;
 }
 
 
 .btn-container .lets-play-button {
-    position: absolute;
+    /* position: absolute; */
     /* left: 10px; */
-    padding: 0px 15px 0px 15px;
-    width: 140px;
+    /* padding: 15px 15px 15px 15px; */
+    width: 160px;
     /* background-color: aqua; */
     /* transform-origin: center left; */
     text-wrap: nowrap;
@@ -312,13 +319,13 @@ h2 {
 }
 .current-score-para.show {
     /* left: 20px; */
-    width: 250px;
+    width: 210px;
     /* background-color: red; */
     opacity: 1;
 }
 
 .score-container p {
-    text-align: center;
+    text-align: left;
 }
 
 .previous-hands--black {

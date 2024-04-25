@@ -153,10 +153,13 @@ function setH1AnimTimesAndMessages(resultMessage) {
     }, h1TextAnimDelay + h1TextAnimDuration);
 }
 
+let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
+topAreaTextContainer.style.height = roundTextHeight + "px";
+
 function setTopRoundTicker(keepGoing) {
     if (keepGoing === true) {
         topAreaWrapper.classList.add("show-rounds");
-        let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
+        // let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
         // console.log(roundTextHeight);
         let topAreaRoundNumberContainer = document.querySelector(".top-area__text-container__number")
         topAreaRoundNumberContainer.style.height = roundTextHeight * 2 + "px" ;
@@ -204,22 +207,29 @@ function setCurrentScoreMessages(playerScore, cpuScore) {
         scoreContainer.appendChild(dummyCurrentScorePara);
         dummyCurrentScorePara.classList.add(...["current-score-para", "show"]);
         let dummyCurrentScoreParaWidth = parseInt(window.getComputedStyle(dummyCurrentScorePara).width);
-        // console.log(dummyCurrentScoreParaWidth);
+        console.log(dummyCurrentScoreParaWidth);
 
         currentScorePara.textContent = `Current Score: Player ${playerScore}, Cpu ${cpuScore}`;
         currentScorePara.classList.add("show");
-
+        // currentScorePara.style.width = dummyCurrentScoreParaWidth + "px";
         currentScorePara.style.left = (windowWidth - dummyCurrentScoreParaWidth) / 2 + "px";
-    }, 1000);
+    }, 500);
 }
 
 function newGame() {
     setTimeout(() => {
         curtainElement.classList.remove("roll-down");
+        letsPlayButton.style.display = "none";
+        playerChoiceButtonArray.forEach(button => {
+            button.addEventListener("click", pickHand);
+            button.style.display = "";
+    
+        })
+
     }, 500);
 
     topAreaWrapper.classList.remove("hi-there-effect")
-    letsPlayButton.style.display = "none";
+    // letsPlayButton.style.display = "none";
     setTimeout(() => {
         if (topAreaTextContainer.lastChild === hiThere) {
             topAreaTextContainer.removeChild(hiThere);
@@ -236,6 +246,7 @@ function newGame() {
     currentRound = 1;
     currentScorePara.textContent = `Current Score: Player ${playerScore}, Cpu ${cpuScore}`;
     scoreContainer.appendChild(currentScorePara);
+    currentScorePara.classList.remove("show");
 
     resultMessage = `Choose Your Weapon!`;
     setH1AnimTimesAndMessages(resultMessage);
@@ -244,14 +255,8 @@ function newGame() {
     setH2TextEffects()
 
     h2Text.textContent = `Great, here goes round ${currentRound}`;
-
-    playerChoiceButtonArray.forEach(button => {
-        button.addEventListener("click", pickHand);
-        button.style.display = "";
-
-    })
-
 }
+
 const allButtons = document.querySelectorAll("button")
 
 function handleMouseOver() {
@@ -278,10 +283,18 @@ allButtons.forEach(button => {
     button.addEventListener('touchcancel', handleTouchCancel);
 
     button.addEventListener('click', function(event) {
+        // this.classList.remove("hovered");
+        this.style.border = "4px solid #f72585";
+        this.style.color = "#f72585";
+        // this.style.borderColor = "blue";
+        // this.style.borderWidth = "10px";
         // Prevent the default action of the click event
         event.preventDefault();
         // Remove the "hovered" class after a delay to allow time for the touch event to complete
         setTimeout(() => {
+            this.style.border = "";
+            this.style.color = "";
+
             this.classList.remove('hovered');
         }, 300); // Adjust the delay as needed
     });
@@ -320,7 +333,7 @@ function playRound(playerChoice) {
 
     if (playerChoice === computerChoice) {
         vs.textContent = "vs";
-        resultMessage = "It's a tie";
+        resultMessage = "The Round is a tie";
         boldTextNumber.push(0);
         boldTextNumber.push(2);
     } else if (
@@ -328,12 +341,12 @@ function playRound(playerChoice) {
         playerChoice === "Paper" && computerChoice === "Rock" ||
         playerChoice === "Scissor" && computerChoice === "Paper"
     ) {
-        resultMessage = "You Win!"
+        resultMessage = "You Won the Round!"
         vs.textContent = "beats";
         playerScore++;
         boldTextNumber.push(0);
     } else {
-        resultMessage = "Computer Wins!"
+        resultMessage = "Computer Won Round!"
         vs.textContent = "lost to";
         cpuScore++;
         boldTextNumber.push(2);
@@ -363,7 +376,7 @@ function playRound(playerChoice) {
             h2Text.textContent = `Final Score: ${playerScore} - ${cpuScore}`
             scoreContainer.removeChild(currentScorePara)
             keepGoing = false;
-            startFireWork(2);
+            startFireWork(12);
             restartGame();
 
         } else if (playerScore < cpuScore) {
@@ -375,7 +388,7 @@ function playRound(playerChoice) {
             restartGame();
         } else {
             h2Text.textContent = `It's a tie: ${playerScore} - ${cpuScore}`
-            resultMessage = `Let's play a knock-out round!`;
+            resultMessage = `It's a knock-out round!`;
             roundsToPlay++;
             keepGoing = false;
         }
