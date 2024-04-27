@@ -75,23 +75,18 @@ function setLetsPLayButton(params) {
     letsPlayButton.textContent = "Sure, let's do this!";
     // get with of letsPlayButton
     let letsPlayButtonWidth = letsPlayButton.getBoundingClientRect().width;
-    console.log(letsPlayButtonWidth);
-    // Hide letsPlayButton
-    letsPlayButton.classList.add("hidden");
-    // Make button container display: block
+    // Set btnContainer to BLOCK and make letsPlayButton 0 width
     btnContainer.classList.add("letsPlaySetting");
-
+    letsPlayButton.classList.add("zero-width");
 
     setTimeout(() => {
         // Show letsPlayButton
-        letsPlayButton.classList.remove("not-visible");
-        letsPlayButton.classList.remove("hidden");
+        letsPlayButton.classList.remove(...["not-visible", "zero-width"]);
+        // Set style left for letsPlayButton
         letsPlayButton.style.left = (windowWidth - letsPlayButtonWidth) / 2 + "px";
         // Find out transition time for button
-        let letsPlayTransitionDuration = parseFloat(window.getComputedStyle(letsPlayButton).transitionDuration.split(", ")[0]) * 1000;
-        console.log(window.getComputedStyle(letsPlayButton).transitionDuration);
-        console.log(letsPlayTransitionDuration);
-        // After letPlayButton has transitioned... 
+        let letsPlayTransitionDuration = parseFloat(window.getComputedStyle(letsPlayButton).transitionDuration.split(", ")[1]) * 1000;
+        // After letsPlayButton has transitioned... 
         setTimeout(() => {
             // remove btnContainer class to make it flex again
             btnContainer.classList.remove("letsPlaySetting");
@@ -105,7 +100,6 @@ function setLetsPLayButton(params) {
 }
 
 setLetsPLayButton()
-
 
 /* 
 Select Score Tracker
@@ -216,7 +210,6 @@ function setH2TextEffects(keepGoing, boldTextNumber) {
 
 function setCurrentScoreMessages(playerScore, cpuScore, keepGoing) {
 
-    // currentScorePara.classList.remove("not-visible");
     currentScorePara.classList.add("zero-width");
     currentScorePara.style.width = "0px";
 
@@ -236,7 +229,6 @@ function newGame() {
 
     setTimeout(() => {
         curtainElement.classList.remove("roll-down");
-
         letsPlayButton.style.display = "none";
         playerChoiceButtonArray.forEach(button => {
             button.addEventListener("click", pickHand);
@@ -261,17 +253,15 @@ function newGame() {
     roundsLeftToPlay
     currentRound = 1;
 
-    // currentScorePara.classList.remove("show");
-
     resultMessage = `Choose Your Weapon!`;
     setH1AnimTimesAndMessages(resultMessage);
 
     setTopRoundTicker();
     setH2TextEffects()
+    h2Text.classList.add("black");
 
     h2Text.textContent = `Great, here goes round ${currentRound}`;
 }
-
 const allButtons = document.querySelectorAll("button")
 
 function handleMouseOver() {
@@ -298,20 +288,18 @@ allButtons.forEach(button => {
     button.addEventListener('touchcancel', handleTouchCancel);
 
     button.addEventListener('click', function(event) {
-        // this.classList.remove("hovered");
         this.style.outline = "4px solid #f72585";
-        this.style.color = "#f72585";
-        // this.style.borderColor = "blue";
-        // this.style.borderWidth = "10px";
+        // this.style.color = "#f72585";
+
         // Prevent the default action of the click event
         event.preventDefault();
         // Remove the "hovered" class after a delay to allow time for the touch event to complete
         setTimeout(() => {
             this.style.outline = "";
-            this.style.color = "";
+            // this.style.color = "";
 
             this.classList.remove('hovered');
-        }, 200); // Adjust the delay as needed
+        }, 300); // Adjust the delay as needed
     });
 });
 
@@ -332,6 +320,8 @@ function getCpuChoice() {
 
 
 function playRound(playerChoice) {
+    h2Text.classList.remove("black");
+
     roundsPlayed++;
 
     let computerChoice = getCpuChoice();
@@ -368,7 +358,7 @@ function playRound(playerChoice) {
     }
 
     /*
-    Fin out if the game is over
+    Find out if the game is over
     */
 
     let scoreDiff = 0;
@@ -415,10 +405,8 @@ function playRound(playerChoice) {
 }
 
 function cpuWonGame(params) {
-    // curtainElement.classList.remove("roll-up")
     setTimeout(() => {
         curtainElement.classList.add("roll-down");
-
     }, 200);
 }
 
@@ -430,8 +418,6 @@ function restartGame() {
     letsPlayButton.textContent = "Play again!"
     letsPlayButton.style.display = "";
     letsPlayButton.addEventListener("click", newGame);
-    // currentScorePara.classList.add("zero-width");
-    // currentScorePara.style.width = "0px";
 }
 
 
