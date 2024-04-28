@@ -350,8 +350,8 @@ function playRound(playerChoice) {
 
     roundsPlayed++;
 
-    // let computerChoice = getCpuChoice();
-    let computerChoice = "Rock";
+    let computerChoice = getCpuChoice();
+    // let computerChoice = "Rock";
 
     h2Text.innerHTML = lastPlayedHandsElementsStructure;
 
