@@ -37,7 +37,7 @@ let showPlayButtonTimeDelay = (timeDelayIncrementor * 3 + timeDelay + 0.25) * 10
 for (let i = 0; i < h1TextRPSAllChildren.length; i++) {
     h1TextRPSAllChildren[i].style.animationDelay = timeDelay + "s";
     timeDelay = timeDelay + timeDelayIncrementor;
-    
+
 }
 
 const lastPlayedHandsElementsStructure = h2Text.innerHTML;
@@ -96,7 +96,7 @@ function setLetsPLayButton(params) {
     }, showPlayButtonTimeDelay);
     // Add click function to button
     letsPlayButton.addEventListener("click", newGame);
-    
+
 }
 
 setLetsPLayButton()
@@ -122,7 +122,7 @@ window.onload = function () {
         h2Text.classList.toggle("center-area__h2Text--wayOffLeft");
 
         // Get transition duration for LetsPlay button
-        
+
     }, showPlayButtonTimeDelay);
 }
 
@@ -175,7 +175,7 @@ function setH1AnimTimesAndMessages(resultMessage) {
             console.log(resultMessage);
             let splitResultMessage = resultMessage.split(" ");
             console.log(splitResultMessage);
-            let resultMessageTop = splitResultMessage.slice(0,2).join(" ");
+            let resultMessageTop = splitResultMessage.slice(0, 2).join(" ");
             let resultMessageBottom = splitResultMessage.slice(2).join(" ");
             h1Text.textContent = resultMessageTop + "\n";
             // h1Text.textContent = resultMessageTop;
@@ -201,7 +201,7 @@ function setTopRoundTicker(keepGoing) {
         // let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
         // console.log(roundTextHeight);
         let topAreaRoundNumberContainer = document.querySelector(".top-area__text-container__number")
-        topAreaRoundNumberContainer.style.height = roundTextHeight * 2 + "px" ;
+        topAreaRoundNumberContainer.style.height = roundTextHeight * 2 + "px";
         // console.log(topAreaRoundNumberContainer.style.height);
         let topAreaTopRoundNumber = document.querySelector(".top-area__text-container__number--top")
         let topAreaBottomRoundNumber = document.querySelector(".top-area__text-container__number--bottom")
@@ -243,7 +243,7 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing) {
     if (keepGoing) {
         setTimeout(() => {
             currentScorePara.style.width = currentScoreParaWidth + "px";
-    
+
             currentScorePara.classList.remove("zero-width");
             currentScorePlayer.textContent = playerScore;
             currentScoreCpu.textContent = cpuScore;
@@ -313,7 +313,7 @@ allButtons.forEach(button => {
     button.addEventListener('touchend', handleTouchEnd);
     button.addEventListener('touchcancel', handleTouchCancel);
 
-    button.addEventListener('click', function(event) {
+    button.addEventListener('click', function (event) {
         this.style.outline = "4px solid #f72585";
         // this.style.color = "#f72585";
 
@@ -438,12 +438,16 @@ function cpuWonGame(params) {
 
 // Restart game, hide hands buttons, show play again button
 function restartGame() {
-    playerChoiceButtonArray.forEach(button => button.style.display = "none");
-    topAreaWrapper.classList.remove("show-rounds");
-    letsPlayButton.style.width = "100px";
-    letsPlayButton.textContent = "Play again!"
-    letsPlayButton.style.display = "";
-    letsPlayButton.addEventListener("click", newGame);
+
+    setTimeout(() => {
+        playerChoiceButtonArray.forEach(button => button.style.display = "none");
+        topAreaWrapper.classList.remove("show-rounds");
+        letsPlayButton.style.width = "100px";
+        letsPlayButton.textContent = "Play again!"
+        letsPlayButton.style.display = "";
+        letsPlayButton.addEventListener("click", newGame);
+    }, 500);
+
 }
 
 
