@@ -149,13 +149,42 @@ curtainElement.classList.add("curtain-element")
 mainContainer.appendChild(curtainElement);
 
 function setH1AnimTimesAndMessages(resultMessage) {
-    // console.log(resultMessage);
+    h1Text.style.height = "";
     h1Text.classList.toggle("center-area__h1Text--rotate-in")
     h1TextAnimDuration = parseFloat(window.getComputedStyle(h1Text).animationDuration.split(", ")[0]) * 1000;
     h1TextAnimDelay = parseFloat(window.getComputedStyle(h1Text).animationDelay.split(", ")[0]) * 1000;
+    let h1TextWidth
+    let currentH1TextContent = h1Text.textContent;
+    h1Text.textContent = `${resultMessage}`;
+    h1TextWidth = h1Text.getBoundingClientRect().width;
+    h1TextHeight = h1Text.getBoundingClientRect().height;
+    console.log(h1TextWidth, windowWidth);
+
+    console.log(h1TextWidth > windowWidth);
+    h1Text.textContent = currentH1TextContent;
+
 
     setTimeout(() => {
-        h1Text.textContent = `${resultMessage}`;
+
+        if (h1TextWidth > windowWidth) {
+            h1Text.style.height = h1TextHeight * 2 + "px";
+            console.log(h1Text);
+            // h1Text.style.textWrap = "wrap";
+            // h1Text.setAttribute('style', 'white-space: pre;');
+            h1Text.style.whiteSpace = "pre";
+            console.log(resultMessage);
+            let splitResultMessage = resultMessage.split(" ");
+            console.log(splitResultMessage);
+            let resultMessageTop = splitResultMessage.slice(0,2).join(" ");
+            let resultMessageBottom = splitResultMessage.slice(2).join(" ");
+            h1Text.textContent = resultMessageTop + "\n";
+            // h1Text.textContent = resultMessageTop;
+            h1Text.textContent += resultMessageBottom;
+        } else {
+            h1Text.textContent = `${resultMessage}`;
+
+        }
+
     }, h1TextAnimDelay + h1TextAnimDuration / 2);
 
     setTimeout(() => {
@@ -183,9 +212,7 @@ function setTopRoundTicker(keepGoing) {
             topAreaRoundNumberContainer.classList.add("slide-up");
             let slideUpElement = topAreaTextContainer.querySelector(".top-area__text-container__number.slide-up")
             slideUpElement.style.transform = `translateY(-${roundTextHeight}px)`;
-            console.log(slideUpElement.style.transform);
 
-            // console.log(slideUpElement);
             setTimeout(() => {
                 topAreaTopRoundNumber.textContent = currentRound - 1;
                 topAreaRoundNumberContainer.classList.remove("slide-up");
@@ -218,7 +245,6 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing) {
             currentScorePara.style.width = currentScoreParaWidth + "px";
     
             currentScorePara.classList.remove("zero-width");
-            console.log(currentScorePara);
             currentScorePlayer.textContent = playerScore;
             currentScoreCpu.textContent = cpuScore;
         }, 500);
