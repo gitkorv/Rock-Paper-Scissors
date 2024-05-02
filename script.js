@@ -251,8 +251,8 @@ function playRound(playerChoice) {
     h2Text.classList.remove("black");
     roundsPlayed++;
 
-    // let computerChoice = getCpuChoice();
-    let computerChoice = "Rock";
+    let computerChoice = getCpuChoice();
+    // let computerChoice = "Rock";
     h2Text.innerHTML = originalH2TextStructure;
     // console.log(h2Text);
 
@@ -313,7 +313,7 @@ function playRound(playerChoice) {
             resultMessage = `You won the game!`;
             h2Text.textContent = `Final Score: ${playerScore} - ${cpuScore}`
             keepGoing = false;
-            // startFireWork(12);
+            startFireWork(12);
             restartGame();
 
         } else if (playerScore < cpuScore) {
