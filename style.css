@@ -195,7 +195,12 @@ h2 {
 }
 .center-area__h2Text > div > span.bold-anim-double{
     animation: bold-choice-double 1.5s;
+    animation-delay: 0.25s;
 }
+/* .center-area__h2Text > div > span.bold-anim.bold-anim-double.with-after::after {
+    animation: bold-choice-double 1.5s;
+    animation-delay: 0.25s;
+} */
 .center-area__h2Text > div > span.vs-anim{
     animation: vs-anim 1.5s;
     animation-delay: .5s;
@@ -205,12 +210,17 @@ h2 {
 .center-area__h2Text > div > span.bold-anim.with-after::after {
     position: absolute;
     font-size: 200%;
-    color: #3a0ca3;
+    color: #f72585;
     opacity: 0;
     left: -50%;
     top: -50%;
     animation: opacity .75s ease-in-out;
     animation-delay: 1.25s;
+    /* outline: 2px solid rgb(215, 26, 26); */
+}
+.center-area__h2Text > div > span.bold-anim.bold-anim-double.with-after::after {
+    animation: opacity .75s ease-in-out;
+    animation-delay: .5s;
     /* outline: 2px solid rgb(215, 26, 26); */
 }
 

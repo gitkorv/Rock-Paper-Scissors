@@ -251,8 +251,8 @@ function playRound(playerChoice) {
     h2Text.classList.remove("black");
     roundsPlayed++;
 
-    let computerChoice = getCpuChoice();
-    // let computerChoice = "Rock";
+    // let computerChoice = getCpuChoice();
+    let computerChoice = "Rock";
     h2Text.innerHTML = originalH2TextStructure;
     // console.log(h2Text);
 
@@ -383,7 +383,7 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
             h2SpanElements[boldTextNumber].classList.add("with-after");
             h2SpanElements[boldTextNumber].classList.add(`${winningHand.toLowerCase()}`);
             let thisShit = h2TextSpanContainers[boldTextNumber].querySelector(`span.bold-anim.with-after.${winningHand.toLowerCase()}`);
-            console.table(window.getComputedStyle(thisShit).fontSize);
+            console.log(thisShit);
         } else {
             boldTextNumber.forEach(number => {
                 handWidth = h2SpanElements[number].getBoundingClientRect().width;
@@ -392,8 +392,9 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
                 h2SpanElements[number].classList.add("bold-anim-double");
                 h2SpanElements[number].classList.add("with-after");
                 h2SpanElements[number].classList.add(`${winningHand.toLowerCase()}`);
-                let thisShit = h2TextSpanContainers[number].querySelector(`span.bold-anim.with-after.${winningHand.toLowerCase()}`);
-                console.table(window.getComputedStyle(thisShit).fontSize);
+                let thisShit = h2TextSpanContainers[number].querySelector(`span.bold-anim.bold-anim-double.with-after`);
+                // thisShit.style.animationDelay = "0.25s"
+                console.log(thisShit);
             });
         }
         h2SpanElements[1].classList.add("vs-anim");
