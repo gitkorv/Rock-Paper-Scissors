@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Krv adds
 .vscode/
+script_240413.js
+script_consoleVersion.js
+script_copy_240412.js
