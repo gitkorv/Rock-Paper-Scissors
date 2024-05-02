@@ -106,7 +106,8 @@ body {
     /* justify-content: space-evenly; */
     padding: 10px 0px 10px 0px;
     width: 100vw;
-    overflow: hidden;
+    /* overflow-x: hidden; */
+    /* overflow: hidden; */
     /* background-color: #654553; */
 }
 
@@ -125,25 +126,26 @@ h2 {
 
 .center-area__h2Text-container {
     position: relative;
-    display: block;
-    width: 200%;
-    /* height: 20px; */
-    left: -50%;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    /* overflow: hidden; */
+    /* overflow-x: hidden; */
+
     /* background-color: antiquewhite; */
 }
 
 .center-area__h2Text {
+    display: flex;
     color: #f72585;
     position: relative;
-    margin: 0px auto 0px auto;
-    /* left: 0px; */
-    /* color: black; */
-    left: 0px;
-    width: 100%;
-    text-align: center;
+    gap: 8px;
+    justify-content: center;
+    /* align-items: center; */
     text-wrap: nowrap;
-    mix-blend-mode: difference;
-    overflow: hidden;
+    width: 100%;
+    height: 32px;
+    /* mix-blend-mode: difference; */
     /* background-color: #4cc9f0; */
 }
 .center-area__h2Text.black {
@@ -173,16 +175,90 @@ h2 {
     }
 }
 
-.center-area__h2Text span.bold-anim {
+.center-area__h2Text > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* width: auto; */
+    /* background-color: cadetblue; */
+    
+}
+
+.center-area__h2Text > div > span.bold-anim {
+    display: block;
+    position: absolute;
+    text-align: center;
+    /* background-color: #72c41a; */
     animation: bold-choice 1.5s;
+    animation-delay: 1s;
+}
+.center-area__h2Text > div > span.bold-anim-double{
+    animation: bold-choice-double 1.5s;
+}
+.center-area__h2Text > div > span.vs-anim{
+    animation: vs-anim 1.5s;
+    animation-delay: .5s;
+
+}
+
+.center-area__h2Text > div > span.bold-anim.with-after::after {
+    position: absolute;
+    font-size: 200%;
+    color: #3a0ca3;
+    opacity: 0;
+    left: -50%;
+    top: -50%;
+    animation: opacity .75s ease-in-out;
+    animation-delay: 1.25s;
+    /* outline: 2px solid rgb(215, 26, 26); */
+}
+
+@keyframes opacity {
+    50% {
+        opacity: .15;
+    }
+    
+}
+
+.center-area__h2Text > div > span.bold-anim.with-after.rock::after {
+    content: "Rock";
+}
+span.bold-anim.with-after.paper::after {
+    content: "Paper";
+}
+span.bold-anim.with-after.scissor::after {
+    content: "Scissor";
 }
 
 @keyframes bold-choice {
-    50% {
-        color: #f72585;
-        font-variation-settings: "wght"700, "wdth"175;
+    75% {
+        z-index: 200;
+        color: #000000;
+        font-size: 48px;
+        /* text-shadow: 1px 1px 5px black; */
+
+        font-variation-settings: "wght"500, "wdth"125;
     }
 }
+@keyframes bold-choice-double {
+    50% {
+        z-index: 200;
+        color: #000000;
+        font-size: 48px;
+        /* text-shadow: 1px 1px 5px black; */
+
+        font-variation-settings: "wght"500, "wdth"75;
+    }
+}
+@keyframes vs-anim {
+    25% {
+        color: black;
+        font-size: 18px;
+        font-variation-settings: "wght"200, "wdth"50;
+    }
+}
+
 
 .center-area__h1Text {
     display: block;
@@ -200,7 +276,7 @@ h2 {
 }
 
 .center-area__h1Text--rotate-in {
-    animation: flipH1Text 1.75s linear;
+    animation: flipH1Text 2s linear;
     /* animation-delay: 1.25s; */
 }
 
