@@ -110,7 +110,7 @@ const scoreContainer = document.querySelector(".score-container");
 On window load, Bring in h2Text etc
 */
 window.onload = function () {
-    topAreaWrapper.classList.add("hi-there-effect");
+    topAreaWrapper.classList.add("show-rounds");
     h2Text.style.visibility = "hidden";
     setTimeout(() => {
         h2Text.style.visibility = "";
@@ -206,7 +206,8 @@ function newGame() {
 
     // h2Text.textContent = "test";
 
-    topAreaWrapper.classList.remove("hi-there-effect")
+    // topAreaWrapper.classList.remove("hi-there-effect")
+    topAreaWrapper.classList.remove("show-rounds")
     // letsPlayButton.style.display = "none";
     setTimeout(() => {
         if (topAreaTextContainer.lastChild === hiThere) {
@@ -215,6 +216,9 @@ function newGame() {
         topAreaTextContainerChildren.forEach(child => child.classList.remove("hidden"));
     }, 1000);
 
+    // topAreaTextContainer.innerHTML = originalTopAreaTextContainerHTML;
+
+
     playerChoice;
     playerScore = 0;
     cpuScore = 0;
@@ -222,6 +226,7 @@ function newGame() {
     roundsToPlay = 5;
     roundsLeftToPlay
     currentRound = 1;
+    keepGoing = true;
 
     resultMessage = `Choose Your Weapon!`;
     setH1AnimTimesAndMessages(resultMessage);
@@ -251,8 +256,8 @@ function playRound(playerChoice) {
     h2Text.classList.remove("black");
     roundsPlayed++;
 
-    let computerChoice = getCpuChoice();
-    // let computerChoice = "Rock";
+    // let computerChoice = getCpuChoice();
+    let computerChoice = "Rock";
     h2Text.innerHTML = originalH2TextStructure;
     // console.log(h2Text);
 
@@ -311,14 +316,24 @@ function playRound(playerChoice) {
     if (roundsPlayed === roundsToPlay || scoreDiff > roundsLeftToPlay) {
         if (playerScore > cpuScore) {
             resultMessage = `You won the game!`;
-            h2Text.textContent = `Final Score: ${playerScore} - ${cpuScore}`
+            // h2Text.textContent = `Final Score: ${playerScore} - ${cpuScore}`
+            setH2TextEffects(keepGoing, boldTextNumber, winningHand)
+            topAreaWrapper.classList.remove("show-rounds");
+            topAreaWrapper.classList.add("no-transition");
             keepGoing = false;
-            startFireWork(12);
+            setTimeout(() => {
+                startFireWork(12);
+
+            }, 1500);
             restartGame();
 
         } else if (playerScore < cpuScore) {
             resultMessage = `The Computer won the game!`;
-            h2Text.textContent = `Final Score: ${playerScore} - ${cpuScore}`
+            // h2Text.textContent = `Final Score: ${playerScore} - ${cpuScore}`
+            setH2TextEffects(keepGoing, boldTextNumber, winningHand)
+
+            topAreaWrapper.classList.remove("show-rounds");
+            topAreaWrapper.classList.add("no-transition");
             keepGoing = false;
             cpuWonGame();
             restartGame();
@@ -329,7 +344,7 @@ function playRound(playerChoice) {
             keepGoing = false;
         }
     }
-
+    console.log(keepGoing);
     setTopRoundTicker(keepGoing);
     setH2TextEffects(keepGoing, boldTextNumber, winningHand)
     setH1AnimTimesAndMessages(resultMessage)
@@ -361,7 +376,7 @@ function setTopRoundTicker(keepGoing) {
                 slideUpElement.style.transform = `translateY(-0px)`
             }, 950);
         }
-    }
+    }   
 }
 
 function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
@@ -374,9 +389,9 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
     let h2TextSpanContainers = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span-container"))
 
     if (keepGoing === true) {
-        let handWidth 
+        let handWidth
         console.log(boldTextNumber.length);
-        if (boldTextNumber.length < 2 ) {
+        if (boldTextNumber.length < 2) {
             handWidth = h2SpanElements[boldTextNumber].getBoundingClientRect().width;
             h2TextSpanContainers[boldTextNumber].style.width = handWidth + "px";
             h2SpanElements[boldTextNumber].classList.add("bold-anim");
@@ -384,6 +399,19 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
             h2SpanElements[boldTextNumber].classList.add(`${winningHand.toLowerCase()}`);
             let thisShit = h2TextSpanContainers[boldTextNumber].querySelector(`span.bold-anim.with-after.${winningHand.toLowerCase()}`);
             console.log(thisShit);
+            console.log(boldTextNumber.toString());
+            switch (boldTextNumber.toString()) {
+                case "0":
+                    console.log("it's 0");
+                    h2SpanElements[2].classList.add("vs-anim");
+                    break;
+                case "2":
+                    console.log("it's 2");
+                    h2SpanElements[0].classList.add("vs-anim");
+                    break;
+                default:
+                    break;
+            }
         } else {
             boldTextNumber.forEach(number => {
                 handWidth = h2SpanElements[number].getBoundingClientRect().width;
@@ -398,7 +426,7 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
             });
         }
         h2SpanElements[1].classList.add("vs-anim");
-        
+
     }
 }
 
@@ -468,7 +496,16 @@ function restartGame() {
 
     setTimeout(() => {
         playerChoiceButtonArray.forEach(button => button.style.display = "none");
-        topAreaWrapper.classList.remove("show-rounds");
+        topAreaWrapper.classList.remove("no-transition");
+        topAreaTextContainerChildren.forEach(child => child.classList.add("hidden"));
+        hiThere.textContent = `Final Score: ${playerScore} - ${cpuScore}`
+        hiThere.classList.add("top-area__text-container__hi-there")
+        topAreaTextContainer.appendChild(hiThere);
+
+        setTimeout(() => {
+            topAreaWrapper.classList.add("show-rounds");
+
+        }, 1000);
         letsPlayButton.style.width = "100px";
         letsPlayButton.textContent = "Play again!"
         letsPlayButton.style.display = "";
