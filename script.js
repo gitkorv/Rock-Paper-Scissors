@@ -256,8 +256,8 @@ function playRound(playerChoice) {
     h2Text.classList.remove("black");
     roundsPlayed++;
 
-    // let computerChoice = getCpuChoice();
-    let computerChoice = "Rock";
+    let computerChoice = getCpuChoice();
+    // let computerChoice = "Rock";
     h2Text.innerHTML = originalH2TextStructure;
     // console.log(h2Text);
 
