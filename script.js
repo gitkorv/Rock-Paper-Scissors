@@ -256,13 +256,13 @@ function playRound(playerChoice) {
     h2Text.classList.remove("black");
     roundsPlayed++;
 
-    let computerChoice = getCpuChoice();
-    // let computerChoice = "Rock";
+    // let computerChoice = getCpuChoice();
+    let computerChoice = "Rock";
     h2Text.innerHTML = originalH2TextStructure;
     // console.log(h2Text);
 
     let playerHand = document.querySelector(".center-area__h2Text__player-span")
-    let vs = document.querySelector(".center-area__h2Text__vs-span")
+    let vsSpan = document.querySelector(".center-area__h2Text__vs-span")
     let cpuHand = document.querySelector(".center-area__h2Text__cpu-span")
     let boldTextNumber = [];
     playerHand.textContent = playerChoice;
@@ -270,7 +270,7 @@ function playRound(playerChoice) {
 
 
     if (playerChoice === computerChoice) {
-        vs.textContent = "vs";
+        vsSpan.textContent = "vs";
         resultMessage = "The Round is a tie";
         boldTextNumber.push(0);
         boldTextNumber.push(2);
@@ -281,14 +281,14 @@ function playRound(playerChoice) {
         playerChoice === "Scissor" && computerChoice === "Paper"
     ) {
         resultMessage = "You Won the Round!"
-        vs.textContent = "beats";
+        vsSpan.textContent = "beats";
         playerScore++;
         boldTextNumber.push(0);
         winningHand = playerChoice;
 
     } else {
-        resultMessage = "Computer Won Round!"
-        vs.textContent = "lost to";
+        resultMessage = "The Computer Won the Round!"
+        vsSpan.textContent = "lost to";
         cpuScore++;
         boldTextNumber.push(2);
         winningHand = computerChoice;
@@ -338,13 +338,30 @@ function playRound(playerChoice) {
             cpuWonGame();
             restartGame();
         } else {
-            h2Text.textContent = `It's a tie: ${playerScore} - ${cpuScore}`
-            resultMessage = `It's a knock-out round!`;
+            setH2TextEffects(keepGoing, boldTextNumber, winningHand)
+
+            topAreaWrapper.classList.remove("show-rounds");
+            topAreaWrapper.classList.add("no-transition");
+            setTimeout(() => {
+                topAreaWrapper.classList.remove("no-transition");
+                topAreaTextContainerChildren.forEach(child => child.classList.add("hidden"));
+                hiThere.textContent = `Game is tied: ${playerScore} - ${cpuScore}`
+                hiThere.classList.add("top-area__text-container__hi-there")
+                topAreaTextContainer.appendChild(hiThere);
+
+                setTimeout(() => {
+                    topAreaWrapper.classList.add("show-rounds");
+
+                }, 1000);
+            }, 500);
+
+
+            // h2Text.textContent = `It's a tie: ${playerScore} - ${cpuScore}`
+            resultMessage = `Let's play a knock-out round!`;
             roundsToPlay++;
             keepGoing = false;
         }
     }
-    console.log(keepGoing);
     setTopRoundTicker(keepGoing);
     setH2TextEffects(keepGoing, boldTextNumber, winningHand)
     setH1AnimTimesAndMessages(resultMessage)
@@ -376,7 +393,7 @@ function setTopRoundTicker(keepGoing) {
                 slideUpElement.style.transform = `translateY(-0px)`
             }, 950);
         }
-    }   
+    }
 }
 
 function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
@@ -390,7 +407,6 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
 
     if (keepGoing === true) {
         let handWidth
-        console.log(boldTextNumber.length);
         if (boldTextNumber.length < 2) {
             handWidth = h2SpanElements[boldTextNumber].getBoundingClientRect().width;
             h2TextSpanContainers[boldTextNumber].style.width = handWidth + "px";
@@ -398,8 +414,8 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
             h2SpanElements[boldTextNumber].classList.add("with-after");
             h2SpanElements[boldTextNumber].classList.add(`${winningHand.toLowerCase()}`);
             let thisShit = h2TextSpanContainers[boldTextNumber].querySelector(`span.bold-anim.with-after.${winningHand.toLowerCase()}`);
-            console.log(thisShit);
-            console.log(boldTextNumber.toString());
+            // console.log(thisShit);
+            // console.log(boldTextNumber.toString());
             switch (boldTextNumber.toString()) {
                 case "0":
                     console.log("it's 0");
@@ -422,7 +438,7 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
                 h2SpanElements[number].classList.add(`${winningHand.toLowerCase()}`);
                 let thisShit = h2TextSpanContainers[number].querySelector(`span.bold-anim.bold-anim-double.with-after`);
                 // thisShit.style.animationDelay = "0.25s"
-                console.log(thisShit);
+                // console.log(thisShit);
             });
         }
         h2SpanElements[1].classList.add("vs-anim");
@@ -436,31 +452,43 @@ function setH1AnimTimesAndMessages(resultMessage) {
     h1TextAnimDuration = parseFloat(window.getComputedStyle(h1Text).animationDuration.split(", ")[0]) * 1000;
     h1TextAnimDelay = parseFloat(window.getComputedStyle(h1Text).animationDelay.split(", ")[0]) * 1000;
     let h1TextWidth
+    let h1TextHeight
     let currentH1TextContent = h1Text.textContent;
     h1Text.textContent = `${resultMessage}`;
     h1TextWidth = h1Text.getBoundingClientRect().width;
+    console.log(h1TextWidth);
+    console.log(windowWidth);
     h1TextHeight = h1Text.getBoundingClientRect().height;
+    console.log(h1TextHeight);
     h1Text.textContent = currentH1TextContent;
 
     setTimeout(() => {
-        if (h1TextWidth > windowWidth) {
-            h1Text.style.height = h1TextHeight * 2 + "px";
+        // if (h1TextWidth > windowWidth) {
+        //     h1Text.style.height = h1TextHeight * 2 + "px";
+        //     console.log(h1Text);
+        //     // h1Text.style.textWrap = "wrap";
+        //     // h1Text.setAttribute('style', 'white-space: pre;');
+        //     h1Text.style.whiteSpace = "pre";
+        //     console.log(resultMessage);
+        //     let splitResultMessage = resultMessage.split(" ");
+        //     console.log(splitResultMessage);
+        //     let resultMessageTop = splitResultMessage.slice(0, 2).join(" ");
+        //     let resultMessageBottom = splitResultMessage.slice(2).join(" ");
+        //     h1Text.textContent = resultMessageTop + "\n";
+        //     // h1Text.textContent = resultMessageTop;
+        //     h1Text.textContent += resultMessageBottom;
+        // } else {
+        //     h1Text.textContent = `${resultMessage}`;
+        // }
+        if (h1TextWidth > windowWidth || h1TextWidth === windowWidth) {
+            // h1Text.style.height = h1TextHeight * 2 + "px";
             console.log(h1Text);
-            // h1Text.style.textWrap = "wrap";
-            // h1Text.setAttribute('style', 'white-space: pre;');
-            h1Text.style.whiteSpace = "pre";
-            console.log(resultMessage);
-            let splitResultMessage = resultMessage.split(" ");
-            console.log(splitResultMessage);
-            let resultMessageTop = splitResultMessage.slice(0, 2).join(" ");
-            let resultMessageBottom = splitResultMessage.slice(2).join(" ");
-            h1Text.textContent = resultMessageTop + "\n";
-            // h1Text.textContent = resultMessageTop;
-            h1Text.textContent += resultMessageBottom;
+            h1Text.classList.add("with-margins");
         } else {
-            h1Text.textContent = `${resultMessage}`;
-        }
+            h1Text.classList.remove("with-margins")
 
+        }
+        h1Text.textContent = `${resultMessage}`;
     }, h1TextAnimDelay + h1TextAnimDuration / 2);
 
     setTimeout(() => {
@@ -528,9 +556,9 @@ class FireworkPath {
     constructor(firework) {
         this.firework = firework;
         this.startX = this.firework.width / 2;
-        this.startY = this.firework.height / 2;
+        this.startY = this.firework.height / 3;
         this.bendX = this.firework.width / 2;
-        this.bendY = this.firework.height / 2 - 150;
+        this.bendY = this.firework.height / 3 - 150;
         this.endX = Math.floor(Math.random() * 401) - 200 + this.startX;
         this.endY = this.startY - (Math.floor(Math.random() * 101) + 50);
         this.colors = ["#f72585", "#7209b7", "#3a0ca3", "#4361ee", "#4cc9f0"];
