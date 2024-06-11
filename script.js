@@ -139,7 +139,9 @@ let currentScorePara = document.querySelector(".current-score-para");
 let currentScorePlayer = currentScorePara.firstElementChild;
 let currentScoreCpu = currentScorePara.lastElementChild;
 let currentScoreParaWidth = currentScorePara.getBoundingClientRect().width;
-currentScorePara.style.left = (windowWidth - currentScoreParaWidth) / 2 + "px";
+console.log(currentScoreParaWidth);
+console.log(windowWidth);
+// currentScorePara.style.left = 100 + "px";
 
 let h1TextAnimDuration;
 let h1TextAnimDelay;

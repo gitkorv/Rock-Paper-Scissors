@@ -41,12 +41,46 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: end;
-    /* align-items: center; */
+    justify-content: space-between;
+    padding: 60px 0 20px 0;
+    align-items: center;
     flex: 1;
     overflow: hidden;
     /* background-color: rgb(255, 168, 127); */
 }
+
+.score-container {
+    /* flex: 1; */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    /* background-color: #f72585; */
+}
+.current-score-para {
+    display: block;
+    /* flex-direction: column; */
+    position: relative;
+    /* background-color: #4cc9f0; */
+    opacity: 1;
+    /* width: 100%; */
+    /* height: 20px; */
+    overflow: hidden;
+    text-wrap: nowrap;
+    transition: width 1s;
+
+}
+.current-score-para.zero-width {
+    opacity: 0;
+}
+.current-score-para.show.not-visible {
+    visibility: hidden;
+}
+
+.score-container p {
+    text-align: left;
+}
+
 .top-area--wrapper {
     display: block;
     position: relative;
@@ -102,10 +136,11 @@ body {
 
 .center-area {
     display: flex;
+    flex: 1;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
     /* justify-content: space-evenly; */
-    padding: 10px 0px 40px 0px;
+    padding: 10px 0px 60px 0px;
     width: 100vw;
     overflow: visible;
     /* background-color: #654553; */
@@ -363,6 +398,7 @@ span.bold-anim.with-after.scissor::after {
     transform-origin: center;
     text-wrap: nowrap;
     overflow: hidden;
+    cursor: pointer;
 
     /* height: 100px; */
     transition: all .3s;
@@ -391,47 +427,16 @@ span.bold-anim.with-after.scissor::after {
 
 }
 
-
-.score-container {
-    flex: 1;
+.bottom-area {
+    flex: .5;
     display: flex;
     /* justify-content: center; */
     align-items: center;
 }
-.current-score-para {
-    display: block;
-    position: relative;
-    margin-top: 8px;
-    /* background-color: #4cc9f0; */
-    opacity: 1;
-    /* width: auto; */
-    /* height: 20px; */
-    overflow: hidden;
-    text-wrap: nowrap;
-    transition: width 1s;
 
-}
-.current-score-para.zero-width {
-    opacity: 0;
-}
-.current-score-para.show.not-visible {
-    visibility: hidden;
-}
 
-.score-container p {
-    text-align: left;
-}
 
-.previous-hands--black {
-    /* display: block; */
-    color: black;
-    transition: color .2s;
-}
 
-.previous-hands--red {
-    /* display: block; */
-    color: red;
-}
 
 @keyframes slideIn {
     0% {

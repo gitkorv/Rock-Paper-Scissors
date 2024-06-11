@@ -13,6 +13,12 @@
 <body>
     <div class="main-container">
         <div class="top-area">
+            <div class="score-container">
+                <p class="current-score-para zero-width">Current Score: Player
+                    <span class="current-score__player-span">0</span>, Cpu
+                    <span class="current-score__cpu-span">0</span>
+                </p>
+            </div>
             <div class="top-area--wrapper">
                 <div class="top-area__text-container">
                     <span class="top-area__text-container__round">Round </span>
@@ -27,9 +33,12 @@
         <div class="center-area">
             <div class="center-area__h2Text-container">
                 <h2 class="center-area__h2Text">
-                    <div class="center-area__h2Text__span-container center-area__h2Text__player-container"><span class="center-area__h2Text__span center-area__h2Text__player-span">Player Hand</span></div>
-                    <div class="center-area__h2Text__span-container center-area__h2Text__vs-container"><span class="center-area__h2Text__span center-area__h2Text__vs-span">vs</span></div>
-                    <div class="center-area__h2Text__span-container center-area__h2Text__cpu-container"><span class="center-area__h2Text__span center-area__h2Text__cpu-span">CPU Hand</span></div>
+                    <div class="center-area__h2Text__span-container center-area__h2Text__player-container"><span
+                            class="center-area__h2Text__span center-area__h2Text__player-span">Player Hand</span></div>
+                    <div class="center-area__h2Text__span-container center-area__h2Text__vs-container"><span
+                            class="center-area__h2Text__span center-area__h2Text__vs-span">vs</span></div>
+                    <div class="center-area__h2Text__span-container center-area__h2Text__cpu-container"><span
+                            class="center-area__h2Text__span center-area__h2Text__cpu-span">CPU Hand</span></div>
                 </h2>
             </div>
             <h1 class="center-area__h1Text">
@@ -43,19 +52,15 @@
             <button class="hand-btn__paper play-button">Paper</button>
             <button class="hand-btn__scissor play-button">Scissor</button>
         </div>
-        <div class="score-container">
-            <p class="current-score-para zero-width">Current Score: Player 
-                <span class="current-score__player-span">0</span>, Cpu
-                <span class="current-score__cpu-span">0</span>
+        <div class="bottom-area">
         </div>
-
         <div class="fireworks-container">
             <svg id="svg-container">
                 <path class="fireworks-path"></path>
             </svg>
         </div>
-            
-        </div>
+
+    </div>
     </div>
 
     <script src="script.js"></script>
