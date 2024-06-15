@@ -475,7 +475,7 @@ span.bold-anim.with-after.scissor::after {
     width: 100%;
     pointer-events: none;
     z-index: -200;
-    background-color: #3a0ca3;
+    background-color: #a30c4d;
     height: 0px;
     transition: height 1s ease-out;
 }
