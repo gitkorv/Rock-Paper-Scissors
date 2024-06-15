@@ -136,12 +136,16 @@ let currentRound
 let winningHand = "test";
 
 let currentScorePara = document.querySelector(".current-score-para");
-let currentScorePlayer = currentScorePara.firstElementChild;
-let currentScoreCpu = currentScorePara.lastElementChild;
+let currentScorePlayer = currentScorePara.querySelector(".current-score__player-span-number");
+let currentScorePlayerWrapper = currentScorePlayer.parentElement;
+console.log(currentScorePlayerWrapper);
+let currentScoreCpu = currentScorePara.querySelector(".current-score__cpu-span-number");
+let currentScoreCpuWrapper = currentScoreCpu.parentElement;
+
 let currentScoreParaWidth = currentScorePara.getBoundingClientRect().width;
 console.log(currentScoreParaWidth);
 console.log(windowWidth);
-// currentScorePara.style.left = 100 + "px";
+    // currentScorePara.style.left = (windowWidth - currentScoreParaWidth) / 2 + "px";
 
 let h1TextAnimDuration;
 let h1TextAnimDelay;
@@ -367,8 +371,9 @@ function playRound(playerChoice) {
     setTopRoundTicker(keepGoing);
     setH2TextEffects(keepGoing, boldTextNumber, winningHand)
     setH1AnimTimesAndMessages(resultMessage)
-    setCurrentScoreMessages(playerScore, cpuScore, keepGoing);
+    setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound);
     currentRound++;
+
 }
 
 function setTopRoundTicker(keepGoing) {
@@ -498,19 +503,39 @@ function setH1AnimTimesAndMessages(resultMessage) {
     }, h1TextAnimDelay + h1TextAnimDuration);
 }
 
-function setCurrentScoreMessages(playerScore, cpuScore, keepGoing) {
+function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound) {
+    console.log(currentRound);
 
-    currentScorePara.classList.add("zero-width");
-    currentScorePara.style.width = "0px";
+    // currentScorePara.classList.add("zero-width");
+    // currentScorePara.style.width = "0px";
 
     if (keepGoing) {
-        setTimeout(() => {
-            currentScorePara.style.width = currentScoreParaWidth + "px";
+        if (currentRound === 1) {
+            currentScorePara.style.width = "0px";
 
-            currentScorePara.classList.remove("zero-width");
-            currentScorePlayer.textContent = playerScore;
-            currentScoreCpu.textContent = cpuScore;
-        }, 500);
+            setTimeout(() => {
+                currentScorePara.style.width = currentScoreParaWidth + "px";
+    
+                currentScorePara.classList.remove("zero-width");
+                currentScorePlayer.textContent = playerScore;
+                currentScoreCpu.textContent = cpuScore;
+            }, 500);
+        } else {
+            let currentTransitionStyle = currentScorePlayerWrapper.style;
+            console.log(currentTransitionStyle);
+            console.log(currentScorePlayerWrapper);
+            // currentScorePlayerWrapper.style.transition = ""
+            currentScorePlayerWrapper.style.width = "0px";
+            setTimeout(() => {
+                currentScorePlayer.textContent = playerScore;
+                currentScoreCpu.textContent = cpuScore;
+                currentScorePlayerWrapper.style.width = "100%";
+
+    
+
+            }, 500);
+        }
+
     }
 }
 
@@ -706,6 +731,6 @@ window.addEventListener('resize', function () {
     windowWidth = window.innerWidth;
     windowHeight = window.innerHeight;
     firework.reset();
-    currentScorePara.style.left = (windowWidth - currentScoreParaWidth) / 2 + "px";
+    // currentScorePara.style.left = (windowWidth - currentScoreParaWidth) / 2 + "px";
 
 })
