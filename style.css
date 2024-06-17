@@ -470,15 +470,43 @@ span.bold-anim.with-after.scissor::after {
     }
 }
 
-.curtain-element {
+.curtain-container {
     position: absolute;
+    display: flex;
     width: 100%;
     pointer-events: none;
     z-index: -200;
     background-color: #a30c4d;
-    height: 0px;
-    transition: height 1s ease-out;
+    /* height: 0px; */
+    height: 100%;
+    /* transition: visibility 5s ease-out; */
 }
+
+.show-curtain {
+    visibility: visible;
+}
+
+.curtain__drip-wrapper {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+    background-color: #4cc9f0;
+}
+
+
+.curtain__drip {
+    width: 80%;
+    background-color: #f72585;
+    height: 0px;
+    /* border-radius: 50%; */
+
+}
+
+.curtain__drip.trans {
+    height: 100%;
+}
+
 
 .curtain-element.roll-down {
     height: 100%;

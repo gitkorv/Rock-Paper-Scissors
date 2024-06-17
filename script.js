@@ -151,9 +151,12 @@ let h1TextAnimDuration;
 let h1TextAnimDelay;
 
 // Create curtain element
-let curtainElement = document.createElement("div");
-curtainElement.classList.add("curtain-element")
-mainContainer.appendChild(curtainElement);
+let curtainContainer = document.createElement("div");
+curtainContainer.classList.add("curtain-container")
+mainContainer.appendChild(curtainContainer);
+
+cpuWonGame()
+
 
 let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
 topAreaTextContainer.style.height = roundTextHeight + "px";
@@ -200,9 +203,8 @@ allButtons.forEach(button => {
 });
 
 function newGame() {
-
     setTimeout(() => {
-        curtainElement.classList.remove("roll-down");
+        curtainContainer.classList.remove("roll-down");
         letsPlayButton.style.display = "none";
         playerChoiceButtonArray.forEach(button => {
             button.addEventListener("click", pickHand);
@@ -538,12 +540,41 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound)
 
     }
 }
+// curtainElement.classList.add("show-curtain");
 
 
 function cpuWonGame(params) {
-    setTimeout(() => {
-        curtainElement.classList.add("roll-down");
-    }, 200);
+
+
+
+        for (let i = 0; i < 10; i++) { 
+            let transitionTime = Math.random() * 5 + 1;
+            let transitionTime2Decimals = transitionTime.toFixed(2);
+            console.log(transitionTime2Decimals);
+            let curtainDripWrapper = document.createElement("div");
+            curtainDripWrapper.classList.add("curtain__drip-wrapper")
+            let curtainDripElement = document.createElement("div");
+            curtainDripElement.classList.add(`curtain__drip`, `drip`, `drip-${i+1}`);
+            curtainContainer.appendChild(curtainDripWrapper);
+            curtainDripWrapper.appendChild(curtainDripElement);
+            curtainDripElement.style.cssText = `transition: height ${transitionTime2Decimals}s;`
+
+            function makeDrips() {
+                curtainDripElement.classList.add("trans")
+
+            }
+            setTimeout(() => {
+                makeDrips()
+
+            }, 1000);
+
+            // requestAnimationFrame(makeDrips);
+            // curtainElement.style.cssText = `transform: translate`
+
+
+            
+        }
+
 }
 
 // Restart game, hide hands buttons, show play again button
