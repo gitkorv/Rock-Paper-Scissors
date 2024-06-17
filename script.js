@@ -155,7 +155,7 @@ let curtainContainer = document.createElement("div");
 curtainContainer.classList.add("curtain-container")
 mainContainer.appendChild(curtainContainer);
 
-cpuWonGame()
+// cpuWonGame()
 
 
 let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
@@ -204,7 +204,9 @@ allButtons.forEach(button => {
 
 function newGame() {
     setTimeout(() => {
-        curtainContainer.classList.remove("roll-down");
+        // curtainContainer.classList.remove("roll-down");
+        curtainContainer.innerHTML = "";
+
         letsPlayButton.style.display = "none";
         playerChoiceButtonArray.forEach(button => {
             button.addEventListener("click", pickHand);
@@ -264,8 +266,8 @@ function playRound(playerChoice) {
     h2Text.classList.remove("black");
     roundsPlayed++;
 
-    let computerChoice = getCpuChoice();
-    // let computerChoice = "Rock";
+    // let computerChoice = getCpuChoice();
+    let computerChoice = "Rock";
     h2Text.innerHTML = originalH2TextStructure;
     // console.log(h2Text);
 
@@ -545,6 +547,10 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound)
 
 function cpuWonGame(params) {
 
+        let allDripsWidth = windowWidth;
+        console.log(allDripsWidth);
+
+
 
 
         for (let i = 0; i < 10; i++) { 
@@ -557,7 +563,7 @@ function cpuWonGame(params) {
             curtainDripElement.classList.add(`curtain__drip`, `drip`, `drip-${i+1}`);
             curtainContainer.appendChild(curtainDripWrapper);
             curtainDripWrapper.appendChild(curtainDripElement);
-            curtainDripElement.style.cssText = `transition: height ${transitionTime2Decimals}s ease-in;`;
+            curtainDripElement.style.cssText = `transition: height ${transitionTime2Decimals}s ease-out;`;
 
 
 
@@ -570,26 +576,44 @@ function cpuWonGame(params) {
         }
 
 
-        let curtainDripWrapperArray = Array.from(document.querySelectorAll(".curtain__drip-wrapper"));
-        let curtainDripElementArray = Array.from(document.querySelectorAll(".curtain__drip"));
-        let curtainDripTipAraay = Array.from(document.querySelectorAll(".curtain__drip-tip"))
+
+
+        let curtainDripWrappersArray = Array.from(document.querySelectorAll(".curtain__drip-wrapper"));
+        // let curtainDripElementArray = Array.from(document.querySelectorAll(".curtain__drip"));
+        // let curtainDripTipAraay = Array.from(document.querySelectorAll(".curtain__drip-tip"))
         // console.log(curtainDripElementArray);
 
-        let dripTipWidthArray = [] 
+        // let dripTipWidthArray = [] 
+        let curtainDripElemensWidthsPercentages = [4,4,4,4,8,8,8,16,20,24]
+        let curtainDripElemensWidthsAll = [];
+        let cutCurtainDripElemensWidthsPercentages = [];
+
+        for (let i = 0; i < curtainDripWrappersArray.length; i++) {
+
+            let getIndex = Math.floor(Math.random() * (10 -i));
+            // console.log(getIndex);
+            let myPercentageOfWidth = curtainDripElemensWidthsPercentages[getIndex] / 100;
+            console.log(allDripsWidth * myPercentageOfWidth);
+            // console.log(curtainDripElemensWidthsPercentages[getIndex]);
+            curtainDripWrappersArray[i].style.width = `${allDripsWidth * myPercentageOfWidth}px`;
+            curtainDripElemensWidthsPercentages.splice(getIndex,1)
+            
+        }
+
         
-        curtainDripWrapperArray.forEach(item => {
-            let dripTipWidth = window.getComputedStyle(item).width;
-            // console.log(window.getComputedStyle(item).width);
+        curtainDripWrappersArray.forEach(item => {
+            let dripTipWidth = parseInt(window.getComputedStyle(item).width) * 0.7;
+            console.log(dripTipWidth);
             let tip = item.querySelector(".drip-tip");
-            tip.style.cssText = `width: ${dripTipWidth}; height: ${dripTipWidth}`;
+            tip.style.cssText = `width: ${dripTipWidth}px; height: ${dripTipWidth}px`;
         })
         console.log(windowHeight);
 
         curtainContainer.style.top = "-50px";
-        curtainContainer.style.height = windowHeight + 75 + "px";
+        curtainContainer.style.height = windowHeight + 100 + "px";
 
         function makeDrips() {
-            curtainDripWrapperArray.forEach(dripWrapper => {
+            curtainDripWrappersArray.forEach(dripWrapper => {
                 dripWrapper.firstChild.classList.add("trans")
                 dripWrapper.lastChild.classList.add("trans")
             });
