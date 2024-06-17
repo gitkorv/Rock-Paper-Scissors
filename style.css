@@ -479,6 +479,7 @@ span.bold-anim.with-after.scissor::after {
     background-color: #a30c4d;
     /* height: 0px; */
     height: 100%;
+    filter: contrast(30);
     /* transition: visibility 5s ease-out; */
 }
 
@@ -488,16 +489,21 @@ span.bold-anim.with-after.scissor::after {
 
 .curtain__drip-wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
     flex: 1;
     height: 100%;
-    background-color: #4cc9f0;
+    /* background-color: #4cc9f0; */
+    filter: blur(10px);
+
+    /* border: 1px solid salmon; */
 }
 
 
 .curtain__drip {
-    width: 80%;
-    background-color: #f72585;
+    width: 50%;
+    background-color: #000000;
     height: 0px;
     /* border-radius: 50%; */
 
@@ -505,6 +511,17 @@ span.bold-anim.with-after.scissor::after {
 
 .curtain__drip.trans {
     height: 100%;
+}
+
+.curtain__drip-tip {
+    border-radius: 50%;
+    background-color: rgb(0, 0, 0);
+    transform: translateY(-100%);
+    transition: transform 1s;
+}
+.curtain__drip-tip.trans {
+
+    transform: translateY(0%);
 }
 
 

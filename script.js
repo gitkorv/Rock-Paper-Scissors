@@ -548,33 +548,56 @@ function cpuWonGame(params) {
 
 
         for (let i = 0; i < 10; i++) { 
-            let transitionTime = Math.random() * 5 + 1;
+            let transitionTime = Math.random() * 10 + 1;
             let transitionTime2Decimals = transitionTime.toFixed(2);
-            console.log(transitionTime2Decimals);
+            // console.log(transitionTime2Decimals);
             let curtainDripWrapper = document.createElement("div");
             curtainDripWrapper.classList.add("curtain__drip-wrapper")
             let curtainDripElement = document.createElement("div");
             curtainDripElement.classList.add(`curtain__drip`, `drip`, `drip-${i+1}`);
             curtainContainer.appendChild(curtainDripWrapper);
             curtainDripWrapper.appendChild(curtainDripElement);
-            curtainDripElement.style.cssText = `transition: height ${transitionTime2Decimals}s;`
-
-            function makeDrips() {
-                curtainDripElement.classList.add("trans")
-
-            }
-            setTimeout(() => {
-                makeDrips()
-
-            }, 1000);
-
-            // requestAnimationFrame(makeDrips);
-            // curtainElement.style.cssText = `transform: translate`
+            curtainDripElement.style.cssText = `transition: height ${transitionTime2Decimals}s ease-in;`;
 
 
-            
+
+            let curtainDripTip = document.createElement("div");
+            curtainDripTip.classList.add(`curtain__drip-tip`, `drip-tip`, `drip-tip-${i+1}`);
+
+            curtainDripWrapper.appendChild(curtainDripTip)
+
+
         }
 
+
+        let curtainDripWrapperArray = Array.from(document.querySelectorAll(".curtain__drip-wrapper"));
+        let curtainDripElementArray = Array.from(document.querySelectorAll(".curtain__drip"));
+        let curtainDripTipAraay = Array.from(document.querySelectorAll(".curtain__drip-tip"))
+        // console.log(curtainDripElementArray);
+
+        let dripTipWidthArray = [] 
+        
+        curtainDripWrapperArray.forEach(item => {
+            let dripTipWidth = window.getComputedStyle(item).width;
+            // console.log(window.getComputedStyle(item).width);
+            let tip = item.querySelector(".drip-tip");
+            tip.style.cssText = `width: ${dripTipWidth}; height: ${dripTipWidth}`;
+        })
+        console.log(windowHeight);
+
+        curtainContainer.style.top = "-50px";
+        curtainContainer.style.height = windowHeight + 75 + "px";
+
+        function makeDrips() {
+            curtainDripWrapperArray.forEach(dripWrapper => {
+                dripWrapper.firstChild.classList.add("trans")
+                dripWrapper.lastChild.classList.add("trans")
+            });
+            // curtainDripElement.classList.add("trans")
+        }
+        setTimeout(() => {
+            makeDrips()
+        }, 1000);
 }
 
 // Restart game, hide hands buttons, show play again button
