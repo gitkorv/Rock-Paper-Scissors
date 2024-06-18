@@ -332,7 +332,7 @@ function playRound(playerChoice) {
             topAreaWrapper.classList.add("no-transition");
             keepGoing = false;
             setTimeout(() => {
-                startFireWork(12);
+                startFireWork();
 
             }, 1500);
             restartGame();
@@ -549,34 +549,30 @@ function cpuWonGame(params) {
 
         let allDripsWidth = windowWidth;
         console.log(allDripsWidth);
-
+        let dripTransitionTimes = [];
 
 
 
         for (let i = 0; i < 10; i++) { 
             let transitionTime = Math.random() * 10 + 1;
             let transitionTime2Decimals = transitionTime.toFixed(2);
+            dripTransitionTimes.push(transitionTime)
             // console.log(transitionTime2Decimals);
             let curtainDripWrapper = document.createElement("div");
             curtainDripWrapper.classList.add("curtain__drip-wrapper")
-            let curtainDripElement = document.createElement("div");
-            curtainDripElement.classList.add(`curtain__drip`, `drip`, `drip-${i+1}`);
+            let curtainDrip = document.createElement("div");
+            curtainDrip.classList.add(`curtain__drip`, `drip`, `drip-${i+1}`);
             curtainContainer.appendChild(curtainDripWrapper);
-            curtainDripWrapper.appendChild(curtainDripElement);
-            curtainDripElement.style.cssText = `transition: height ${transitionTime2Decimals}s ease-out;`;
-
-
+            curtainDripWrapper.appendChild(curtainDrip);
+            curtainDrip.style.cssText = `animation: drip-line ${transitionTime2Decimals}s ease-out forwards`;
+            // curtainDrip.style.cssText = `transition: height ${transitionTime2Decimals}s ease-out, 
+            // width ${transitionTime2Decimals}s ease-out`;
 
             let curtainDripTip = document.createElement("div");
             curtainDripTip.classList.add(`curtain__drip-tip`, `drip-tip`, `drip-tip-${i+1}`);
-
+            curtainDripTip.style.cssText = `transition: transform ${transitionTime2Decimals}s ease-out`;
             curtainDripWrapper.appendChild(curtainDripTip)
-
-
-        }
-
-
-
+        }        
 
         let curtainDripWrappersArray = Array.from(document.querySelectorAll(".curtain__drip-wrapper"));
         // let curtainDripElementArray = Array.from(document.querySelectorAll(".curtain__drip"));
@@ -601,26 +597,50 @@ function cpuWonGame(params) {
         }
 
         
-        curtainDripWrappersArray.forEach(item => {
-            let dripTipWidth = parseInt(window.getComputedStyle(item).width) * 0.7;
+        curtainDripWrappersArray.forEach((item, i) => {
+            let dripTipWidth = parseInt(window.getComputedStyle(item).width) * 0.6;
             console.log(dripTipWidth);
             let tip = item.querySelector(".drip-tip");
-            tip.style.cssText = `width: ${dripTipWidth}px; height: ${dripTipWidth}px`;
+            tip.style.cssText = `width: ${dripTipWidth}px; height: ${dripTipWidth * 1.5}px; transition: transform ${dripTransitionTimes[i]}s`;
         })
         console.log(windowHeight);
 
-        curtainContainer.style.top = "-50px";
-        curtainContainer.style.height = windowHeight + 100 + "px";
+        // curtainContainer.style.top = "-50px";
+        // curtainContainer.style.height = windowHeight + 100 + "px";
 
         function makeDrips() {
             curtainDripWrappersArray.forEach(dripWrapper => {
-                dripWrapper.firstChild.classList.add("trans")
+                // dripWrapper.firstChild.classList.add("trans")
+                // dripWrapper.lastChild.transition = `all 2s`;
+
                 dripWrapper.lastChild.classList.add("trans")
             });
             // curtainDripElement.classList.add("trans")
         }
+
+        console.log(dripTransitionTimes);
+        let longestTransition = Math.max(...dripTransitionTimes)
+        let shortestTransition = Math.min(...dripTransitionTimes)
+        console.log(shortestTransition * 1000);
+
+        let dripBottom = document.createElement("div");
+        dripBottom.classList.add("curtain__drip-bottom");
+        curtainContainer.appendChild(dripBottom)
+
+        console.log(longestTransition);
+
+        function makeDripWater(shortestTransition, longestTransition) {
+            dripBottom.style.transitionDuration = longestTransition * 1000 + "ms";
+
+            setTimeout(() => {
+                dripBottom.classList.add("trans");
+            }, shortestTransition * 1000 - 500);
+        }
+
+
         setTimeout(() => {
             makeDrips()
+            makeDripWater(shortestTransition, longestTransition)
         }, 1000);
 }
 
@@ -669,7 +689,7 @@ class FireworkPath {
         this.colors = ["#f72585", "#7209b7", "#3a0ca3", "#4361ee", "#4cc9f0"];
         this.randomColorIndex = Math.floor(Math.random() * this.colors.length);
         this.randomFireworksColor = `${this.colors[this.randomColorIndex]}`;
-        this.pathAnimationTime = Math.floor(Math.random() * 2000) + 1000;
+        this.pathAnimationTime = Math.floor(Math.random() * 2000) + 2000;
 
     }
     drawPath() {
@@ -799,8 +819,8 @@ class Firework {
 
 const firework = new Firework(windowWidth, windowHeight);
 
-function startFireWork(number) {
-    firework.init(number);
+function startFireWork() {
+    firework.init(12);
     firework.draw();
     firework.reset();
 }
