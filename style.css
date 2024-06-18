@@ -19,6 +19,7 @@ body {
     /* font-size: 1em; */
     height: 100dvh;
     width: 100dvw;
+    overflow: hidden;
 }
 
 .main-container {
@@ -521,7 +522,7 @@ span.bold-anim.with-after.scissor::after {
 }
 .curtain__drip-tip.trans {
 
-    transform: translateY(0%);
+    transform: translateY(10%);
 }
 
 

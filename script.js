@@ -155,7 +155,7 @@ let curtainContainer = document.createElement("div");
 curtainContainer.classList.add("curtain-container")
 mainContainer.appendChild(curtainContainer);
 
-// cpuWonGame()
+cpuWonGame()
 
 
 let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
