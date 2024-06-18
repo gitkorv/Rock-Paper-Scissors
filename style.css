@@ -53,6 +53,7 @@ body {
 .score-container {
     /* flex: 1; */
     display: block;
+    color: white;
     /* flex-direction: row; */
     /* justify-content: start; */
     height: 80px;
@@ -81,8 +82,24 @@ body {
     /* width: auto; */
     /* margin-right: 10px; */
     /* background-color: #3a0ca3; */
-    transition: width 1s;
+    transition: width .2s;
 }
+
+.current-score__headline {
+    display: inline-block;
+    width: 120px;
+    /* background-color: #f72585; */
+}
+
+.current-score__player-span, .current-score__cpu-span {
+    display: inline-block;
+    width: fit-content;
+    /* background-color: #007F8D; */
+    /* transition: width .2s; */
+
+}
+
+
 
 .current-score__span-number {
     margin-left: 5px;
@@ -96,9 +113,7 @@ body {
 .current-score-para.zero-width {
     opacity: 0;
 }
-.current-score-para.show.not-visible {
-    visibility: hidden;
-}
+
 
 .score-container p {
     text-align: left;

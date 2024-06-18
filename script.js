@@ -136,6 +136,8 @@ let currentRound
 let winningHand = "test";
 
 let currentScorePara = document.querySelector(".current-score-para");
+let currentScoreHeadline = document.querySelector(".current-score__headline");
+console.log(currentScoreHeadline);
 let currentScorePlayer = currentScorePara.querySelector(".current-score__player-span-number");
 let currentScorePlayerWrapper = currentScorePlayer.parentElement;
 console.log(currentScorePlayerWrapper);
@@ -155,7 +157,7 @@ let curtainContainer = document.createElement("div");
 curtainContainer.classList.add("curtain-container")
 mainContainer.appendChild(curtainContainer);
 
-cpuWonGame()
+// cpuWonGame()
 
 
 let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
@@ -204,6 +206,8 @@ allButtons.forEach(button => {
 
 function newGame() {
     setTimeout(() => {
+        currentScorePara.style.width = "0px";
+
         // curtainContainer.classList.remove("roll-down");
         curtainContainer.innerHTML = "";
 
@@ -278,6 +282,8 @@ function playRound(playerChoice) {
     playerHand.textContent = playerChoice;
     cpuHand.textContent = computerChoice;
 
+    let whoWonRound;
+
 
     if (playerChoice === computerChoice) {
         vsSpan.textContent = "vs";
@@ -285,6 +291,7 @@ function playRound(playerChoice) {
         boldTextNumber.push(0);
         boldTextNumber.push(2);
         winningHand = playerChoice;
+        whoWonRound = "both";
     } else if (
         playerChoice === "Rock" && computerChoice === "Scissor" ||
         playerChoice === "Paper" && computerChoice === "Rock" ||
@@ -295,6 +302,7 @@ function playRound(playerChoice) {
         playerScore++;
         boldTextNumber.push(0);
         winningHand = playerChoice;
+        whoWonRound = "player";
 
     } else {
         resultMessage = "The Computer Won the Round!"
@@ -302,7 +310,7 @@ function playRound(playerChoice) {
         cpuScore++;
         boldTextNumber.push(2);
         winningHand = computerChoice;
-
+        whoWonRound = "cpu";
     }
 
     /*
@@ -375,7 +383,7 @@ function playRound(playerChoice) {
     setTopRoundTicker(keepGoing);
     setH2TextEffects(keepGoing, boldTextNumber, winningHand)
     setH1AnimTimesAndMessages(resultMessage)
-    setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound);
+    setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWonRound);
     currentRound++;
 
 }
@@ -507,39 +515,75 @@ function setH1AnimTimesAndMessages(resultMessage) {
     }, h1TextAnimDelay + h1TextAnimDuration);
 }
 
-function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound) {
-    console.log(currentRound);
+let withOfPlayerScoreWrapper
 
-    // currentScorePara.classList.add("zero-width");
-    // currentScorePara.style.width = "0px";
+function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWon) {
+    console.log(currentRound);
 
     if (keepGoing) {
         if (currentRound === 1) {
             currentScorePara.style.width = "0px";
+            currentScoreHeadline.textContent = "Current Score:";
+
+            withOfPlayerScoreWrapper = currentScorePlayerWrapper.offsetWidth + 10;
+
+            currentScorePlayerWrapper.style.width = "0px";
+            currentScoreCpuWrapper.style.width = "0px";
 
             setTimeout(() => {
                 currentScorePara.style.width = currentScoreParaWidth + "px";
-    
                 currentScorePara.classList.remove("zero-width");
                 currentScorePlayer.textContent = playerScore;
                 currentScoreCpu.textContent = cpuScore;
+
+                setTimeout(() => {
+                    currentScorePlayerWrapper.style.width = withOfPlayerScoreWrapper + "px";
+
+                    setTimeout(() => {
+                        currentScoreCpuWrapper.style.width = withOfPlayerScoreWrapper + "px";
+
+                    }, 200);
+                }, 200);
+
             }, 500);
         } else {
-            let currentTransitionStyle = currentScorePlayerWrapper.style;
-            console.log(currentTransitionStyle);
-            console.log(currentScorePlayerWrapper);
-            // currentScorePlayerWrapper.style.transition = ""
-            currentScorePlayerWrapper.style.width = "0px";
+
+            if (whoWon === "player") {
+                currentScorePlayerWrapper.style.width = "0px";
+            } else if (whoWon === "cpu") {
+                currentScoreCpuWrapper.style.width = "0px";
+            } else {
+                currentScorePlayerWrapper.style.width = "0px";
+                currentScoreCpuWrapper.style.width = "0px";
+            }
+
             setTimeout(() => {
                 currentScorePlayer.textContent = playerScore;
                 currentScoreCpu.textContent = cpuScore;
-                currentScorePlayerWrapper.style.width = "100%";
-
-    
-
+                currentScorePlayerWrapper.style.width = withOfPlayerScoreWrapper + "px";
+                currentScoreCpuWrapper.style.width = withOfPlayerScoreWrapper + "px";
             }, 500);
         }
 
+    } else {
+        currentScoreHeadline.style.width = "0px";
+        if (whoWon === "player") {
+            currentScorePlayerWrapper.style.width = "0px";
+        } else if (whoWon === "cpu") {
+            currentScoreCpuWrapper.style.width = "0px";
+        } else {
+            currentScorePlayerWrapper.style.width = "0px";
+            currentScoreCpuWrapper.style.width = "0px";
+        }
+
+        setTimeout(() => {
+            currentScoreHeadline.textContent = "Final Score:"
+            currentScoreHeadline.style.width = "120px";
+            currentScorePlayer.textContent = playerScore;
+            currentScoreCpu.textContent = cpuScore;
+            currentScorePlayerWrapper.style.width = withOfPlayerScoreWrapper + "px";
+            currentScoreCpuWrapper.style.width = withOfPlayerScoreWrapper + "px";
+        }, 500);
     }
 }
 // curtainElement.classList.add("show-curtain");
