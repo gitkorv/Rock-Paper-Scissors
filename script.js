@@ -482,30 +482,10 @@ function setH1AnimTimesAndMessages(resultMessage) {
     h1Text.textContent = currentH1TextContent;
 
     setTimeout(() => {
-        // if (h1TextWidth > windowWidth) {
-        //     h1Text.style.height = h1TextHeight * 2 + "px";
-        //     console.log(h1Text);
-        //     // h1Text.style.textWrap = "wrap";
-        //     // h1Text.setAttribute('style', 'white-space: pre;');
-        //     h1Text.style.whiteSpace = "pre";
-        //     console.log(resultMessage);
-        //     let splitResultMessage = resultMessage.split(" ");
-        //     console.log(splitResultMessage);
-        //     let resultMessageTop = splitResultMessage.slice(0, 2).join(" ");
-        //     let resultMessageBottom = splitResultMessage.slice(2).join(" ");
-        //     h1Text.textContent = resultMessageTop + "\n";
-        //     // h1Text.textContent = resultMessageTop;
-        //     h1Text.textContent += resultMessageBottom;
-        // } else {
-        //     h1Text.textContent = `${resultMessage}`;
-        // }
-        if (h1TextWidth > windowWidth || h1TextWidth === windowWidth) {
-            // h1Text.style.height = h1TextHeight * 2 + "px";
-            console.log(h1Text);
+        if (h1TextWidth >= windowWidth) {
             h1Text.classList.add("with-margins");
         } else {
             h1Text.classList.remove("with-margins")
-
         }
         h1Text.textContent = `${resultMessage}`;
     }, h1TextAnimDelay + h1TextAnimDuration / 2);

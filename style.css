@@ -354,6 +354,11 @@ span.bold-anim.with-after.scissor::after {
     /* text-wrap: nowrap; */
     transition: height 3s;
 }
+
+.center-area__h1Text__paper {
+    margin: 0 7px;
+}
+
 .center-area__h1Text.with-margins {
     margin: 0 40px 0 40px;
 
