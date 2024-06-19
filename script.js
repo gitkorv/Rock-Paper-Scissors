@@ -568,6 +568,88 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
 }
 // curtainElement.classList.add("show-curtain");
 
+// Canvas drop feature
+
+const dripCanvas = document.getElementById("drip__canvas");
+const dripCanvasCTX = dripCanvas.getContext("2d");
+dripCanvas.width = window.innerWidth;
+dripCanvas.height = window.innerHeight;
+const rect = dripCanvas.getBoundingClientRect();
+
+dripCanvasCTX.fillStyle = "#FFFFFF";
+
+console.log(dripCanvasCTX);
+class drip {
+    constructor(dripEffect) {
+        this.dripEffect = dripEffect;
+        this.x = Math.random() * this.dripEffect.width;
+        this.y = 0;
+        this.radius = Math.random() * 40 + 5;
+        // this.speedX = Math.random() - 0.5;
+        this.speedY = Math.random() * 2;
+    }
+    update(color) {
+        // if (this.x < this.radius || this.x > this.dripEffect.width - this.radius) this.speedX *= -1;
+        // if (this.y < this.radius || this.y > this.dripEffect.height - this.radius) this.speedY *= -1;
+        // this.x += this.speedX;
+        if (this.y > this.dripEffect.height) {
+            this.y = 0;
+            this.x = Math.random() * this.dripEffect.width;
+            this.color = color;
+        }
+        this.y += this.speedY;
+    }
+    draw(context, color){
+        context.beginPath();
+        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        context.fillStyle = this.color;
+        context.fill();
+        // context.stroke();
+    }
+    reset(){
+        this.x = this.dripEffect.width * 0.5;
+        this.y = this.dripEffect.height * 0.5;
+    }
+}
+
+class dripsEffect {
+    constructor(width, height) {
+        this.width = width;
+        this.height = height;
+        this.dripArray = [];
+        this.colors = ["#FFFFFF", "#33bf99"]
+    }
+    init(numberOfDrips) {
+        for (let i = 0; i < numberOfDrips; i++) {
+            this.dripArray.push(new drip(this));
+        }
+    }
+    update(context) {
+        this.dripArray.forEach(drip => drip.update(this.colors[Math.floor(Math.random()*2)]));
+    }
+    draw(context) {
+        this.dripArray.forEach(drip => drip.draw(context));
+    }
+    reset(newWidth, newHeight) {
+        this.width = newWidth;
+        this.height = newHeight;
+        this.dripArray.forEach(drip => drip.reset());
+    }
+
+}
+
+const dripEffect = new dripsEffect(dripCanvas.width, dripCanvas.height)
+dripEffect.init(2);
+
+function animateDrip() {
+    // dripCanvasCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
+    dripEffect.update(dripCanvasCTX);
+    dripEffect.draw(dripCanvasCTX);
+    requestAnimationFrame(animateDrip)
+}
+
+animateDrip()
+
 
 function cpuWonGame(params) {
 

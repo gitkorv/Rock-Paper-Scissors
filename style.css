@@ -53,7 +53,7 @@ body {
 .score-container {
     /* flex: 1; */
     display: block;
-    color: white;
+    color: #f72585;
     /* flex-direction: row; */
     /* justify-content: start; */
     height: 80px;
@@ -588,7 +588,23 @@ span.bold-anim.with-after.scissor::after {
 
 .curtain__drip-bottom.trans {
     height: 25%;
-} 
+}
+
+
+.canvas-drip-container {
+    position: absolute;
+    /* background-color: #007F8D; */
+    z-index: -150;
+    /* filter: contrast(30); */
+}
+
+#drip__canvas {
+    display: block;
+    /* filter: blur(10px); */
+    background-color: black;
+}
+
+
 
 
 .fireworks-container {
