@@ -143,6 +143,7 @@ body {
 .top-area__text-container {
     display: flex;
     justify-content: center;
+    color: white;
     /* align-items: end; */
     font-weight: 600;
     /* background-color: aqua; */

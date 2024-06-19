@@ -525,7 +525,7 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
             currentScorePara.style.width = "0px";
             currentScoreHeadline.textContent = "Current Score:";
 
-            withOfPlayerScoreWrapper = currentScorePlayerWrapper.offsetWidth + 10;
+            withOfPlayerScoreWrapper = currentScorePlayerWrapper.offsetWidth + 12;
 
             currentScorePlayerWrapper.style.width = "0px";
             currentScoreCpuWrapper.style.width = "0px";
