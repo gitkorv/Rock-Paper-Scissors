@@ -152,10 +152,6 @@ console.log(windowWidth);
 let h1TextAnimDuration;
 let h1TextAnimDelay;
 
-// Create curtain element
-let curtainContainer = document.createElement("div");
-curtainContainer.classList.add("curtain-container")
-mainContainer.appendChild(curtainContainer);
 
 // cpuWonGame()
 
@@ -204,12 +200,18 @@ allButtons.forEach(button => {
     });
 });
 
+let canvasDripWrapper = document.querySelector(".canvas-wrapper-all");
+
 function newGame() {
+    // canvasDripWrapper.classList.add("zero-opacity")
+
+
     setTimeout(() => {
         currentScorePara.style.width = "0px";
+        dripCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
 
-        // curtainContainer.classList.remove("roll-down");
-        curtainContainer.innerHTML = "";
+        // cancelAnimationFrame(dripsEffect)
+        // animateDrip()
 
         letsPlayButton.style.display = "none";
         playerChoiceButtonArray.forEach(button => {
@@ -441,7 +443,7 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
                     h2SpanElements[2].classList.add("vs-anim");
                     break;
                 case "2":
-                    console.log("it's 2");
+                    // console.log("it's 2");
                     h2SpanElements[0].classList.add("vs-anim");
                     break;
                 default:
@@ -475,10 +477,10 @@ function setH1AnimTimesAndMessages(resultMessage) {
     let currentH1TextContent = h1Text.textContent;
     h1Text.textContent = `${resultMessage}`;
     h1TextWidth = h1Text.getBoundingClientRect().width;
-    console.log(h1TextWidth);
-    console.log(windowWidth);
+    // console.log(h1TextWidth);
+    // console.log(windowWidth);
     h1TextHeight = h1Text.getBoundingClientRect().height;
-    console.log(h1TextHeight);
+    // console.log(h1TextHeight);
     h1Text.textContent = currentH1TextContent;
 
     setTimeout(() => {
@@ -498,7 +500,7 @@ function setH1AnimTimesAndMessages(resultMessage) {
 let withOfPlayerScoreWrapper
 
 function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWon) {
-    console.log(currentRound);
+    // console.log(currentRound);
 
     if (keepGoing) {
         if (currentRound === 1) {
@@ -571,183 +573,170 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
 // Canvas drop feature
 
 const dripCanvas = document.getElementById("drip__canvas");
-const dripCanvasCTX = dripCanvas.getContext("2d");
+const dripCTX = dripCanvas.getContext("2d");
 dripCanvas.width = window.innerWidth;
 dripCanvas.height = window.innerHeight;
-const rect = dripCanvas.getBoundingClientRect();
+const dripRect = dripCanvas.getBoundingClientRect();
 
-dripCanvasCTX.fillStyle = "#FFFFFF";
+dripCTX.fillStyle = "#FFFFFF";
 
-console.log(dripCanvasCTX);
+const dripTipCanvas = document.getElementById("drip-tip__canvas");
+const dripTipCTX = dripTipCanvas.getContext("2d");
+dripTipCanvas.width = window.innerWidth;
+dripTipCanvas.height = window.innerHeight;
+const dripTipRect = dripCanvas.getBoundingClientRect();
+
+dripTipCTX.fillStyle = "#FF22FF";
+
+// console.log(dripCTX);
+// let jsjshsh = Math.random() / 10 - 0.05;
+// // jsjshsh.toFixed(3)
+// console.log(Number(jsjshsh.toFixed(4)));
 class drip {
-    constructor(dripEffect) {
-        this.dripEffect = dripEffect;
-        this.x = Math.random() * this.dripEffect.width;
-        this.y = 0;
-        this.radius = Math.random() * 40 + 5;
+    constructor(dripsEffect) {
+        this.dripsEffect = dripsEffect;
+        this.x = Math.random() * this.dripsEffect.width;
+        this.y = -10;
+        this.quickerY = this.y;
+        this.radius = Math.random() * 40 + 20;
         // this.speedX = Math.random() - 0.5;
-        this.speedY = Math.random() * 2;
+        this.speedY = Math.random() ;
+        this.speedYQuicker = this.speedY * Math.random() + .75;
+        // this.colors = ["#FFFFFF", "#33bf99", "#f0ab67"]
+        this.originalRadius = this.radius;
+        this.radiusGrowth = Math.random() < 0.5 ? 0.05: -0.05;
+        // console.log(this.radiusGrowth);
+
     }
-    update(color) {
+    update() {
         // if (this.x < this.radius || this.x > this.dripEffect.width - this.radius) this.speedX *= -1;
         // if (this.y < this.radius || this.y > this.dripEffect.height - this.radius) this.speedY *= -1;
         // this.x += this.speedX;
-        if (this.y > this.dripEffect.height) {
-            this.y = 0;
-            this.x = Math.random() * this.dripEffect.width;
-            this.color = color;
+        if (this.y > this.dripsEffect.height * 1.2) {
+            this.y = -10;
+            this.x = Math.random() * this.dripsEffect.width;
+            this.quickerY = this.y;
         }
         this.y += this.speedY;
+        this.quickerY += this.speedYQuicker;
+        this.radius = this.radius + this.radiusGrowth * Math.random();
+        if (this.radius > this.originalRadius * 1.4 || this.radius < this.originalRadius * 0.9) {this.radiusGrowth *= -1}
+
     }
-    draw(context, color){
-        context.beginPath();
-        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        context.fillStyle = this.color;
-        context.fill();
-        // context.stroke();
+    draw(dripCTX, dripTipCTX){
+        dripCTX.beginPath();
+        dripCTX.lineWidth = this.radius;
+        dripCTX.moveTo(this.x, 0);
+        dripCTX.lineTo(this.x, this.y);
+        dripCTX.strokeStyle = "#FFFFFF"
+        dripCTX.stroke()
+        
+        dripCTX.beginPath();
+        dripCTX.lineWidth = this.radius * 0.5;
+        dripCTX.moveTo(this.x, 0);
+        dripCTX.lineTo(this.x, this.quickerY);
+        dripCTX.strokeStyle = "#FFFFFF"
+        dripCTX.stroke()
+
+        dripTipCTX.beginPath();
+        dripTipCTX.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        dripTipCTX.fillStyle = "#FFFFFF"
+        dripTipCTX.fill();
+
+        dripTipCTX.beginPath();
+        dripTipCTX.arc(this.x, this.quickerY, this.radius, 0, Math.PI * 2);
+        dripTipCTX.fillStyle = "#FFFFFF"
+        dripTipCTX.fill();
+        
+        dripTipCTX.beginPath();
+        dripTipCTX.arc(this.x-2 , this.y -2, this.radius - 2, 0, Math.PI * 0.5);
+        dripTipCTX.fillStyle = "#000000"
+        dripTipCTX.fill();
+
     }
-    reset(){
-        this.x = this.dripEffect.width * 0.5;
-        this.y = this.dripEffect.height * 0.5;
+    reset(dripCTX, dripTipCTX){
+        dripCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
+        dripTipCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
+        this.x = Math.random() * this.dripsEffect.width;
+        this.y = -10;
+        // this.quickerY = this.y;
+        // this.speedY = 1;
+
+        console.log(this.speedY);
+        this.radius = Math.random() * 40 + 20;
+        this.speedYQuicker = this.speedY * Math.random() + 1;
+        this.originalRadius = this.radius;
+        this.radiusGrowth = Math.random() < 0.5 ? 0.05: -0.05;
     }
 }
+
+
 
 class dripsEffect {
     constructor(width, height) {
         this.width = width;
         this.height = height;
         this.dripArray = [];
-        this.colors = ["#FFFFFF", "#33bf99"]
+        this.dripTipArray = [];
     }
     init(numberOfDrips) {
         for (let i = 0; i < numberOfDrips; i++) {
             this.dripArray.push(new drip(this));
+            this.dripTipArray.push(new drip(this, i));
+        }
+        console.log(this.dripArray);
+    }
+    update() {
+        for (let i = 0; i < this.dripArray.length; i++) {
+            this.dripArray[i].update();
+            this.dripTipArray[i].update();            
         }
     }
-    update(context) {
-        this.dripArray.forEach(drip => drip.update(this.colors[Math.floor(Math.random()*2)]));
-    }
-    draw(context) {
-        this.dripArray.forEach(drip => drip.draw(context));
+    draw(dripCTX, dripTipCTX) {
+        this.dripArray.forEach(drip => drip.draw(dripCTX, dripTipCTX));
+
     }
     reset(newWidth, newHeight) {
+        console.log("update");
         this.width = newWidth;
         this.height = newHeight;
-        this.dripArray.forEach(drip => drip.reset());
+        this.manyDrips = this.dripArray.length;
+        
+        this.dripArray = [];
+        this.dripTipArray = [];
+        
+        for (let i = 0; i < this.manyDrips; i++) {
+            this.dripArray.push(new drip(this));
+            this.dripTipArray.push(new drip(this, i));
+        }
+
+        console.log(this.dripArray);
+
+        // this.dripArray.forEach(drip => drip.reset(dripCTX, dripTipCTX));
+        // this.dripTipArray.forEach(dripTip => dripTip.reset());
     }
 
 }
 
 const dripEffect = new dripsEffect(dripCanvas.width, dripCanvas.height)
-dripEffect.init(2);
+dripEffect.init(4);
+
+let dripFrames
 
 function animateDrip() {
-    // dripCanvasCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
-    dripEffect.update(dripCanvasCTX);
-    dripEffect.draw(dripCanvasCTX);
-    requestAnimationFrame(animateDrip)
+    // dripCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
+    dripTipCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
+    dripEffect.update();
+    dripEffect.draw(dripCTX, dripTipCTX);
+    dripFrames = requestAnimationFrame(animateDrip)
 }
 
-animateDrip()
+// animateDrip()
 
 
 function cpuWonGame(params) {
-
-        let allDripsWidth = windowWidth;
-        console.log(allDripsWidth);
-        let dripTransitionTimes = [];
-
-
-
-        for (let i = 0; i < 10; i++) { 
-            let transitionTime = Math.random() * 10 + 1;
-            let transitionTime2Decimals = transitionTime.toFixed(2);
-            dripTransitionTimes.push(transitionTime)
-            // console.log(transitionTime2Decimals);
-            let curtainDripWrapper = document.createElement("div");
-            curtainDripWrapper.classList.add("curtain__drip-wrapper")
-            let curtainDrip = document.createElement("div");
-            curtainDrip.classList.add(`curtain__drip`, `drip`, `drip-${i+1}`);
-            curtainContainer.appendChild(curtainDripWrapper);
-            curtainDripWrapper.appendChild(curtainDrip);
-            curtainDrip.style.cssText = `animation: drip-line ${transitionTime2Decimals}s ease-out forwards`;
-            // curtainDrip.style.cssText = `transition: height ${transitionTime2Decimals}s ease-out, 
-            // width ${transitionTime2Decimals}s ease-out`;
-
-            let curtainDripTip = document.createElement("div");
-            curtainDripTip.classList.add(`curtain__drip-tip`, `drip-tip`, `drip-tip-${i+1}`);
-            curtainDripTip.style.cssText = `transition: transform ${transitionTime2Decimals}s ease-out`;
-            curtainDripWrapper.appendChild(curtainDripTip)
-        }        
-
-        let curtainDripWrappersArray = Array.from(document.querySelectorAll(".curtain__drip-wrapper"));
-        // let curtainDripElementArray = Array.from(document.querySelectorAll(".curtain__drip"));
-        // let curtainDripTipAraay = Array.from(document.querySelectorAll(".curtain__drip-tip"))
-        // console.log(curtainDripElementArray);
-
-        // let dripTipWidthArray = [] 
-        let curtainDripElemensWidthsPercentages = [4,4,4,4,8,8,8,16,20,24]
-        let curtainDripElemensWidthsAll = [];
-        let cutCurtainDripElemensWidthsPercentages = [];
-
-        for (let i = 0; i < curtainDripWrappersArray.length; i++) {
-
-            let getIndex = Math.floor(Math.random() * (10 -i));
-            // console.log(getIndex);
-            let myPercentageOfWidth = curtainDripElemensWidthsPercentages[getIndex] / 100;
-            console.log(allDripsWidth * myPercentageOfWidth);
-            // console.log(curtainDripElemensWidthsPercentages[getIndex]);
-            curtainDripWrappersArray[i].style.width = `${allDripsWidth * myPercentageOfWidth}px`;
-            curtainDripElemensWidthsPercentages.splice(getIndex,1)
-            
-        }
-
-        
-        curtainDripWrappersArray.forEach((item, i) => {
-            let dripTipWidth = parseInt(window.getComputedStyle(item).width) * 0.6;
-            console.log(dripTipWidth);
-            let tip = item.querySelector(".drip-tip");
-            tip.style.cssText = `width: ${dripTipWidth}px; height: ${dripTipWidth * 1.5}px; transition: transform ${dripTransitionTimes[i]}s`;
-        })
-        console.log(windowHeight);
-
-        // curtainContainer.style.top = "-50px";
-        // curtainContainer.style.height = windowHeight + 100 + "px";
-
-        function makeDrips() {
-            curtainDripWrappersArray.forEach(dripWrapper => {
-                // dripWrapper.firstChild.classList.add("trans")
-                // dripWrapper.lastChild.transition = `all 2s`;
-
-                dripWrapper.lastChild.classList.add("trans")
-            });
-            // curtainDripElement.classList.add("trans")
-        }
-
-        console.log(dripTransitionTimes);
-        let longestTransition = Math.max(...dripTransitionTimes)
-        let shortestTransition = Math.min(...dripTransitionTimes)
-        console.log(shortestTransition * 1000);
-
-        let dripBottom = document.createElement("div");
-        dripBottom.classList.add("curtain__drip-bottom");
-        curtainContainer.appendChild(dripBottom)
-
-        console.log(longestTransition);
-
-        function makeDripWater(shortestTransition, longestTransition) {
-            dripBottom.style.transitionDuration = longestTransition * 1000 + "ms";
-
-            setTimeout(() => {
-                dripBottom.classList.add("trans");
-            }, shortestTransition * 1000 - 500);
-        }
-
-
-        setTimeout(() => {
-            makeDrips()
-            makeDripWater(shortestTransition, longestTransition)
-        }, 1000);
+        canvasDripWrapper.classList.remove("zero-opacity");
+        animateDrip()
 }
 
 // Restart game, hide hands buttons, show play again button
@@ -768,7 +757,15 @@ function restartGame() {
         letsPlayButton.style.width = "100px";
         letsPlayButton.textContent = "Play again!"
         letsPlayButton.style.display = "";
-        letsPlayButton.addEventListener("click", newGame);
+        // letsPlayButton.addEventListener("click", newGame);
+        letsPlayButton.addEventListener("click", function() {
+            newGame()
+            canvasDripWrapper.classList.add("zero-opacity")
+
+            cancelAnimationFrame(dripFrames);
+            // dripCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
+            dripEffect.reset(dripCanvas.width, dripCanvas.height)
+        });
     }, 500);
 
 }
