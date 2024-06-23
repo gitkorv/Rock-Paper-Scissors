@@ -54,7 +54,8 @@ h2Text.appendChild(letsPLayAGameMessage)
 /* 
 Select playing buttons
 */
-const btnContainer = document.querySelector(".btn-container")
+const btnContainer = document.querySelector(".btn-container");
+const btnWrapperAll = document.querySelector(".btn-wrapper-all");
 const playerChoiceButtons = document.querySelectorAll(".play-button")
 const playerChoiceButtonArray = Array.from(playerChoiceButtons)
 /* 
@@ -66,37 +67,29 @@ playerChoiceButtonArray.forEach(button => button.style.display = "none");
 Create initial button "Lets play" and add it to layout
 */
 const letsPlayButton = document.createElement("button");
-
+letsPlayButton.classList.add("lets-play")
 
 function setLetsPLayButton(params) {
-    // Add classes, content and append letsPlayButton
-    letsPlayButton.classList.add(...["lets-play-button", "not-visible"]);
-    btnContainer.appendChild(letsPlayButton)
-    letsPlayButton.textContent = "Sure, let's do this!";
+
+    btnWrapperAll.appendChild(letsPlayButton);
+    btnWrapperAll.style.transitionDuration = "1s";
+    btnWrapperAll.style.opacity = "0";
     // get with of letsPlayButton
     let letsPlayButtonWidth = letsPlayButton.getBoundingClientRect().width;
-    // Set btnContainer to BLOCK and make letsPlayButton 0 width
-    btnContainer.classList.add("letsPlaySetting");
-    letsPlayButton.classList.add("zero-width");
 
     setTimeout(() => {
-        // Show letsPlayButton
-        letsPlayButton.classList.remove(...["not-visible", "zero-width"]);
-        // Set style left for letsPlayButton
-        letsPlayButton.style.left = (windowWidth - letsPlayButtonWidth) / 2 + "px";
-        // Find out transition time for button
+        btnWrapperAll.style.opacity = "1";
+        btnWrapperAll.classList.remove("zero-width");
+        letsPlayButton.textContent = "Sure, let's do this!";
+
         let letsPlayTransitionDuration = parseFloat(window.getComputedStyle(letsPlayButton).transitionDuration.split(", ")[1]) * 1000;
         // After letsPlayButton has transitioned... 
         setTimeout(() => {
-            // remove btnContainer class to make it flex again
-            btnContainer.classList.remove("letsPlaySetting");
-            // remove left position to work with flex again
-            letsPlayButton.style.left = "";
+            btnWrapperAll.style.transitionDuration = "";
+
         }, letsPlayTransitionDuration);
     }, showPlayButtonTimeDelay);
-    // Add click function to button
     letsPlayButton.addEventListener("click", newGame);
-
 }
 
 setLetsPLayButton()
@@ -147,7 +140,7 @@ let currentScoreCpuWrapper = currentScoreCpu.parentElement;
 let currentScoreParaWidth = currentScorePara.getBoundingClientRect().width;
 console.log(currentScoreParaWidth);
 console.log(windowWidth);
-    // currentScorePara.style.left = (windowWidth - currentScoreParaWidth) / 2 + "px";
+// currentScorePara.style.left = (windowWidth - currentScoreParaWidth) / 2 + "px";
 
 let h1TextAnimDuration;
 let h1TextAnimDelay;
@@ -201,26 +194,23 @@ allButtons.forEach(button => {
 });
 
 let canvasDripWrapper = document.querySelector(".canvas-wrapper-all");
+canvasDripWrapper.classList.add("zero-opacity")
+
 
 function newGame() {
-    // canvasDripWrapper.classList.add("zero-opacity")
-
-
+    btnWrapperAll.classList.add("zero-width")
     setTimeout(() => {
+        letsPlayButton.classList.add("zero-width");
+
+        btnWrapperAll.classList.remove("zero-width")
         currentScorePara.style.width = "0px";
-        dripCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
-
-        // cancelAnimationFrame(dripsEffect)
-        // animateDrip()
-
-        letsPlayButton.style.display = "none";
+        // letsPlayButton.style.display = "none";
         playerChoiceButtonArray.forEach(button => {
             button.addEventListener("click", pickHand);
             button.style.display = "";
         })
     }, 500);
 
-    // h2Text.textContent = "test";
 
     // topAreaWrapper.classList.remove("hi-there-effect")
     topAreaWrapper.classList.remove("show-rounds")
@@ -339,8 +329,11 @@ function playRound(playerChoice) {
             // h2Text.textContent = `Final Score: ${playerScore} - ${cpuScore}`
             setH2TextEffects(keepGoing, boldTextNumber, winningHand)
             topAreaWrapper.classList.remove("show-rounds");
-            topAreaWrapper.classList.add("no-transition");
+            // topAreaWrapper.classList.add("no-transition");
+            topAreaWrapper.style.transitionDuration = ".2s";
             keepGoing = false;
+            canvasDripWrapper.classList.remove("zero-opacity")
+
             setTimeout(() => {
                 startFireWork();
 
@@ -353,7 +346,9 @@ function playRound(playerChoice) {
             setH2TextEffects(keepGoing, boldTextNumber, winningHand)
 
             topAreaWrapper.classList.remove("show-rounds");
-            topAreaWrapper.classList.add("no-transition");
+            // topAreaWrapper.classList.add("no-transition");
+            topAreaWrapper.style.transitionDuration = ".2s";
+
             keepGoing = false;
             cpuWonGame();
             restartGame();
@@ -361,8 +356,12 @@ function playRound(playerChoice) {
             setH2TextEffects(keepGoing, boldTextNumber, winningHand)
 
             topAreaWrapper.classList.remove("show-rounds");
-            topAreaWrapper.classList.add("no-transition");
+            // topAreaWrapper.classList.add("no-transition");
+            topAreaWrapper.style.transitionDuration = ".2s";
+
             setTimeout(() => {
+                topAreaWrapper.style.transitionDuration = "";
+
                 topAreaWrapper.classList.remove("no-transition");
                 topAreaTextContainerChildren.forEach(child => child.classList.add("hidden"));
                 hiThere.textContent = `Game is tied: ${playerScore} - ${cpuScore}`
@@ -473,14 +472,10 @@ function setH1AnimTimesAndMessages(resultMessage) {
     h1TextAnimDuration = parseFloat(window.getComputedStyle(h1Text).animationDuration.split(", ")[0]) * 1000;
     h1TextAnimDelay = parseFloat(window.getComputedStyle(h1Text).animationDelay.split(", ")[0]) * 1000;
     let h1TextWidth
-    let h1TextHeight
     let currentH1TextContent = h1Text.textContent;
     h1Text.textContent = `${resultMessage}`;
     h1TextWidth = h1Text.getBoundingClientRect().width;
-    // console.log(h1TextWidth);
-    // console.log(windowWidth);
     h1TextHeight = h1Text.getBoundingClientRect().height;
-    // console.log(h1TextHeight);
     h1Text.textContent = currentH1TextContent;
 
     setTimeout(() => {
@@ -600,11 +595,11 @@ class drip {
         this.quickerY = this.y;
         this.radius = Math.random() * 40 + 20;
         // this.speedX = Math.random() - 0.5;
-        this.speedY = Math.random() ;
+        this.speedY = Math.random();
         this.speedYQuicker = this.speedY * Math.random() + .75;
         // this.colors = ["#FFFFFF", "#33bf99", "#f0ab67"]
         this.originalRadius = this.radius;
-        this.radiusGrowth = Math.random() < 0.5 ? 0.05: -0.05;
+        this.radiusGrowth = Math.random() < 0.5 ? 0.05 : -0.05;
         // console.log(this.radiusGrowth);
 
     }
@@ -620,17 +615,17 @@ class drip {
         this.y += this.speedY;
         this.quickerY += this.speedYQuicker;
         this.radius = this.radius + this.radiusGrowth * Math.random();
-        if (this.radius > this.originalRadius * 1.4 || this.radius < this.originalRadius * 0.9) {this.radiusGrowth *= -1}
+        if (this.radius > this.originalRadius * 1.4 || this.radius < this.originalRadius * 0.9) { this.radiusGrowth *= -1 }
 
     }
-    draw(dripCTX, dripTipCTX){
+    draw(dripCTX, dripTipCTX) {
         dripCTX.beginPath();
         dripCTX.lineWidth = this.radius;
         dripCTX.moveTo(this.x, 0);
         dripCTX.lineTo(this.x, this.y);
         dripCTX.strokeStyle = "#FFFFFF"
         dripCTX.stroke()
-        
+
         dripCTX.beginPath();
         dripCTX.lineWidth = this.radius * 0.5;
         dripCTX.moveTo(this.x, 0);
@@ -647,21 +642,21 @@ class drip {
         dripTipCTX.arc(this.x, this.quickerY, this.radius, 0, Math.PI * 2);
         dripTipCTX.fillStyle = "#FFFFFF"
         dripTipCTX.fill();
-        
+
         dripTipCTX.beginPath();
-        dripTipCTX.arc(this.x-2 , this.y -2, this.radius - 2, 0, Math.PI * 0.5);
+        dripTipCTX.arc(this.x - 2, this.y - 2, this.radius - 2, 0, Math.PI * 0.5);
         dripTipCTX.fillStyle = "#000000"
         dripTipCTX.fill();
 
     }
-    reset(){
-        console.log("drip reset");
+    reset() {
+        // console.log("drip reset");
         // dripCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
         // dripTipCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
         this.x = Math.random() * this.dripsEffect.width;
         this.y = -10;
         this.quickerY = this.y;
-        
+
     }
 }
 
@@ -684,7 +679,7 @@ class dripsEffect {
     update() {
         for (let i = 0; i < this.dripArray.length; i++) {
             this.dripArray[i].update();
-            this.dripTipArray[i].update();            
+            this.dripTipArray[i].update();
         }
     }
     draw(dripCTX, dripTipCTX) {
@@ -692,7 +687,7 @@ class dripsEffect {
 
     }
     reset() {
-        console.log("dripEffect reset");
+        // console.log("dripEffect reset");
         for (let i = 0; i < this.dripArray.length; i++) {
             this.dripArray[i].reset();
             this.dripTipArray[i].reset();
@@ -708,7 +703,7 @@ let dripFrames
 
 function animateDrip() {
     // dripCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
-    dripTipCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
+    dripTipCTX.clearRect(0, 0, dripCanvas.width, dripCanvas.height);
     dripEffect.update();
     dripEffect.draw(dripCTX, dripTipCTX);
     dripFrames = requestAnimationFrame(animateDrip)
@@ -718,36 +713,54 @@ function animateDrip() {
 
 
 function cpuWonGame(params) {
-        canvasDripWrapper.classList.remove("zero-opacity");
-        animateDrip()
+    canvasDripWrapper.classList.remove("zero-opacity");
+    animateDrip()
 }
 
 // Restart game, hide hands buttons, show play again button
 function restartGame() {
 
     setTimeout(() => {
-        playerChoiceButtonArray.forEach(button => button.style.display = "none");
+        // playerChoiceButtonArray.forEach(button => button.style.display = "none");
+        topAreaWrapper.style.transitionDuration = "";
+
         topAreaWrapper.classList.remove("no-transition");
         topAreaTextContainerChildren.forEach(child => child.classList.add("hidden"));
         hiThere.textContent = `Final Score: ${playerScore} - ${cpuScore}`
         hiThere.classList.add("top-area__text-container__hi-there")
         topAreaTextContainer.appendChild(hiThere);
+        btnWrapperAll.classList.add("zero-width");
+        setTimeout(() => {
+            playerChoiceButtonArray.forEach(button => button.style.display = "none");
+        }, 1000);
+        letsPlayButton.style.display = "";
+        letsPlayButton.classList.add("play-again");
+
+        topAreaWrapper.classList.add("show-rounds");
+
 
         setTimeout(() => {
-            topAreaWrapper.classList.add("show-rounds");
+            letsPlayButton.classList.toggle("zero-width");
+            letsPlayButton.textContent = "Play again!"
+            btnWrapperAll.style.transitionDuration = "1s"
+            btnWrapperAll.classList.remove("zero-width");
+            setTimeout(() => {
+                btnWrapperAll.style.transitionDuration = "";
+            }, 1000);
+            // topAreaWrapper.classList.add("show-rounds");
+        }, 4000);
 
-        }, 1000);
-        letsPlayButton.style.width = "100px";
-        letsPlayButton.textContent = "Play again!"
-        letsPlayButton.style.display = "";
-        // letsPlayButton.addEventListener("click", newGame);
-        letsPlayButton.addEventListener("click", function() {
+        letsPlayButton.addEventListener("click", function () {
             newGame()
-            canvasDripWrapper.classList.add("zero-opacity")
 
-            cancelAnimationFrame(dripFrames);
-            // dripCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
-            dripEffect.reset()
+            canvasDripWrapper.classList.add("zero-opacity")
+            setTimeout(() => {
+                cancelAnimationFrame(dripFrames);
+
+                dripCTX.clearRect(0, 0, dripCanvas.width, dripCanvas.height);
+                dripEffect.reset()
+            }, 1000);
+
         });
     }, 500);
 
@@ -767,11 +780,12 @@ class FireworkPath {
     constructor(firework) {
         this.firework = firework;
         this.startX = this.firework.width / 2;
-        this.startY = this.firework.height / 3;
+        this.startY = this.firework.height / 2;
         this.bendX = this.firework.width / 2;
         this.bendY = this.firework.height / 3 - 150;
-        this.endX = Math.floor(Math.random() * 401) - 200 + this.startX;
-        this.endY = this.startY - (Math.floor(Math.random() * 101) + 50);
+        // this.endX = Math.floor(Math.random() * 401) - 200 + this.startX;
+        this.endX = Math.floor(Math.random() * (this.firework.width * 0.8) + this.firework.width * 0.1);
+        this.endY = this.startY - (Math.floor(Math.random() * 101) + 80);
         this.colors = ["#f72585", "#7209b7", "#3a0ca3", "#4361ee", "#4cc9f0"];
         this.randomColorIndex = Math.floor(Math.random() * this.colors.length);
         this.randomFireworksColor = `${this.colors[this.randomColorIndex]}`;
@@ -906,6 +920,7 @@ class Firework {
 const firework = new Firework(windowWidth, windowHeight);
 
 function startFireWork() {
+
     firework.init(12);
     firework.draw();
     firework.reset();
