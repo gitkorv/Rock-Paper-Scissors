@@ -314,7 +314,7 @@ span.bold-anim.with-after.scissor::after {
     }
     50% {
         z-index: 200;
-        color: #000000;
+        color: #FFFFFF;
         font-size: 48px;
         font-variation-settings: "wght"500, "wdth"125;
     }
@@ -325,14 +325,14 @@ span.bold-anim.with-after.scissor::after {
     }
     50% {
         z-index: 200;
-        color: #000000;
+        color: #FFFFFF;
         font-size: 48px;
         font-variation-settings: "wght"500, "wdth"75;
     }
 }
 @keyframes vs-anim {
     50% {
-        color: black;
+        color: #FFFFFF;
         font-size: 18px;
         font-variation-settings: "wght"200, "wdth"50;
     }
