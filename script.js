@@ -719,7 +719,7 @@ class dripsEffect {
 }
 
 const dripEffect = new dripsEffect(dripCanvas.width, dripCanvas.height)
-dripEffect.init(4);
+dripEffect.init(10);
 
 let dripFrames
 
