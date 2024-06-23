@@ -824,7 +824,7 @@ class Explosion extends FireworkPath {
         this.oneExplosionContainer.classList.add(`explosion-container`, `expCont${this.i}`)
         this.oneExplosionContainer.style.top = `${this.endY}px`;
         this.oneExplosionContainer.style.left = `${this.endX}px`;
-        this.oneExplosionContainer.style.background = `radial-gradient(circle, ${this.randomFireworksColor} 0%, rgba(255,255,255,.5) 50%, rgba(25,255,255,0) 100%)`
+        this.oneExplosionContainer.style.background = `radial-gradient(circle, ${this.randomFireworksColor} 0%, rgba(255,255,255,.2) 25%, ${this.colors[Math.floor(Math.random() * this.colors.length)]} 50%, rgba(255,255,255,1) 100%)`
         fireworksTopContainer.appendChild(this.oneExplosionContainer);
         // Settings for bursts within explosions
         this.burstsInExplosion = 50;
