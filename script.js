@@ -654,19 +654,14 @@ class drip {
         dripTipCTX.fill();
 
     }
-    reset(dripCTX, dripTipCTX){
-        dripCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
-        dripTipCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
+    reset(){
+        console.log("drip reset");
+        // dripCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
+        // dripTipCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
         this.x = Math.random() * this.dripsEffect.width;
         this.y = -10;
-        // this.quickerY = this.y;
-        // this.speedY = 1;
-
-        console.log(this.speedY);
-        this.radius = Math.random() * 40 + 20;
-        this.speedYQuicker = this.speedY * Math.random() + 1;
-        this.originalRadius = this.radius;
-        this.radiusGrowth = Math.random() < 0.5 ? 0.05: -0.05;
+        this.quickerY = this.y;
+        
     }
 }
 
@@ -696,24 +691,12 @@ class dripsEffect {
         this.dripArray.forEach(drip => drip.draw(dripCTX, dripTipCTX));
 
     }
-    reset(newWidth, newHeight) {
-        console.log("update");
-        this.width = newWidth;
-        this.height = newHeight;
-        this.manyDrips = this.dripArray.length;
-        
-        this.dripArray = [];
-        this.dripTipArray = [];
-        
-        for (let i = 0; i < this.manyDrips; i++) {
-            this.dripArray.push(new drip(this));
-            this.dripTipArray.push(new drip(this, i));
+    reset() {
+        console.log("dripEffect reset");
+        for (let i = 0; i < this.dripArray.length; i++) {
+            this.dripArray[i].reset();
+            this.dripTipArray[i].reset();
         }
-
-        console.log(this.dripArray);
-
-        // this.dripArray.forEach(drip => drip.reset(dripCTX, dripTipCTX));
-        // this.dripTipArray.forEach(dripTip => dripTip.reset());
     }
 
 }
@@ -764,7 +747,7 @@ function restartGame() {
 
             cancelAnimationFrame(dripFrames);
             // dripCTX.clearRect(0,0, dripCanvas.width, dripCanvas.height);
-            dripEffect.reset(dripCanvas.width, dripCanvas.height)
+            dripEffect.reset()
         });
     }, 500);
 
