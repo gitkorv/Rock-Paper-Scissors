@@ -786,8 +786,8 @@ class FireworkPath {
         this.bendX = this.firework.width / 2;
         this.bendY = this.firework.height / 3 - 150;
         // this.endX = Math.floor(Math.random() * 401) - 200 + this.startX;
-        this.endX = Math.floor(Math.random() * (this.firework.width * 0.8) + this.firework.width * 0.1);
-        this.endY = this.startY - (Math.floor(Math.random() * 101) + 80);
+        this.endX = Math.floor(Math.random() * (this.firework.width * 0.6) + this.firework.width * 0.2);
+        this.endY = this.startY - (Math.floor(Math.random() * 250) + 80);
         this.colors = ["#f72585", "#7209b7", "#3a0ca3", "#4361ee", "#4cc9f0"];
         this.randomColorIndex = Math.floor(Math.random() * this.colors.length);
         this.randomFireworksColor = `${this.colors[this.randomColorIndex]}`;
