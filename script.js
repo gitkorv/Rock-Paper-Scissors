@@ -752,6 +752,8 @@ function restartGame() {
 
         letsPlayButton.addEventListener("click", function () {
             newGame()
+            firework.reset();
+
 
             canvasDripWrapper.classList.add("zero-opacity")
             setTimeout(() => {
@@ -914,17 +916,30 @@ class Firework {
         this.pathAnimTimeArray = [];
         this.explosionArray = [];
         this.endXAndYArray = [];
+        svgContainer.innerHTML = "";
+        removeDivsFromFirework()
+
     }
 }
 
 const firework = new Firework(windowWidth, windowHeight);
 
 function startFireWork() {
+    // firework.reset();
 
     firework.init(12);
     firework.draw();
-    firework.reset();
 }
+
+function removeDivsFromFirework() {
+    const container = document.querySelector(".fireworks-container");
+
+    let divsArray = Array.from(document.querySelectorAll(".explosion-container"))
+
+    divsArray.forEach(div => container.removeChild(div));
+    console.log(divs);
+}
+
 
 window.addEventListener('resize', function () {
     windowWidth = window.innerWidth;
