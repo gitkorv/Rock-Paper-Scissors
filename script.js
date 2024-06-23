@@ -937,7 +937,7 @@ function removeDivsFromFirework() {
     let divsArray = Array.from(document.querySelectorAll(".explosion-container"))
 
     divsArray.forEach(div => container.removeChild(div));
-    console.log(divs);
+    // console.log(divs);
 }
 
 
