@@ -800,12 +800,32 @@ class FireworkPath {
         this.pathData = `M${this.startX},${this.startY} Q${this.bendX},${this.bendY} ${this.endX},${this.endY}`;
         this.path.setAttribute('d', this.pathData);
         this.pathLength = this.path.getTotalLength();
-        this.path.style.strokeDasharray = this.pathLength;
-        this.path.style.strokeDashoffset = this.pathLength;
-        this.path.style.animationDuration = this.pathAnimationTime + "ms"
+        this.path.style.strokeDasharray = `${this.pathLength * 0.75} ${this.pathLength * 1.25}`;
+        this.path.style.strokeDashoffset = this.pathLength * 0.75;
+        // this.path.style.strokeDashoffset = 0;
+        // this.path.style.animationDuration = this.pathAnimationTime + "ms"
+        // this.path.style.transitionDuration = this.pathAnimationTime + "ms"
+        // this.path.style.transition = `stroke-dashoffset 1s ease-out forwards`;
+        this.path.style.transitionDuration = `${this.pathAnimationTime * 2}ms, ${this.pathAnimationTime * 1.5}ms`;
+        this.path.style.transitionTimingFunction = "ease-out, ease-in";
         this.path.setAttribute('stroke', this.randomFireworksColor);
 
         svgContainer.appendChild(this.path);
+    }
+    update() {
+
+        this.path.style.strokeDashoffset = `-${this.pathLength}`;
+        this.path.style.strokeWidth = 0;
+
+        // this.path.style.strokeDashoffset = `-100`;
+        // requestAnimationFrame(() => {
+        //     // let randomThing = svgContainer.clientWidth;
+            
+        // })
+        // setTimeout(() => {
+        //     this.path.style.strokeDashoffset = `-${this.pathLength}`;
+        //     this.path.style.strokeWidth = 0;
+        // }, 1);
     }
 }
 
@@ -909,6 +929,15 @@ class Firework {
         }
         this.explosionArray.forEach(explosion => explosion.update());
     }
+    update() {
+        // this.fireworkPathArray.forEach(path => path.update());
+
+        requestAnimationFrame(() => {
+            this.fireworkPathArray.forEach(path => path.update());
+
+        })
+    }
+
     reset() {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
@@ -929,6 +958,7 @@ function startFireWork() {
 
     firework.init(12);
     firework.draw();
+    firework.update()
 }
 
 function removeDivsFromFirework() {

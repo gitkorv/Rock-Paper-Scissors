@@ -465,6 +465,9 @@ span.bold-anim.with-after.scissor::after {
     /* background-color: black; */
     /* box-shadow: inset 0em 0em 0em 1.2em black; */
     color: #f72585;
+    background-color: hsl(276, 91%, 50%);
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, .1);
+
     scale: 105%;
     /* transition: all .3s ease; */
 }
@@ -604,11 +607,16 @@ span.bold-anim.with-after.scissor::after {
     /* stroke: black; */
     /* stroke: white; */
     stroke-width: 2;
-
-    animation: ease-out 1 forwards draw;
+    transition: stroke-dashoffset, stroke-width;
+    /* transition-timing-function: eas; */
+    /* animation: ease-out 1 forwards draw; */
 }
 
-@keyframes draw {
+/* .fireworks-path.trans {
+    stroke-dashoffset: ;
+} */
+
+/* @keyframes draw {
     50% {
         opacity: 1;
     }
@@ -620,7 +628,7 @@ span.bold-anim.with-after.scissor::after {
         stroke-dashoffset: 0;
         opacity: 0;
     }
-}
+} */
 
 .fireworks-boom {
     opacity: 0;
