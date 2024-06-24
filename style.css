@@ -472,6 +472,12 @@ span.bold-anim.with-after.scissor::after {
     /* transition: all .3s ease; */
 }
 
+.btn-wrapper-all button:active, 
+.btn-wrapper-all button.lets-play:active,
+.btn-wrapper-all button.lets-play.play-again:active {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
 .btn-wrapper-all button.lets-play {
     width: 100%;
     overflow: hidden;

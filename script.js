@@ -178,7 +178,7 @@ allButtons.forEach(button => {
     button.addEventListener('touchcancel', handleTouchCancel);
 
     button.addEventListener('click', function (event) {
-        this.style.outline = "4px solid #f72585";
+        // this.style.outline = "4px solid #f72585";
         // this.style.color = "#f72585";
 
         // Prevent the default action of the click event
