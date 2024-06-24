@@ -164,7 +164,13 @@ function handleTouchStart() {
     this.classList.add("hovered")
 }
 function handleTouchEnd() {
-    this.classList.remove("hovered")
+    // this.classList.remove("hovered");
+    setTimeout(() => {
+        // this.style.outline = "";
+        // this.style.color = "";
+
+        this.classList.remove('hovered');
+    }, 100); // 
 }
 function handleTouchCancel() {
     this.classList.remove("hovered")
@@ -185,11 +191,11 @@ allButtons.forEach(button => {
         event.preventDefault();
         // Remove the "hovered" class after a delay to allow time for the touch event to complete
         // setTimeout(() => {
-        //     this.style.outline = "";
+        //     // this.style.outline = "";
         //     // this.style.color = "";
 
         //     this.classList.remove('hovered');
-        // }, 300); // Adjust the delay as needed
+        // }, 100); // Adjust the delay as needed
     });
 });
 
