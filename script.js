@@ -184,12 +184,12 @@ allButtons.forEach(button => {
         // Prevent the default action of the click event
         event.preventDefault();
         // Remove the "hovered" class after a delay to allow time for the touch event to complete
-        setTimeout(() => {
-            this.style.outline = "";
-            // this.style.color = "";
+        // setTimeout(() => {
+        //     this.style.outline = "";
+        //     // this.style.color = "";
 
-            this.classList.remove('hovered');
-        }, 300); // Adjust the delay as needed
+        //     this.classList.remove('hovered');
+        // }, 300); // Adjust the delay as needed
     });
 });
 
@@ -364,7 +364,7 @@ function playRound(playerChoice) {
 
                 topAreaWrapper.classList.remove("no-transition");
                 topAreaTextContainerChildren.forEach(child => child.classList.add("hidden"));
-                hiThere.textContent = `Game is tied: ${playerScore} - ${cpuScore}`
+                hiThere.textContent = `The game is tied`
                 hiThere.classList.add("top-area__text-container__hi-there")
                 topAreaTextContainer.appendChild(hiThere);
 
@@ -554,8 +554,13 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
         }
 
         setTimeout(() => {
-            currentScoreHeadline.textContent = "Final Score:"
-            currentScoreHeadline.style.width = "120px";
+            if (playerScore === cpuScore) {
+                currentScoreHeadline.textContent = "Current Score:"
+            } else {
+                currentScoreHeadline.textContent = "Final Score:"
+
+            }
+            currentScoreHeadline.style.width = "220px";
             currentScorePlayer.textContent = playerScore;
             currentScoreCpu.textContent = cpuScore;
             currentScorePlayerWrapper.style.width = withOfPlayerScoreWrapper + "px";
