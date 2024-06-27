@@ -204,18 +204,37 @@ canvasDripWrapper.classList.add("zero-opacity")
 
 
 function newGame() {
+    currentScorePara.classList.add("zero-width");
+
+
     btnWrapperAll.classList.add("zero-width")
     setTimeout(() => {
         letsPlayButton.classList.add("zero-width");
 
         btnWrapperAll.classList.remove("zero-width")
-        currentScorePara.style.width = "0px";
+
+        currentScoreHeadline.textContent = "Current Score:";
+
+
+        console.log(currentScorePara);
+
+        // currentScorePara.addEventListener('transitionend', function(e) {
+        //     console.log(e);
+        // })
+    
+        // currentScorePara.removeEventListener('transitionend', function(e) {
+        //     console.log(e);
+        // })
+
+
         // letsPlayButton.style.display = "none";
         playerChoiceButtonArray.forEach(button => {
             button.addEventListener("click", pickHand);
             button.style.display = "";
         })
     }, 500);
+
+    
 
 
     // topAreaWrapper.classList.remove("hi-there-effect")
@@ -388,7 +407,7 @@ function playRound(playerChoice) {
         }
     }
     setTopRoundTicker(keepGoing);
-    setH2TextEffects(keepGoing, boldTextNumber, winningHand)
+    setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound)
     setH1AnimTimesAndMessages(resultMessage)
     setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWonRound);
     currentRound++;
@@ -422,7 +441,13 @@ function setTopRoundTicker(keepGoing) {
     }
 }
 
-function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
+function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound) {
+    if (currentRound !== undefined) {
+        h2Text.classList.add("font-5rem");
+    } else {
+        h2Text.classList.remove("font-5rem");
+    }
+    console.log(currentRound);
     h2Text.classList.toggle("h2Text-fade-in");
     setTimeout(() => {
         h2Text.classList.toggle("h2Text-fade-in");
@@ -431,7 +456,7 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
     let h2SpanElements = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span"));
     let h2TextSpanContainers = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span-container"))
 
-    if (keepGoing === true) {
+    if (keepGoing === true || keepGoing === false) {
         let handWidth
         if (boldTextNumber.length < 2) {
             handWidth = h2SpanElements[boldTextNumber].getBoundingClientRect().width;
@@ -439,8 +464,7 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
             h2SpanElements[boldTextNumber].classList.add("bold-anim");
             h2SpanElements[boldTextNumber].classList.add("with-after");
             h2SpanElements[boldTextNumber].classList.add(`${winningHand.toLowerCase()}`);
-            let thisShit = h2TextSpanContainers[boldTextNumber].querySelector(`span.bold-anim.with-after.${winningHand.toLowerCase()}`);
-            // console.log(thisShit);
+
             // console.log(boldTextNumber.toString());
             switch (boldTextNumber.toString()) {
                 case "0":
@@ -457,14 +481,12 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand) {
         } else {
             boldTextNumber.forEach(number => {
                 handWidth = h2SpanElements[number].getBoundingClientRect().width;
+                console.log(handWidth);
                 h2TextSpanContainers[number].style.width = handWidth + "px";
                 h2SpanElements[number].classList.add("bold-anim");
                 h2SpanElements[number].classList.add("bold-anim-double");
                 h2SpanElements[number].classList.add("with-after");
                 h2SpanElements[number].classList.add(`${winningHand.toLowerCase()}`);
-                let thisShit = h2TextSpanContainers[number].querySelector(`span.bold-anim.bold-anim-double.with-after`);
-                // thisShit.style.animationDelay = "0.25s"
-                // console.log(thisShit);
             });
         }
         h2SpanElements[1].classList.add("vs-anim");
@@ -500,78 +522,99 @@ function setH1AnimTimesAndMessages(resultMessage) {
 
 let withOfPlayerScoreWrapper
 
-function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWon) {
+let currentScoreAllSpans = Array.from(currentScorePara.children)
+console.log(currentScoreAllSpans);
+
+let currentScoreSpans = Array.from(currentScorePara.querySelectorAll(".current-score__span-both-players"));
+console.log(currentScoreSpans);
+
+let widthOfCurrentScoreHeadline;
+let widthOfPlayerScoreWrapper;
+
+
+function setWidthsForCurrentScoreSpans(playerScore, cpuScore) {
+    // currentScorePara.style.width = "100%";
+    currentScoreHeadline.style.width = "fit-content";
+    widthOfCurrentScoreHeadline = currentScoreHeadline.offsetWidth;
+    console.log(widthOfCurrentScoreHeadline);
+    currentScoreHeadline.style.width = widthOfCurrentScoreHeadline + "px";
+
+    currentScorePlayerWrapper.style.width = "fit-content";
+    currentScoreCpuWrapper.style.width = "fit-content";
+    widthOfPlayerScoreWrapper = currentScorePlayerWrapper.offsetWidth + 12;
+    currentScorePlayerWrapper.style.width = widthOfPlayerScoreWrapper + "px";
+    currentScoreCpuWrapper.style.width = widthOfPlayerScoreWrapper + "px";
+
+    // currentScoreSpans.forEach(player => player.style.width = widthOfPlayerScoreWrapper + "px")
+
+    currentScorePlayer.textContent = playerScore;
+    currentScoreCpu.textContent = cpuScore;
+}
+
+function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWonRound) {
     // console.log(currentRound);
 
-    if (keepGoing) {
+    console.log(whoWonRound);
+
+    if (currentRound === 1) {
+        setWidthsForCurrentScoreSpans(playerScore, cpuScore);
+        // setTimeout(() => {
+        //     currentScorePara.classList.remove("zero-width");
+        // }, 500);
+        currentScorePara.classList.remove("zero-width");
+
+    };
+    
+    function currentScoreAnims(changeMe, endWidth, playerScore, cpuScore, currentRound) {
+        let timeoutTime = currentRound === 1 ? 750 : 500;
+
         if (currentRound === 1) {
-            currentScorePara.style.width = "0px";
-            currentScoreHeadline.textContent = "Current Score:";
-
-            withOfPlayerScoreWrapper = currentScorePlayerWrapper.offsetWidth + 12;
-
-            currentScorePlayerWrapper.style.width = "0px";
-            currentScoreCpuWrapper.style.width = "0px";
-
-            setTimeout(() => {
-                currentScorePara.style.width = currentScoreParaWidth + "px";
-                currentScorePara.classList.remove("zero-width");
-                currentScorePlayer.textContent = playerScore;
-                currentScoreCpu.textContent = cpuScore;
-
-                setTimeout(() => {
-                    currentScorePlayerWrapper.style.width = withOfPlayerScoreWrapper + "px";
-
-                    setTimeout(() => {
-                        currentScoreCpuWrapper.style.width = withOfPlayerScoreWrapper + "px";
-
-                    }, 200);
-                }, 200);
-
-            }, 500);
+            changeMe.forEach(span => span.classList.toggle("no-trans"));
+            changeMe.forEach(span => span.style.width = "0px");
+            changeMe.forEach(span => span.classList.toggle("no-trans"));
         } else {
-
-            if (whoWon === "player") {
-                currentScorePlayerWrapper.style.width = "0px";
-            } else if (whoWon === "cpu") {
-                currentScoreCpuWrapper.style.width = "0px";
-            } else {
-                currentScorePlayerWrapper.style.width = "0px";
-                currentScoreCpuWrapper.style.width = "0px";
-            }
-
-            setTimeout(() => {
-                currentScorePlayer.textContent = playerScore;
-                currentScoreCpu.textContent = cpuScore;
-                currentScorePlayerWrapper.style.width = withOfPlayerScoreWrapper + "px";
-                currentScoreCpuWrapper.style.width = withOfPlayerScoreWrapper + "px";
-            }, 500);
+            changeMe.forEach(span => span.style.width = "0px");
         }
 
-    } else {
-        currentScoreHeadline.style.width = "0px";
-        if (whoWon === "player") {
-            currentScorePlayerWrapper.style.width = "0px";
-        } else if (whoWon === "cpu") {
-            currentScoreCpuWrapper.style.width = "0px";
+        setTimeout(() => {
+            changeMe.forEach(span => span.style.width = endWidth + "px");
+            currentScorePlayer.textContent = playerScore;
+            currentScoreCpu.textContent = cpuScore;
+        }, timeoutTime);
+    }
+
+    if (keepGoing) {
+
+        if (whoWonRound === "player") {
+            currentScoreAnims([currentScorePlayerWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore, currentRound)
+        } else if (whoWonRound === "cpu") {
+            currentScoreAnims([currentScoreCpuWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore)
         } else {
-            currentScorePlayerWrapper.style.width = "0px";
-            currentScoreCpuWrapper.style.width = "0px";
+            currentScoreAnims(currentScoreSpans, widthOfPlayerScoreWrapper, playerScore, cpuScore)
+        }
+            
+    } else {
+        if (whoWonRound === "player") {
+            currentScoreHeadline.style.width = "0px";
+            currentScoreAnims([currentScorePlayerWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore)
+        } else if (whoWonRound === "cpu") {
+            currentScoreHeadline.style.width = "0px";
+            currentScoreAnims([currentScoreCpuWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore)
+        } else {
+            currentScoreAnims(currentScoreSpans, widthOfPlayerScoreWrapper, playerScore, cpuScore)
         }
 
         setTimeout(() => {
             if (playerScore === cpuScore) {
                 currentScoreHeadline.textContent = "Current Score:"
+                currentScoreHeadline.style.width = "fit-content";
+                widthOfCurrentScoreHeadline = currentScoreHeadline.offsetWidth;
+                currentScoreHeadline.style.width = widthOfCurrentScoreHeadline + "px";
             } else {
                 currentScoreHeadline.textContent = "Final Score:"
-
             }
-            currentScoreHeadline.style.width = "220px";
-            currentScorePlayer.textContent = playerScore;
-            currentScoreCpu.textContent = cpuScore;
-            currentScorePlayerWrapper.style.width = withOfPlayerScoreWrapper + "px";
-            currentScoreCpuWrapper.style.width = withOfPlayerScoreWrapper + "px";
-        }, 500);
+            currentScoreHeadline.style.width = widthOfCurrentScoreHeadline + "px";
+        }, 250);
     }
 }
 // curtainElement.classList.add("show-curtain");
@@ -986,6 +1029,12 @@ window.addEventListener('resize', function () {
     windowWidth = window.innerWidth;
     windowHeight = window.innerHeight;
     firework.reset();
+    setWidthsForCurrentScoreSpans(playerScore, cpuScore);
+
+    // console.log("resize");
+    // withOfPlayerScoreWrapper = currentScorePlayerWrapper.offsetWidth + 12;
+    // console.log(withOfPlayerScoreWrapper);
+
     // currentScorePara.style.left = (windowWidth - currentScoreParaWidth) / 2 + "px";
 
 })
