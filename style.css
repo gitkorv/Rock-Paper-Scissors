@@ -876,10 +876,68 @@ span.bold-anim.with-after.scissor::after {
     .score-container {
         font-size: 1.5rem;
     }
+    .center-area__h2Text-container {
+        height: 50px;
+    }
+    .center-area__h2Text.font-5rem {
+        font-size: 3rem;
+        gap: 8px;
+    }
+    @keyframes bold-choice {
+        25% {
+            font-size: 18px;
+        }
+        50% {
+            z-index: 200;
+            color: #FFFFFF;
+            font-size: 4rem;
+            font-variation-settings: "wght"500, "wdth"125;
+        }
+    }
+    @keyframes bold-choice-double {
+        25% {
+            font-size: 18px;
+        }
+        50% {
+            z-index: 200;
+            color: #FFFFFF;
+            font-size: 4rem;
+            font-variation-settings: "wght"500, "wdth"75;
+        }
+    }
 }
 @media (min-width: 601px) and (max-width: 1024px){
     .score-container {
         font-size: 2rem;
+    }
+    .center-area__h2Text-container {
+        height: 100px;
+    }
+    .center-area__h2Text.font-5rem {
+        font-size: 4rem;
+        gap: 9px;
+    }
+    @keyframes bold-choice {
+        25% {
+            font-size: 18px;
+        }
+        50% {
+            z-index: 200;
+            color: #FFFFFF;
+            font-size: 5rem;
+            font-variation-settings: "wght"500, "wdth"125;
+        }
+    }
+    @keyframes bold-choice-double {
+        25% {
+            font-size: 18px;
+        }
+        50% {
+            z-index: 200;
+            color: #FFFFFF;
+            font-size: 5rem;
+            font-variation-settings: "wght"500, "wdth"75;
+        }
     }
 }
 @media (min-width: 1025px) {
