@@ -33,11 +33,10 @@ body {
     flex-direction: column;
     overflow: hidden;
     /* align-items: center; */
-
     /* justify-content: center; */
     /* background-color: bisque; */
-    transform-style: preserve-3d;
-    perspective: 1000px;
+    /* transform-style: preserve-3d;
+    perspective: 1000px; */
 }
 
 .top-area {
