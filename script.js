@@ -23,7 +23,8 @@ Select the center area
 */
 const centerArea = document.querySelector(".center-area")
 let h2Text = document.querySelector(".center-area__h2Text");
-let h2TextSpanContainers = Array.from(h2Text.children);
+let h2TextSpanContainers = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span-container"));
+console.log(h2TextSpanContainers);
 
 // let h2SpanElements = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span"));
 const h1Text = document.querySelector(".center-area__h1Text")
@@ -203,8 +204,12 @@ let canvasDripWrapper = document.querySelector(".canvas-wrapper-all");
 canvasDripWrapper.classList.add("zero-opacity")
 
 
-function newGame() {
+function newGame(gameOver) {
+    console.log("gameOver is" + gameOver);
     currentScorePara.classList.add("zero-width");
+
+    let h2TextSpanContainers = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span-container"));
+    h2TextSpanContainers.forEach(spanContainer => spanContainer.style.display = "none");
 
 
     btnWrapperAll.classList.add("zero-width")
@@ -261,12 +266,12 @@ function newGame() {
 
     resultMessage = `Choose Your Weapon!`;
     setH1AnimTimesAndMessages(resultMessage);
-    h2Text.textContent = "";
+    // h2Text.textContent = "";
     h2Text.appendChild(letsPLayAGameMessage);
     letsPLayAGameMessage.textContent = `Great, here goes round ${currentRound}`;
     letsPLayAGameMessage.classList.add("black");
     setTopRoundTicker();
-    setH2TextEffects()
+    setH2TextEffects(undefined, undefined, undefined, undefined, gameOver)
 }
 
 
@@ -345,6 +350,7 @@ function playRound(playerChoice) {
     }
 
     let keepGoing = true;
+    let gameOver = false;
 
     roundsLeftToPlay = roundsToPlay - roundsPlayed;
 
@@ -358,12 +364,13 @@ function playRound(playerChoice) {
             topAreaWrapper.style.transitionDuration = ".2s";
             keepGoing = false;
             canvasDripWrapper.classList.remove("zero-opacity")
+            gameOver = true;
 
             setTimeout(() => {
                 startFireWork();
 
             }, 1500);
-            restartGame();
+            restartGame(gameOver);
 
         } else if (playerScore < cpuScore) {
             resultMessage = `The Computer won the game!`;
@@ -374,9 +381,10 @@ function playRound(playerChoice) {
             // topAreaWrapper.classList.add("no-transition");
             topAreaWrapper.style.transitionDuration = ".2s";
 
+            gameOver = true;
             keepGoing = false;
             cpuWonGame();
-            restartGame();
+            restartGame(gameOver);
         } else {
             setH2TextEffects(keepGoing, boldTextNumber, winningHand)
 
@@ -407,7 +415,7 @@ function playRound(playerChoice) {
         }
     }
     setTopRoundTicker(keepGoing);
-    setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound)
+    setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, gameOver)
     setH1AnimTimesAndMessages(resultMessage)
     setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWonRound);
     currentRound++;
@@ -441,13 +449,33 @@ function setTopRoundTicker(keepGoing) {
     }
 }
 
-function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound) {
+function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, gameOver) {
+    console.log("gameOver is" + gameOver);
+
+    console.log(gameOver, currentRound);
+
     if (currentRound !== undefined) {
         h2Text.classList.add("font-5rem");
-    } else {
+
+    } else if (currentRound === undefined) {
         h2Text.classList.remove("font-5rem");
+
     }
-    console.log(currentRound);
+
+    // if (currentRound !== undefined && !gameOver) {
+    //     console.log(`currentRound: ${currentRound}, gameOver: ${gameOver}`);
+    //     h2Text.classList.add("font-5rem");
+    // } else if (currentRound === undefined && !gameOver) {
+    //     console.log(`currentRound: ${currentRound}, gameOver: ${gameOver}`);
+    // } else if (currentRound === undefined && gameOver === undefined){
+    //     console.log(`currentRound: ${currentRound}, gameOver: ${gameOver}`);
+
+    //     let h2TextSpanContainers = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span-container"));
+    //     h2TextSpanContainers.forEach(spanContainer => spanContainer.style.display = "none");
+    //     h2Text.classList.add("font-5rem");
+    // }
+
+
     h2Text.classList.toggle("h2Text-fade-in");
     setTimeout(() => {
         h2Text.classList.toggle("h2Text-fade-in");
@@ -536,7 +564,7 @@ function setWidthsForCurrentScoreSpans(playerScore, cpuScore) {
     // currentScorePara.style.width = "100%";
     currentScoreHeadline.style.width = "fit-content";
     widthOfCurrentScoreHeadline = currentScoreHeadline.offsetWidth;
-    console.log(widthOfCurrentScoreHeadline);
+    // console.log(widthOfCurrentScoreHeadline);
     currentScoreHeadline.style.width = widthOfCurrentScoreHeadline + "px";
 
     currentScorePlayerWrapper.style.width = "fit-content";
@@ -772,7 +800,8 @@ function cpuWonGame(params) {
 }
 
 // Restart game, hide hands buttons, show play again button
-function restartGame() {
+function restartGame(gameOver) {
+    console.log("gameOver is" + gameOver);
 
     setTimeout(() => {
         // playerChoiceButtonArray.forEach(button => button.style.display = "none");
@@ -805,7 +834,7 @@ function restartGame() {
         }, 4000);
 
         letsPlayButton.addEventListener("click", function () {
-            newGame()
+            newGame(gameOver)
             firework.reset();
 
 
@@ -1024,12 +1053,30 @@ function removeDivsFromFirework() {
     // console.log(divs);
 }
 
+// console.log(h2SpanElements, h2TextSpanContainers);
+
+function resizeH2TextSpanDivContainers() {
+    let h2SpanElementWidths = []
+    let h2SpanElements = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span"));
+    let h2TextSpanContainers = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span-container"))
+
+    h2SpanElements.forEach(div => h2SpanElementWidths.push(div.offsetWidth))
+
+    for (let i = 0; i < h2SpanElementWidths.length; i++) {
+        h2TextSpanContainers[i].style.width = h2SpanElementWidths[i] + "px";        
+    }
+}
+
+
+
+
 
 window.addEventListener('resize', function () {
     windowWidth = window.innerWidth;
     windowHeight = window.innerHeight;
     firework.reset();
     setWidthsForCurrentScoreSpans(playerScore, cpuScore);
+    resizeH2TextSpanDivContainers()
 
     // console.log("resize");
     // withOfPlayerScoreWrapper = currentScorePlayerWrapper.offsetWidth + 12;
