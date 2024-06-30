@@ -527,6 +527,7 @@ function setH1AnimTimesAndMessages(resultMessage) {
     h1Text.classList.toggle("center-area__h1Text--rotate-in")
     h1TextAnimDuration = parseFloat(window.getComputedStyle(h1Text).animationDuration.split(", ")[0]) * 1000;
     h1TextAnimDelay = parseFloat(window.getComputedStyle(h1Text).animationDelay.split(", ")[0]) * 1000;
+    console.log(h1Text);
     let h1TextWidth
     let currentH1TextContent = h1Text.textContent;
     h1Text.textContent = `${resultMessage}`;
@@ -534,17 +535,30 @@ function setH1AnimTimesAndMessages(resultMessage) {
     h1TextHeight = h1Text.getBoundingClientRect().height;
     h1Text.textContent = currentH1TextContent;
 
+    // setTimeout(() => {
+    //     if (h1TextWidth >= windowWidth) {
+    //         h1Text.classList.add("with-margins");
+    //     } else {
+    //         h1Text.classList.remove("with-margins")
+    //     }
+    //     h1Text.textContent = `${resultMessage}`;
+    // }, h1TextAnimDelay + h1TextAnimDuration / 2);
+
     setTimeout(() => {
+        h1Text.classList.toggle("center-area__h1Text--rotate-in");
+        h1Text.classList.toggle("center-area__h1Text--rotate-in--part2");
+        h1Text.style.animationDuration = h1TextAnimDuration + "ms";
         if (h1TextWidth >= windowWidth) {
             h1Text.classList.add("with-margins");
         } else {
             h1Text.classList.remove("with-margins")
         }
         h1Text.textContent = `${resultMessage}`;
-    }, h1TextAnimDelay + h1TextAnimDuration / 2);
+        setTimeout(() => {
+            h1Text.classList.toggle("center-area__h1Text--rotate-in--part2");
 
-    setTimeout(() => {
-        h1Text.classList.toggle("center-area__h1Text--rotate-in");
+        }, h1TextAnimDuration);
+
     }, h1TextAnimDelay + h1TextAnimDuration);
 }
 

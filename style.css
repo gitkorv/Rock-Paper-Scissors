@@ -35,8 +35,7 @@ body {
     /* align-items: center; */
     /* justify-content: center; */
     /* background-color: bisque; */
-    /* transform-style: preserve-3d;
-    perspective: 1000px; */
+    z-index: -1000;
 }
 
 .top-area {
@@ -189,10 +188,13 @@ body {
     display: none;
 }
 
+/* Center Area */
+
 .center-area {
     display: flex;
     flex: .5;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
     /* justify-content: space-evenly; */
     padding: 10px 0px 60px 0px;
@@ -200,7 +202,8 @@ body {
     overflow: visible;
     /* background-color: #654553; */
     transform-style: preserve-3d;
-    perspective: 1000px;}
+    perspective: 500px;
+}
 
 h1 {
     font-family: "scale-variable", sans-serif;
@@ -374,14 +377,25 @@ span.bold-anim.with-after.scissor::after {
     color: #4cc9f0;
     position: relative;
     /* margin-top: 6px; */
-    mix-blend-mode: difference;
-    /* background-color: #bcb0b5; */
+    /* mix-blend-mode: difference; */
+    background-color: #bcb0b5;
     height: 80px;
     /* text-wrap: nowrap; */
     transition: height 3s;
-    /* transform: rotate3d(0, 1, 0, 75deg); */
+    border: 1px solid red;
+    width: 80%;
+    /* z-index: 1000; */
+    /* transform: rotate3d(0, 1, 0, 85deg); */
+}
 
-
+.center-area__h1Text::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -100;
+    background-color: crimson;
+    animation: none;
 }
 
 .center-area__h1Text__paper {
@@ -394,38 +408,43 @@ span.bold-anim.with-after.scissor::after {
 }
 
 .center-area__h1Text--rotate-in {
-    animation: flipH1Text 2s linear;
+    animation: flipH1Text 1s linear;
     animation-delay: .2s;
+}
+.center-area__h1Text--rotate-in--part2 {
+    animation-name: flipH1TextPart2;
+    /* animation-duration: 5s; */
+    animation-timing-function: linear;
 }
 
 @keyframes flipH1Text {
-    0% {
+    from {
         opacity: 1;
     }
-    15% {
-        opacity: .5;
-    }
-    25% {
-        transform: rotate3d(0, 0, 0, 0deg);
-        opacity: .25;
-
-    }
-    35% {
-        opacity: .1;
-        background-color: #7209b7;
-
-    }
-    45% {
-        opacity: .25;
-
-    }
     50% {
+        transform: rotate3d(0, 0, 0, 0deg);
+        opacity: .1;
+    }
+    to {
         opacity: 1;
         transform: rotate3d(0, 1, 0, 90deg);
         background-color: hsl(276, 91%, 70%);
     }
-    51% {
+}
+
+@keyframes flipH1TextPart2 {
+    from {
+        opacity: 1;
         transform: rotate3d(0, 1, 0, -90deg);
+
+    }
+    50% {
+        opacity: .1;
+    }
+    to {
+        transform: rotate3d(0, 0, 0, 0deg);
+
+        opacity: 1;
         background-color: hsl(276, 91%, 70%);
     }
 }
@@ -457,6 +476,7 @@ span.bold-anim.with-after.scissor::after {
     flex: 0.5;
     width: auto;
     margin: 0px 15%;
+    z-index: -10;
     /* background-color: pink; */
     /* height: 100%; */
 }
