@@ -373,13 +373,14 @@ span.bold-anim.with-after.scissor::after {
     bottom: 60px;
     background-color: rgba(0, 0, 0, 0.2);
     width: 80%;
-    height: 80px;
+    height: 60px;
     mix-blend-mode: difference;
     z-index: -10;
 }
 
 .center-area__h1Text {
     display: flex;
+    font-size: 1em;
     /* margin: 0 auto 0 auto; */
     /* right: 0px; */
     justify-content: center;
@@ -394,7 +395,7 @@ span.bold-anim.with-after.scissor::after {
     /* transform: translateZ(200px); */
 
 
-    height: 80px;
+    height: 60px;
     /* text-wrap: nowrap; */
     transition: height 3s;
     /* border: 1px solid red; */
@@ -414,8 +415,8 @@ span.bold-anim.with-after.scissor::after {
 }
 
 .center-area__h1Text--rotate-in {
-    animation: flipH1Text 1s linear;
-    animation-delay: 1s;
+    animation: flipH1Text .5s linear;
+    animation-delay: 1.5s;
 }
 .center-area__h1Text--rotate-in--part2 {
     animation-name: flipH1TextPart2;
@@ -435,7 +436,7 @@ span.bold-anim.with-after.scissor::after {
     }
     to {
         transform: rotate3d(0, 1, 0, 90deg);
-        background-color: hsl(276, 91%, 58%);
+        background-color: hsl(276, 91%, 48%);
         /* background-image: linear-gradient(to right, hsl(276, 91%, 58%), hsl(276, 91%, 18%)); */
     }
 }
@@ -443,7 +444,7 @@ span.bold-anim.with-after.scissor::after {
 @keyframes flipH1TextPart2 {
     from {
         transform: rotate3d(0, 1, 0, -90deg);
-        background-color: hsl(276, 91%, 58%);
+        background-color: hsl(276, 91%, 48%);
         /* background-image: linear-gradient(to left, hsl(276, 91%, 58%), hsl(276, 91%, 18%)); */
     }
     75% {
@@ -613,6 +614,10 @@ span.bold-anim.with-after.scissor::after {
     /* filter: contrast(20); */
     z-index: -500;
     opacity: 1;
+    /* transition: opacity 1s ease-out; */
+}
+
+.canvas-wrapper-all-trans {
     transition: opacity 1s ease-out;
 }
 
@@ -654,9 +659,6 @@ span.bold-anim.with-after.scissor::after {
     filter: blur(5px);
     /* background-color: rgb(255, 0, 0); */
 }
-
-
-
 
 .fireworks-container {
     position: absolute;

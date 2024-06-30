@@ -201,7 +201,11 @@ allButtons.forEach(button => {
 });
 
 let canvasDripWrapper = document.querySelector(".canvas-wrapper-all");
-canvasDripWrapper.classList.add("zero-opacity")
+// canvasDripWrapper.style.transition = "none";
+canvasDripWrapper.classList.add("zero-opacity");
+canvasDripWrapper.classList.add("trans");
+// canvasDripWrapper.style.transition = "";
+
 
 
 function newGame(gameOver) {
@@ -522,6 +526,24 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, 
     }
 }
 
+function alignH1Background(params) {
+    let bottomOfH1Text = h1Text.getBoundingClientRect().bottom
+    console.log(bottomOfH1Text);
+    let h1TextBackground = document.querySelector(".center-area__h1Text--background");
+    let bottomOfH1TextBackground = h1TextBackground.getBoundingClientRect().bottom;
+    console.log(bottomOfH1TextBackground);
+    console.log(window.getComputedStyle(h1TextBackground).bottom);
+
+    if (bottomOfH1TextBackground !== bottomOfH1Text) {
+        let bottomDifference = bottomOfH1TextBackground - bottomOfH1Text;
+        let currentBottomOfH1TextBackground = parseInt(window.getComputedStyle(h1TextBackground).bottom);
+        console.log(currentBottomOfH1TextBackground);
+        console.log(bottomDifference);
+        console.log(h1TextBackground);
+        h1TextBackground.style.bottom = currentBottomOfH1TextBackground + bottomDifference + "px";
+    }
+}
+
 
 
 function setH1AnimTimesAndMessages(resultMessage) {
@@ -532,7 +554,10 @@ function setH1AnimTimesAndMessages(resultMessage) {
 
     console.log(h1Text.style.left);
 
-    let h1TextBackground = document.querySelector(".center-area__h1Text--background");
+    alignH1Background()
+
+    console.log(h1TextAnimDuration);
+
 
     // h1TextBackground.style.top = h1Text.getBoundingClientRect().top /2 + "px";
 
@@ -1108,6 +1133,8 @@ window.addEventListener('resize', function () {
     firework.reset();
     setWidthsForCurrentScoreSpans(playerScore, cpuScore);
     resizeH2TextSpanDivContainers()
+    alignH1Background()
+
 
     // console.log("resize");
     // withOfPlayerScoreWrapper = currentScorePlayerWrapper.offsetWidth + 12;
