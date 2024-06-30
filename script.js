@@ -522,11 +522,30 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, 
     }
 }
 
+
+
 function setH1AnimTimesAndMessages(resultMessage) {
     h1Text.style.height = "";
     h1Text.classList.toggle("center-area__h1Text--rotate-in")
     h1TextAnimDuration = parseFloat(window.getComputedStyle(h1Text).animationDuration.split(", ")[0]) * 1000;
     h1TextAnimDelay = parseFloat(window.getComputedStyle(h1Text).animationDelay.split(", ")[0]) * 1000;
+
+    console.log(h1Text.style.left);
+
+    let h1TextBackground = document.querySelector(".center-area__h1Text--background");
+
+    // h1TextBackground.style.top = h1Text.getBoundingClientRect().top /2 + "px";
+
+    // const styleSheet = document.styleSheets[1];
+    // const rules = styleSheet.cssRules || styleSheet.rules;
+    // console.log(rules[48]);
+
+    // rules[48].style.backgroundColor = "orange";
+    // rules[48].style.animation = "";
+
+    // console.log(rules[48]);
+
+
     console.log(h1Text);
     let h1TextWidth
     let currentH1TextContent = h1Text.textContent;
@@ -556,9 +575,7 @@ function setH1AnimTimesAndMessages(resultMessage) {
         h1Text.textContent = `${resultMessage}`;
         setTimeout(() => {
             h1Text.classList.toggle("center-area__h1Text--rotate-in--part2");
-
         }, h1TextAnimDuration);
-
     }, h1TextAnimDelay + h1TextAnimDuration);
 }
 

@@ -202,7 +202,7 @@ body {
     overflow: visible;
     /* background-color: #654553; */
     transform-style: preserve-3d;
-    perspective: 500px;
+    perspective: 700px;
 }
 
 h1 {
@@ -367,6 +367,16 @@ span.bold-anim.with-after.scissor::after {
     }
 }
 
+.center-area__h1Text--background {
+    display: block;
+    position: absolute;
+    bottom: 60px;
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 80%;
+    height: 80px;
+    /* mix-blend-mode: difference; */
+    z-index: -10;
+}
 
 .center-area__h1Text {
     display: flex;
@@ -378,25 +388,21 @@ span.bold-anim.with-after.scissor::after {
     position: relative;
     /* margin-top: 6px; */
     /* mix-blend-mode: difference; */
-    background-color: #bcb0b5;
+    /* background-color: #bcb0b5; */
+    /* background-color: #7209b7; */
+    background: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%));
+    /* transform: translateZ(200px); */
+
+
     height: 80px;
     /* text-wrap: nowrap; */
     transition: height 3s;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width: 80%;
-    /* z-index: 1000; */
-    /* transform: rotate3d(0, 1, 0, 85deg); */
+    z-index: 1000;
+    /* transform: rotate3d(0, 1, 0, 15deg); */
 }
 
-.center-area__h1Text::before {
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    z-index: -100;
-    background-color: crimson;
-    animation: none;
-}
 
 .center-area__h1Text__paper {
     margin: 0 7px;
@@ -409,7 +415,7 @@ span.bold-anim.with-after.scissor::after {
 
 .center-area__h1Text--rotate-in {
     animation: flipH1Text 1s linear;
-    animation-delay: .2s;
+    /* animation-delay: .2s; */
 }
 .center-area__h1Text--rotate-in--part2 {
     animation-name: flipH1TextPart2;
@@ -418,34 +424,24 @@ span.bold-anim.with-after.scissor::after {
 }
 
 @keyframes flipH1Text {
-    from {
-        opacity: 1;
-    }
-    50% {
+    10% {
         transform: rotate3d(0, 0, 0, 0deg);
-        opacity: .1;
+        background: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%));
     }
-    to {
-        opacity: 1;
+    100% {
         transform: rotate3d(0, 1, 0, 90deg);
-        background-color: hsl(276, 91%, 70%);
+        background: linear-gradient(to right, hsl(276, 91%, 58%), hsl(276, 91%, 18%));
     }
 }
 
 @keyframes flipH1TextPart2 {
-    from {
-        opacity: 1;
+    0% {
         transform: rotate3d(0, 1, 0, -90deg);
-
+        background: linear-gradient(to left, hsl(276, 91%, 58%), hsl(276, 91%, 18%));
     }
-    50% {
-        opacity: .1;
-    }
-    to {
+    90% {
         transform: rotate3d(0, 0, 0, 0deg);
-
-        opacity: 1;
-        background-color: hsl(276, 91%, 70%);
+        background: linear-gradient(to left,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%));
     }
 }
 
