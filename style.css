@@ -374,7 +374,7 @@ span.bold-anim.with-after.scissor::after {
     background-color: rgba(0, 0, 0, 0.2);
     width: 80%;
     height: 80px;
-    /* mix-blend-mode: difference; */
+    mix-blend-mode: difference;
     z-index: -10;
 }
 
@@ -389,8 +389,8 @@ span.bold-anim.with-after.scissor::after {
     /* margin-top: 6px; */
     /* mix-blend-mode: difference; */
     /* background-color: #bcb0b5; */
-    /* background-color: #7209b7; */
-    background: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%));
+    background-color: hsl(276, 91%, 38%);
+    /* background-image: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
     /* transform: translateZ(200px); */
 
 
@@ -415,7 +415,7 @@ span.bold-anim.with-after.scissor::after {
 
 .center-area__h1Text--rotate-in {
     animation: flipH1Text 1s linear;
-    /* animation-delay: .2s; */
+    animation-delay: 1s;
 }
 .center-area__h1Text--rotate-in--part2 {
     animation-name: flipH1TextPart2;
@@ -424,24 +424,37 @@ span.bold-anim.with-after.scissor::after {
 }
 
 @keyframes flipH1Text {
-    10% {
+    from {
         transform: rotate3d(0, 0, 0, 0deg);
-        background: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%));
+        background-color: hsl(276, 91%, 38%);
+        /* background-image: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
     }
-    100% {
+    25% {
+        background-color: hsl(276, 91%, 38%);
+        /* background-image: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
+    }
+    to {
         transform: rotate3d(0, 1, 0, 90deg);
-        background: linear-gradient(to right, hsl(276, 91%, 58%), hsl(276, 91%, 18%));
+        background-color: hsl(276, 91%, 58%);
+        /* background-image: linear-gradient(to right, hsl(276, 91%, 58%), hsl(276, 91%, 18%)); */
     }
 }
 
 @keyframes flipH1TextPart2 {
-    0% {
+    from {
         transform: rotate3d(0, 1, 0, -90deg);
-        background: linear-gradient(to left, hsl(276, 91%, 58%), hsl(276, 91%, 18%));
+        background-color: hsl(276, 91%, 58%);
+        /* background-image: linear-gradient(to left, hsl(276, 91%, 58%), hsl(276, 91%, 18%)); */
     }
-    90% {
+    75% {
+        background-color: hsl(276, 91%, 38%);
+        /* background-image: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
+    }
+    to {
         transform: rotate3d(0, 0, 0, 0deg);
-        background: linear-gradient(to left,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%));
+        background-color: hsl(276, 91%, 38%);
+
+        /* background-image: linear-gradient(to left,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
     }
 }
 
