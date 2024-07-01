@@ -480,6 +480,25 @@ span.bold-anim.with-after.scissor::after {
     }
 }
 
+.center-area__h1Canvas-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    height: 100dvh;
+    z-index: 500;
+    /* background-color: #f72585; */
+    opacity: .5;
+    pointer-events: none;
+}
+
+#center-area__h1Canvas {
+    /* background-color: #4cc9f0; */
+    /* width: 100%;
+    height: 100%; */
+}
+
+
 .btn-container {
     display: flex;
     justify-content: center;

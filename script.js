@@ -104,6 +104,8 @@ const scoreContainer = document.querySelector(".score-container");
 On window load, Bring in h2Text etc
 */
 window.onload = function () {
+    alignH1Background()
+
     topAreaWrapper.classList.add("show-rounds");
     h2Text.style.visibility = "hidden";
     setTimeout(() => {
@@ -544,6 +546,71 @@ function alignH1Background(params) {
     }
 }
 
+let h1Canvas = document.getElementById("center-area__h1Canvas");
+const h1CanvasCTX = h1Canvas.getContext("2d");
+
+const h1CanvasRect = h1Canvas.getBoundingClientRect();
+
+
+
+function drawLineAroundH1Text() {
+
+    h1Canvas.width = window.innerWidth;
+    h1Canvas.height = window.innerHeight;
+
+    let h1TextCorners = {
+        topLeft: [h1Text.getBoundingClientRect().x, h1Text.getBoundingClientRect().y],
+        topRight: [h1Text.getBoundingClientRect().right, h1Text.getBoundingClientRect().y],
+        bottomLeft: [h1Text.getBoundingClientRect().x, h1Text.getBoundingClientRect().bottom],
+        bottomRight: [h1Text.getBoundingClientRect().right, h1Text.getBoundingClientRect().bottom]
+    }
+
+
+    let pathLength = h1Text.getBoundingClientRect().width * 2 + h1Text.getBoundingClientRect().height * 2;
+
+    console.log(pathLength);
+
+
+    let dashOffset = 0;
+
+    function animateH1Path() {
+        h1CanvasCTX.clearRect(0, 0, h1Canvas.width, h1Canvas.height);
+
+        h1CanvasCTX.lineDashOffset = pathLength + dashOffset;
+        console.log(h1CanvasCTX.lineDashOffset);
+
+        h1CanvasCTX.beginPath();
+        h1CanvasCTX.moveTo(h1TextCorners.topLeft[0],h1TextCorners.topLeft[1]);
+        h1CanvasCTX.lineTo(h1TextCorners.topRight[0], h1TextCorners.topRight[1]);
+        h1CanvasCTX.lineTo(h1TextCorners.bottomRight[0], h1TextCorners.bottomRight[1]);
+        h1CanvasCTX.lineTo(h1TextCorners.bottomLeft[0], h1TextCorners.bottomLeft[1]);
+        h1CanvasCTX.lineTo(h1TextCorners.topLeft[0],h1TextCorners.topLeft[1]);
+        h1CanvasCTX.closePath();
+
+        h1CanvasCTX.setLineDash([pathLength,pathLength])
+        h1CanvasCTX.strokeStyle = "white";
+        h1CanvasCTX.lineWidth = ".5 ";
+        h1CanvasCTX.stroke();
+
+        // h1CanvasCTX.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        // h1CanvasCTX.fill();
+
+        // console.log(dashOffset);
+        if (h1CanvasCTX.lineDashOffset >= pathLength * 0.01 ) {
+            requestAnimationFrame(animateH1Path)
+        } else {
+            h1CanvasCTX.clearRect(0, 0, h1Canvas.width, h1Canvas.height);
+
+        }
+
+        dashOffset -= pathLength * 0.01;
+
+        // requestAnimationFrame(animateH1Path)
+    }
+
+    animateH1Path()
+}
+
 
 
 function setH1AnimTimesAndMessages(resultMessage) {
@@ -559,18 +626,6 @@ function setH1AnimTimesAndMessages(resultMessage) {
     console.log(h1TextAnimDuration);
 
 
-    // h1TextBackground.style.top = h1Text.getBoundingClientRect().top /2 + "px";
-
-    // const styleSheet = document.styleSheets[1];
-    // const rules = styleSheet.cssRules || styleSheet.rules;
-    // console.log(rules[48]);
-
-    // rules[48].style.backgroundColor = "orange";
-    // rules[48].style.animation = "";
-
-    // console.log(rules[48]);
-
-
     console.log(h1Text);
     let h1TextWidth
     let currentH1TextContent = h1Text.textContent;
@@ -578,6 +633,15 @@ function setH1AnimTimesAndMessages(resultMessage) {
     h1TextWidth = h1Text.getBoundingClientRect().width;
     h1TextHeight = h1Text.getBoundingClientRect().height;
     h1Text.textContent = currentH1TextContent;
+
+    // console.log(h1Text.getBoundingClientRect());
+    setTimeout(() => {
+        drawLineAroundH1Text(h1Canvas)
+
+    }, 700);
+
+
+
 
     // setTimeout(() => {
     //     if (h1TextWidth >= windowWidth) {
