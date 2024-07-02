@@ -544,7 +544,7 @@ const h1CanvasCTX = h1Canvas.getContext("2d");
 
 const h1CanvasRect = h1Canvas.getBoundingClientRect();
 
-function drawLineAroundH1Text() {
+function setH1TextRotationAndCanvasLine() {
 
     h1Canvas.width = window.innerWidth;
     h1Canvas.height = window.innerHeight;
@@ -596,10 +596,41 @@ function drawLineAroundH1Text() {
         if (h1CanvasCTX.lineDashOffset >= 0) {
             requestAnimationFrame(animateH1Path)
         } else {
-            // h1CanvasCTX.clearRect(0, 0, h1Canvas.width, h1Canvas.height);
+            h1CanvasCTX.clearRect(0, 0, h1Canvas.width, h1Canvas.height);
+
+            h1Text.classList.toggle("center-area__h1Text--rotate-in")
+            h1TextAnimDuration = parseFloat(window.getComputedStyle(h1Text).animationDuration.split(", ")[0]) * 1000;
+            // h1TextAnimDelay = parseFloat(window.getComputedStyle(h1Text).animationDelay.split(", ")[0]) * 1000;
+        
+        
+            let h1TextWidth
+            let currentH1TextContent = h1Text.textContent;
+            h1Text.textContent = `${resultMessage}`;
+            h1TextWidth = h1Text.getBoundingClientRect().width;
+            // h1TextHeight = h1Text.getBoundingClientRect().height;
+            h1Text.textContent = currentH1TextContent;
+        
+            // setTimeout(() => {
+            //     drawLineAroundH1Text(h1Canvas)
+            // }, 700);
+        
+            setTimeout(() => {
+                // h1Text.classList.toggle("center-area__h1Text--rotate-in");
+                h1Text.classList.toggle("center-area__h1Text--rotate-in--part2");
+                h1Text.style.animationDuration = h1TextAnimDuration + "ms";
+                if (h1TextWidth >= windowWidth) {
+                    h1Text.classList.add("with-margins");
+                } else {
+                    h1Text.classList.remove("with-margins")
+                }
+                h1Text.textContent = `${resultMessage}`;
+                setTimeout(() => {
+                    h1Text.classList.toggle("center-area__h1Text--rotate-in");
+
+                    h1Text.classList.toggle("center-area__h1Text--rotate-in--part2");
+                }, h1TextAnimDuration);
+            },h1TextAnimDuration);
         }
-
-
     }
     animateH1Path()
 }
@@ -607,40 +638,8 @@ function drawLineAroundH1Text() {
 function setH1AnimTimesAndMessages(resultMessage) {
     h1Text.style.height = "";
     console.log(h1Text.style);
-
-    h1Text.classList.toggle("center-area__h1Text--rotate-in")
-    h1TextAnimDuration = parseFloat(window.getComputedStyle(h1Text).animationDuration.split(", ")[0]) * 1000;
-    h1TextAnimDelay = parseFloat(window.getComputedStyle(h1Text).animationDelay.split(", ")[0]) * 1000;
-
-    console.log(h1Text.style.left);
-
     alignH1Background()
-
-    let h1TextWidth
-    let currentH1TextContent = h1Text.textContent;
-    h1Text.textContent = `${resultMessage}`;
-    h1TextWidth = h1Text.getBoundingClientRect().width;
-    // h1TextHeight = h1Text.getBoundingClientRect().height;
-    h1Text.textContent = currentH1TextContent;
-
-    setTimeout(() => {
-        drawLineAroundH1Text(h1Canvas)
-    }, 700);
-
-    setTimeout(() => {
-        h1Text.classList.toggle("center-area__h1Text--rotate-in");
-        h1Text.classList.toggle("center-area__h1Text--rotate-in--part2");
-        h1Text.style.animationDuration = h1TextAnimDuration + "ms";
-        if (h1TextWidth >= windowWidth) {
-            h1Text.classList.add("with-margins");
-        } else {
-            h1Text.classList.remove("with-margins")
-        }
-        h1Text.textContent = `${resultMessage}`;
-        setTimeout(() => {
-            h1Text.classList.toggle("center-area__h1Text--rotate-in--part2");
-        }, h1TextAnimDuration);
-    }, h1TextAnimDelay + h1TextAnimDuration);
+    setH1TextRotationAndCanvasLine(resultMessage)
 }
 
 let withOfPlayerScoreWrapper

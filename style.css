@@ -415,13 +415,15 @@ span.bold-anim.with-after.scissor::after {
 }
 
 .center-area__h1Text--rotate-in {
-    animation: flipH1Text .5s linear;
-    animation-delay: 1.5s;
+    animation: flipH1Text 1s linear forwards;
+    /* animation-delay: 1.5s; */
 }
 .center-area__h1Text--rotate-in--part2 {
     animation-name: flipH1TextPart2;
     /* animation-duration: 5s; */
-    animation-timing-function: linear;
+    animation-timing-function: linear forwards;
+    transform: rotate3d(0, 1, 0, -90deg);
+
 }
 
 @keyframes flipH1Text {
