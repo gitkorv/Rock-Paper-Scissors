@@ -24,7 +24,6 @@ Select the center area
 const centerArea = document.querySelector(".center-area")
 let h2Text = document.querySelector(".center-area__h2Text");
 let h2TextSpanContainers = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span-container"));
-console.log(h2TextSpanContainers);
 
 // let h2SpanElements = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span"));
 const h1Text = document.querySelector(".center-area__h1Text")
@@ -530,18 +529,12 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, 
 
 function alignH1Background(params) {
     let bottomOfH1Text = h1Text.getBoundingClientRect().bottom
-    console.log(bottomOfH1Text);
     let h1TextBackground = document.querySelector(".center-area__h1Text--background");
     let bottomOfH1TextBackground = h1TextBackground.getBoundingClientRect().bottom;
-    console.log(bottomOfH1TextBackground);
-    console.log(window.getComputedStyle(h1TextBackground).bottom);
 
     if (bottomOfH1TextBackground !== bottomOfH1Text) {
         let bottomDifference = bottomOfH1TextBackground - bottomOfH1Text;
         let currentBottomOfH1TextBackground = parseInt(window.getComputedStyle(h1TextBackground).bottom);
-        console.log(currentBottomOfH1TextBackground);
-        console.log(bottomDifference);
-        console.log(h1TextBackground);
         h1TextBackground.style.bottom = currentBottomOfH1TextBackground + bottomDifference + "px";
     }
 }
@@ -550,8 +543,6 @@ let h1Canvas = document.getElementById("center-area__h1Canvas");
 const h1CanvasCTX = h1Canvas.getContext("2d");
 
 const h1CanvasRect = h1Canvas.getBoundingClientRect();
-
-
 
 function drawLineAroundH1Text() {
 
@@ -565,56 +556,58 @@ function drawLineAroundH1Text() {
         bottomRight: [h1Text.getBoundingClientRect().right, h1Text.getBoundingClientRect().bottom]
     }
 
-
     let pathLength = h1Text.getBoundingClientRect().width * 2 + h1Text.getBoundingClientRect().height * 2;
-
+    let oneUnitOfPathLength = pathLength * 0.01;
     console.log(pathLength);
-
-
+    let speed = 2;
     let dashOffset = 0;
+    let lastTime = 0;
 
-    function animateH1Path() {
-        h1CanvasCTX.clearRect(0, 0, h1Canvas.width, h1Canvas.height);
+    function animateH1Path(timestamp) {
 
-        h1CanvasCTX.lineDashOffset = pathLength + dashOffset;
-        console.log(h1CanvasCTX.lineDashOffset);
+        let elapsedTime = timestamp - lastTime;
 
-        h1CanvasCTX.beginPath();
-        h1CanvasCTX.moveTo(h1TextCorners.topLeft[0],h1TextCorners.topLeft[1]);
-        h1CanvasCTX.lineTo(h1TextCorners.topRight[0], h1TextCorners.topRight[1]);
-        h1CanvasCTX.lineTo(h1TextCorners.bottomRight[0], h1TextCorners.bottomRight[1]);
-        h1CanvasCTX.lineTo(h1TextCorners.bottomLeft[0], h1TextCorners.bottomLeft[1]);
-        h1CanvasCTX.lineTo(h1TextCorners.topLeft[0],h1TextCorners.topLeft[1]);
-        h1CanvasCTX.closePath();
+        if (elapsedTime > speed) {
+            // h1CanvasCTX.clearRect(0, 0, h1Canvas.width, h1Canvas.height);
+            h1CanvasCTX.lineDashOffset = pathLength - dashOffset;
+    
+            h1CanvasCTX.beginPath();
+            h1CanvasCTX.moveTo(h1TextCorners.topLeft[0],h1TextCorners.topLeft[1]);
+            h1CanvasCTX.lineTo(h1TextCorners.topRight[0], h1TextCorners.topRight[1]);
+            h1CanvasCTX.lineTo(h1TextCorners.bottomRight[0], h1TextCorners.bottomRight[1]);
+            h1CanvasCTX.lineTo(h1TextCorners.bottomLeft[0], h1TextCorners.bottomLeft[1]);
+            h1CanvasCTX.lineTo(h1TextCorners.topLeft[0],h1TextCorners.topLeft[1]);
+            h1CanvasCTX.closePath();
+    
+            h1CanvasCTX.setLineDash([pathLength,pathLength])
+            h1CanvasCTX.strokeStyle = "white";
+            h1CanvasCTX.lineWidth = ".5";
+            h1CanvasCTX.stroke();
+    
 
-        h1CanvasCTX.setLineDash([pathLength,pathLength])
-        h1CanvasCTX.strokeStyle = "white";
-        h1CanvasCTX.lineWidth = ".5 ";
-        h1CanvasCTX.stroke();
-
-        // h1CanvasCTX.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        // h1CanvasCTX.fill();
-
-        // console.log(dashOffset);
-        if (h1CanvasCTX.lineDashOffset >= pathLength * 0.01 ) {
-            requestAnimationFrame(animateH1Path)
-        } else {
-            h1CanvasCTX.clearRect(0, 0, h1Canvas.width, h1Canvas.height);
-
+            // else {
+            //     h1CanvasCTX.clearRect(0, 0, h1Canvas.width, h1Canvas.height);
+            // }
+            // dashOffset -= pathLength * speed;
+            dashOffset += oneUnitOfPathLength;
+            lastTime = timestamp;
         }
 
-        dashOffset -= pathLength * 0.01;
+        if (h1CanvasCTX.lineDashOffset >= 0) {
+            requestAnimationFrame(animateH1Path)
+        } else {
+            // h1CanvasCTX.clearRect(0, 0, h1Canvas.width, h1Canvas.height);
+        }
 
-        // requestAnimationFrame(animateH1Path)
+
     }
-
     animateH1Path()
 }
 
-
-
 function setH1AnimTimesAndMessages(resultMessage) {
     h1Text.style.height = "";
+    console.log(h1Text.style);
+
     h1Text.classList.toggle("center-area__h1Text--rotate-in")
     h1TextAnimDuration = parseFloat(window.getComputedStyle(h1Text).animationDuration.split(", ")[0]) * 1000;
     h1TextAnimDelay = parseFloat(window.getComputedStyle(h1Text).animationDelay.split(", ")[0]) * 1000;
@@ -623,34 +616,16 @@ function setH1AnimTimesAndMessages(resultMessage) {
 
     alignH1Background()
 
-    console.log(h1TextAnimDuration);
-
-
-    console.log(h1Text);
     let h1TextWidth
     let currentH1TextContent = h1Text.textContent;
     h1Text.textContent = `${resultMessage}`;
     h1TextWidth = h1Text.getBoundingClientRect().width;
-    h1TextHeight = h1Text.getBoundingClientRect().height;
+    // h1TextHeight = h1Text.getBoundingClientRect().height;
     h1Text.textContent = currentH1TextContent;
 
-    // console.log(h1Text.getBoundingClientRect());
     setTimeout(() => {
         drawLineAroundH1Text(h1Canvas)
-
     }, 700);
-
-
-
-
-    // setTimeout(() => {
-    //     if (h1TextWidth >= windowWidth) {
-    //         h1Text.classList.add("with-margins");
-    //     } else {
-    //         h1Text.classList.remove("with-margins")
-    //     }
-    //     h1Text.textContent = `${resultMessage}`;
-    // }, h1TextAnimDelay + h1TextAnimDuration / 2);
 
     setTimeout(() => {
         h1Text.classList.toggle("center-area__h1Text--rotate-in");
@@ -669,13 +644,8 @@ function setH1AnimTimesAndMessages(resultMessage) {
 }
 
 let withOfPlayerScoreWrapper
-
 let currentScoreAllSpans = Array.from(currentScorePara.children)
-console.log(currentScoreAllSpans);
-
 let currentScoreSpans = Array.from(currentScorePara.querySelectorAll(".current-score__span-both-players"));
-console.log(currentScoreSpans);
-
 let widthOfCurrentScoreHeadline;
 let widthOfPlayerScoreWrapper;
 
@@ -1198,12 +1168,5 @@ window.addEventListener('resize', function () {
     setWidthsForCurrentScoreSpans(playerScore, cpuScore);
     resizeH2TextSpanDivContainers()
     alignH1Background()
-
-
-    // console.log("resize");
-    // withOfPlayerScoreWrapper = currentScorePlayerWrapper.offsetWidth + 12;
-    // console.log(withOfPlayerScoreWrapper);
-
-    // currentScorePara.style.left = (windowWidth - currentScoreParaWidth) / 2 + "px";
 
 })
