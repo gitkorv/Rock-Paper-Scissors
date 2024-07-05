@@ -368,7 +368,7 @@ function playRound(playerChoice) {
             // topAreaWrapper.classList.add("no-transition");
             topAreaWrapper.style.transitionDuration = ".2s";
             keepGoing = false;
-            canvasDripWrapper.classList.remove("zero-opacity")
+            // canvasDripWrapper.classList.remove("zero-opacity")
             gameOver = true;
 
             setTimeout(() => {
@@ -421,7 +421,7 @@ function playRound(playerChoice) {
     }
     setTopRoundTicker(keepGoing);
     setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, gameOver)
-    setH1AnimTimesAndMessages(resultMessage)
+    setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound)
     setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWonRound);
     currentRound++;
 
@@ -544,7 +544,7 @@ const h1CanvasCTX = h1Canvas.getContext("2d");
 
 const h1CanvasRect = h1Canvas.getBoundingClientRect();
 
-function setH1TextRotationAndCanvasLine() {
+function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound) {
 
     h1Canvas.width = window.innerWidth;
     h1Canvas.height = window.innerHeight;
@@ -557,13 +557,20 @@ function setH1TextRotationAndCanvasLine() {
     }
 
     let pathLength = h1Text.getBoundingClientRect().width * 2 + h1Text.getBoundingClientRect().height * 2;
-    let oneUnitOfPathLength = pathLength * 0.01;
+    let oneUnitOfPathLength = pathLength * 0.02;
     console.log(pathLength);
-    let speed = 2;
+    let speed = 4;
     let dashOffset = 0;
     let lastTime = 0;
+    let whoReallyWonRound;
+    // WhoWonRound is only passed on the first time animateH1Path is called, after that it becomes undefined due to being called by requestanimationframe //
 
-    function animateH1Path(timestamp) {
+    function animateH1Path(timestamp, whoWonRound) {
+
+        if (whoWonRound !== undefined) {
+            whoReallyWonRound = whoWonRound;
+        }
+        console.log(whoReallyWonRound);
 
         let elapsedTime = timestamp - lastTime;
 
@@ -598,9 +605,9 @@ function setH1TextRotationAndCanvasLine() {
         } else {
             h1CanvasCTX.clearRect(0, 0, h1Canvas.width, h1Canvas.height);
 
-            h1Text.classList.toggle("center-area__h1Text--rotate-in")
+            h1Text.classList.add("center-area__h1Text--rotate-in")
             h1TextAnimDuration = parseFloat(window.getComputedStyle(h1Text).animationDuration.split(", ")[0]) * 1000;
-            // h1TextAnimDelay = parseFloat(window.getComputedStyle(h1Text).animationDelay.split(", ")[0]) * 1000;
+            h1TextAnimDelay = parseFloat(window.getComputedStyle(h1Text).animationDelay.split(", ")[0]) * 1000;
         
         
             let h1TextWidth
@@ -616,7 +623,7 @@ function setH1TextRotationAndCanvasLine() {
         
             setTimeout(() => {
                 // h1Text.classList.toggle("center-area__h1Text--rotate-in");
-                h1Text.classList.toggle("center-area__h1Text--rotate-in--part2");
+                h1Text.classList.add("center-area__h1Text--rotate-in--part2");
                 h1Text.style.animationDuration = h1TextAnimDuration + "ms";
                 if (h1TextWidth >= windowWidth) {
                     h1Text.classList.add("with-margins");
@@ -624,22 +631,37 @@ function setH1TextRotationAndCanvasLine() {
                     h1Text.classList.remove("with-margins")
                 }
                 h1Text.textContent = `${resultMessage}`;
-                setTimeout(() => {
-                    h1Text.classList.toggle("center-area__h1Text--rotate-in");
 
-                    h1Text.classList.toggle("center-area__h1Text--rotate-in--part2");
+                if (gameOver && whoReallyWonRound === "cpu") {
+                    // canvasDripWrapper.classList.remove("zero-opacity");
+                    console.log("were doing it");
+                    h1Text.classList.add("center-area__h1Text--rotate-in--part2-gameOver")
+                }
+
+
+                setTimeout(() => {
+                    h1Text.classList.remove("center-area__h1Text--rotate-in");
+                    h1Text.classList.remove("center-area__h1Text--rotate-in--part2");
+
+                    // if (gameOver) {
+                    //     h1Text.classList.remove("center-area__h1Text--rotate-in--part2-gameOver")
+                    // }
+
                 }, h1TextAnimDuration);
             },h1TextAnimDuration);
         }
     }
-    animateH1Path()
+    setTimeout(() => {
+        animateH1Path(undefined, whoWonRound)
+
+    }, 1500);
 }
 
-function setH1AnimTimesAndMessages(resultMessage) {
+function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound) {
     h1Text.style.height = "";
     console.log(h1Text.style);
     alignH1Background()
-    setH1TextRotationAndCanvasLine(resultMessage)
+    setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound)
 }
 
 let withOfPlayerScoreWrapper
@@ -712,11 +734,14 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
             
     } else {
         if (whoWonRound === "player") {
-            currentScoreHeadline.style.width = "0px";
-            currentScoreAnims([currentScorePlayerWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore)
+            currentScorePara.classList.add("zero-width")
+            // currentScoreHeadline.style.width = "0px";
+            // currentScoreAnims([currentScorePlayerWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore)
         } else if (whoWonRound === "cpu") {
-            currentScoreHeadline.style.width = "0px";
-            currentScoreAnims([currentScoreCpuWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore)
+            currentScorePara.classList.add("zero-width")
+
+            // currentScoreHeadline.style.width = "0px";
+            // currentScoreAnims([currentScoreCpuWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore)
         } else {
             currentScoreAnims(currentScoreSpans, widthOfPlayerScoreWrapper, playerScore, cpuScore)
         }
@@ -884,13 +909,17 @@ function animateDrip() {
 
 
 function cpuWonGame(params) {
-    canvasDripWrapper.classList.remove("zero-opacity");
-    animateDrip()
+    setTimeout(() => {
+        canvasDripWrapper.classList.remove("zero-opacity");
+        animateDrip()
+    }, h1TextAnimDuration);
+
 }
 
 // Restart game, hide hands buttons, show play again button
 function restartGame(gameOver) {
     console.log("gameOver is" + gameOver);
+    console.log("now!!!");
 
     setTimeout(() => {
         // playerChoiceButtonArray.forEach(button => button.style.display = "none");
@@ -914,7 +943,7 @@ function restartGame(gameOver) {
         setTimeout(() => {
             letsPlayButton.classList.toggle("zero-width");
             letsPlayButton.textContent = "Play again!"
-            btnWrapperAll.style.transitionDuration = "1s"
+            btnWrapperAll.style.transitionDuration = "1s";
             btnWrapperAll.classList.remove("zero-width");
             setTimeout(() => {
                 btnWrapperAll.style.transitionDuration = "";
@@ -926,6 +955,7 @@ function restartGame(gameOver) {
             newGame(gameOver)
             firework.reset();
 
+            h1Text.classList.remove("center-area__h1Text--rotate-in--part2-gameOver")
 
             canvasDripWrapper.classList.add("zero-opacity")
             setTimeout(() => {

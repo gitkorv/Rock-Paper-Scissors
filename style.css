@@ -415,7 +415,7 @@ span.bold-anim.with-after.scissor::after {
 }
 
 .center-area__h1Text--rotate-in {
-    animation: flipH1Text 1s linear forwards;
+    animation: flipH1Text .5s linear forwards;
     /* animation-delay: 1.5s; */
 }
 .center-area__h1Text--rotate-in--part2 {
@@ -423,6 +423,12 @@ span.bold-anim.with-after.scissor::after {
     /* animation-duration: 5s; */
     animation-timing-function: linear forwards;
     transform: rotate3d(0, 1, 0, -90deg);
+
+}
+
+.center-area__h1Text--rotate-in--part2-gameOver {
+    animation-name: flipH1TextPart2GameOver;
+    background-color: rgba(0, 0, 0, 0);
 
 }
 
@@ -456,6 +462,23 @@ span.bold-anim.with-after.scissor::after {
     to {
         transform: rotate3d(0, 0, 0, 0deg);
         background-color: hsl(276, 91%, 38%);
+
+        /* background-image: linear-gradient(to left,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
+    }
+}
+@keyframes flipH1TextPart2GameOver {
+    from {
+        transform: rotate3d(0, 1, 0, -90deg);
+        background-color: hsl(276, 91%, 48%);
+        /* background-image: linear-gradient(to left, hsl(276, 91%, 58%), hsl(276, 91%, 18%)); */
+    }
+    75% {
+        background-color: hsl(276, 91%, 20%);
+        /* background-image: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
+    }
+    to {
+        transform: rotate3d(0, 0, 0, 0deg);
+        background-color: hsl(276, 91%, 0%);
 
         /* background-image: linear-gradient(to left,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
     }
