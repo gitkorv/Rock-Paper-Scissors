@@ -166,10 +166,14 @@ body {
     /* height: 26px; */
     font-size: 1.2em;
     overflow: hidden;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, .5);
     /* overflow: visible; */
     
     /* box-shadow: 2px 2px 2px black; */
+}
+
+.top-area__text-container__hi-there--cpu-won {
+    padding: 0 10px;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, .5);
 }
 
 .top-area__text-container__number {
@@ -256,7 +260,7 @@ h2 {
 }
 
 .center-area__h2Text.black {
-    color: black;
+    color: rgb(255, 255, 255);
 }
 
 .center-area__h2Text.h2Text-fade-in {
@@ -638,7 +642,7 @@ span.bold-anim.with-after.scissor::after {
     /* filter: invert(90); */
     filter: blur(30);
 
-    border: solid 1px hsl(0, 0%, 20%);
+    /* border: solid 1px hsl(0, 0%, 20%); */
 }
 
 

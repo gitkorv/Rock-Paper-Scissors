@@ -299,8 +299,8 @@ function playRound(playerChoice) {
     h2Text.classList.remove("black");
     roundsPlayed++;
 
-    // let computerChoice = getCpuChoice();
-    let computerChoice = "Rock";
+    let computerChoice = getCpuChoice();
+    // let computerChoice = "Rock";
     h2Text.innerHTML = originalH2TextStructure;
     // console.log(h2Text);
 
@@ -955,7 +955,7 @@ function restartGame(gameOver) {
         topAreaWrapper.classList.remove("no-transition");
         topAreaTextContainerChildren.forEach(child => child.classList.add("hidden"));
         hiThere.textContent = `Final Score: ${playerScore} - ${cpuScore}`
-        hiThere.classList.add("top-area__text-container__hi-there")
+        hiThere.classList.add("top-area__text-container__hi-there", "top-area__text-container__hi-there--cpu-won")
         topAreaTextContainer.appendChild(hiThere);
         btnWrapperAll.classList.add("zero-width");
         setTimeout(() => {
