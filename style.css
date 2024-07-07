@@ -406,7 +406,7 @@ span.bold-anim.with-after.scissor::after {
     /* right: 0px; */
     justify-content: center;
     align-items: center;
-    color: #4cc9f0;
+    color: rgba(76, 201, 240, 1);
     position: relative;
     /* margin-top: 6px; */
     /* mix-blend-mode: difference; */
@@ -422,9 +422,13 @@ span.bold-anim.with-after.scissor::after {
     /* border: 1px solid red; */
     width: 80%;
     z-index: 1000;
+    transition: color 2s;
     /* transform: rotate3d(0, 1, 0, 15deg); */
 }
 
+.center-area__h1Text.color-fade {
+    color: rgba(76, 201, 240, .1);
+}
 
 .center-area__h1Text__paper {
     margin: 0 7px;

@@ -299,8 +299,8 @@ function playRound(playerChoice) {
     h2Text.classList.remove("black");
     roundsPlayed++;
 
-    let computerChoice = getCpuChoice();
-    // let computerChoice = "Rock";
+    // let computerChoice = getCpuChoice();
+    let computerChoice = "Rock";
     h2Text.innerHTML = originalH2TextStructure;
     // console.log(h2Text);
 
@@ -547,6 +547,14 @@ const h1CanvasCTX = h1Canvas.getContext("2d");
 const h1CanvasRect = h1Canvas.getBoundingClientRect();
 
 function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, gameInPlay) {
+    alignH1Background()
+    console.log(gameOver);
+
+    h1Text.style.transitionDuration = "";
+
+    if (gameInPlay || gameOver) h1Text.classList.add("color-fade");
+    
+    // h1Text.classList.toggle("color-fade");
 
     console.log(gameInPlay);
 
@@ -570,6 +578,7 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
     // WhoWonRound is only passed on the first time animateH1Path is called, after that it becomes undefined due to being called by requestanimationframe //
 
     function animateH1Path(timestamp, whoWonRound) {
+
 
         if (whoWonRound !== undefined) {
             whoReallyWonRound = whoWonRound;
@@ -645,6 +654,12 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
         
             setTimeout(() => {
                 h1Text.style.fontSize = "";
+                h1Text.style.transitionDuration = "0s";
+                requestAnimationFrame(()  => {
+                    if (gameInPlay || gameOver) h1Text.classList.remove("color-fade");
+                })
+
+
 
                 if (gameOver && whoReallyWonRound === "cpu") {
                     // canvasDripWrapper.classList.remove("zero-opacity");
@@ -686,7 +701,7 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
 function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound) {
     h1Text.style.height = "";
     console.log(resultMessage, h1Text);
-    alignH1Background()
+    // alignH1Background()
     setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, gameInPlay)
 }
 
