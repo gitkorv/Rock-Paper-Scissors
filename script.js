@@ -165,14 +165,38 @@ function handleMouseOut() {
 function handleTouchStart() {
     this.classList.add("hovered")
 }
-function handleTouchEnd() {
-    // this.classList.remove("hovered");
-    setTimeout(() => {
-        // this.style.outline = "";
-        // this.style.color = "";
+function handleTouchMove(event) {
+    // console.log(event);
+    const touch = event.touches[0];
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
 
-        this.classList.remove('hovered');
-    }, 100); // 
+    if (element && element.classList.contains("play-button")) {
+        allButtons.forEach(button => button.classList.remove("hovered"));
+        element.classList.add("hovered")
+    } else {
+        allButtons.forEach(button => button.classList.remove("hovered"));
+
+    }
+}
+function handleTouchEnd() {
+    console.log("end!!!");
+    // allButtons.forEach(button => button.classList.remove("hovered"));
+
+    // const touch = event.touches[0];
+    // const element = document.elementFromPoint(touch.clientX, touch.clientY);
+
+    // if (element && element.classList.contains("play-button")) {
+    //     allButtons.forEach(button => button.classList.remove("hovered"));
+    //     element.classList.add("hovered")
+    // }
+
+    // this.classList.remove("hovered");
+    // setTimeout(() => {
+    //     // this.style.outline = "";
+    //     // this.style.color = "";
+
+    //     this.classList.remove('hovered');
+    // }, 100);
 }
 function handleTouchCancel() {
     this.classList.remove("hovered")
@@ -182,6 +206,7 @@ allButtons.forEach(button => {
     button.addEventListener('mouseover', handleMouseOver);
     button.addEventListener('mouseout', handleMouseOut);
     button.addEventListener('touchstart', handleTouchStart);
+    button.addEventListener('touchmove', handleTouchMove);
     button.addEventListener('touchend', handleTouchEnd);
     button.addEventListener('touchcancel', handleTouchCancel);
 
@@ -192,12 +217,12 @@ allButtons.forEach(button => {
         // Prevent the default action of the click event
         event.preventDefault();
         // Remove the "hovered" class after a delay to allow time for the touch event to complete
-        // setTimeout(() => {
-        //     // this.style.outline = "";
-        //     // this.style.color = "";
+        setTimeout(() => {
+            // this.style.outline = "";
+            // this.style.color = "";
 
-        //     this.classList.remove('hovered');
-        // }, 100); // Adjust the delay as needed
+            this.classList.remove('hovered');
+        }, 500); // Adjust the delay as needed
     });
 });
 
