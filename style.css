@@ -254,7 +254,7 @@ body {
     align-items: center;
     gap: 10px;
     /* justify-content: space-evenly; */
-    padding: 10px 0px 60px 0px;
+    padding: 20px 0px 60px 0px;
     width: 100vw;
     overflow: visible;
     /* background-color: #654553; */
@@ -300,6 +300,7 @@ h2 {
     /* background-color: #4cc9f0; */
     /* overflow-y: hidden; */
     /* mix-blend-mode: difference; */
+    opacity: 1;
 }
 
 .center-area__h2Text.font-5rem {
@@ -312,7 +313,7 @@ h2 {
 }
 
 .center-area__h2Text.h2Text-fade-in {
-    animation: h2FadeIn 3s;
+    animation: h2FadeIn 5s;
 }
 
 @keyframes h2FadeIn {
@@ -699,11 +700,11 @@ span.bold-anim.with-after.scissor::after {
 }
 
 .btn-wrapper-all button.btn-fade-out-and-back {
-    animation: fade-out-and-back 2s ease-out;
+    animation: fade-out-and-back 4s ease-out;
 }
 
 .btn-wrapper-all button.btn-fade-out-and-back.slower {
-    animation: fade-out-and-back-slower 2s ease-out;
+    animation: fade-out-and-back-slower 4s ease-out;
 }
 
 @keyframes fade-out-and-back {
