@@ -15,7 +15,8 @@ topAreaTextContainerChildren.forEach(child => child.classList.add("hidden"));
 // Show welcome -- Hi there! -- message
 let hiThere = document.createElement("span");
 hiThere.textContent = "Hi There!"
-hiThere.classList.add("top-area__text-container__hi-there")
+hiThere.classList.add("top-area__text-container__hi-there");
+topAreaWrapper.classList.add("justify-content-center");
 topAreaTextContainer.appendChild(hiThere);
 
 /* 
@@ -99,6 +100,8 @@ Select Score Tracker
 */
 const scoreContainer = document.querySelector(".score-container");
 
+let topAreaBorder = document.querySelector(".top-area__border");
+
 /*
 On window load, Bring in h2Text etc
 */
@@ -106,6 +109,7 @@ window.onload = function () {
     alignH1Background()
 
     topAreaWrapper.classList.add("show-rounds");
+    topAreaBorder.classList.add("opacity1");
     h2Text.style.visibility = "hidden";
     setTimeout(() => {
         h2Text.style.visibility = "";
@@ -154,7 +158,8 @@ let h1TextAnimDelay;
 let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
 topAreaTextContainer.style.height = roundTextHeight + "px";
 
-const allButtons = document.querySelectorAll("button")
+const allButtons = document.querySelectorAll("button");
+let lastTouchedElement = null;
 
 function handleMouseOver() {
     this.classList.add("hovered")
@@ -162,33 +167,61 @@ function handleMouseOver() {
 function handleMouseOut() {
     this.classList.remove("hovered")
 }
-function handleTouchStart() {
-    this.classList.add("hovered")
+function handleTouchStart(event) {
+    lastTouchedElement = event.target;
+    lastTouchedElement.classList.add("active");
+    event.target.classList.add("hovered");
 }
 function handleTouchMove(event) {
     // console.log(event);
     const touch = event.touches[0];
     const element = document.elementFromPoint(touch.clientX, touch.clientY);
 
-    if (element && element.classList.contains("play-button")) {
-        allButtons.forEach(button => button.classList.remove("hovered"));
-        element.classList.add("hovered")
+    if (element && element.tagName === "BUTTON") {
+
+        if (lastTouchedElement && lastTouchedElement !== element) {
+            lastTouchedElement.classList.remove("active", "hovered")
+        }
+        lastTouchedElement = element;
+        element.classList.add("active", "hovered")
+
+        // console.log("this is a button");
+        // allButtons.forEach(button => button.classList.remove("hovered"));
+        // element.classList.add("hovered")
     } else {
-        allButtons.forEach(button => button.classList.remove("hovered"));
+        if (lastTouchedElement) {
+            lastTouchedElement.classList.remove("active", "hovered")
+        }
+        lastTouchedElement = null;
+        // allButtons.forEach(button => button.classList.remove("hovered"));
 
     }
 }
-function handleTouchEnd() {
-    console.log("end!!!");
-    // allButtons.forEach(button => button.classList.remove("hovered"));
+function handleTouchEnd(event) {
+    console.log(event);
+
+    if (lastTouchedElement) {
+        console.log("last touched ", lastTouchedElement.classList);
+    }
+
+    // event.target.classList.add("active");
+    allButtons.forEach(button => button.classList.remove("active", "hovered"));
 
     // const touch = event.touches[0];
     // const element = document.elementFromPoint(touch.clientX, touch.clientY);
 
+    // console.log(element);
+
     // if (element && element.classList.contains("play-button")) {
     //     allButtons.forEach(button => button.classList.remove("hovered"));
-    //     element.classList.add("hovered")
+    //     element.classList.add("active")
+    // } else {
+    //     allButtons.forEach(button => button.classList.remove("hovered"));
     // }
+
+    setTimeout(() => {
+        event.target.classList.remove("active");
+    }, 500);
 
     // this.classList.remove("hovered");
     // setTimeout(() => {
@@ -213,16 +246,30 @@ allButtons.forEach(button => {
     button.addEventListener('click', function (event) {
         // this.style.outline = "4px solid #f72585";
         // this.style.color = "#f72585";
+        if (event.target.classList.contains("play-button")) {
+            console.log("its a play button");
+            allButtons.forEach(button => {
+                button.classList.add("btn-fade-out-and-back")
+            })
+            // this.classList.remove("btn-fade-out-and-back")
+            this.classList.add("slower");
 
+        }
+
+        this.classList.add("active");
         // Prevent the default action of the click event
         event.preventDefault();
         // Remove the "hovered" class after a delay to allow time for the touch event to complete
         setTimeout(() => {
             // this.style.outline = "";
             // this.style.color = "";
-
-            this.classList.remove('hovered');
+            this.classList.remove('hovered', "active");
         }, 500); // Adjust the delay as needed
+        setTimeout(() => {
+            allButtons.forEach(button => {
+                button.classList.remove("btn-fade-out-and-back", "slower");
+            })
+        }, 4000);
     });
 });
 
@@ -274,13 +321,15 @@ function newGame(gameOver, gameInPlay) {
 
 
     // topAreaWrapper.classList.remove("hi-there-effect")
-    topAreaWrapper.classList.remove("show-rounds")
+    topAreaWrapper.classList.remove("show-rounds");
     // letsPlayButton.style.display = "none";
     setTimeout(() => {
         if (topAreaTextContainer.lastChild === hiThere) {
             topAreaTextContainer.removeChild(hiThere);
         }
         topAreaTextContainerChildren.forEach(child => child.classList.remove("hidden"));
+        topAreaWrapper.classList.remove("justify-content-center");
+
     }, 1000);
 
     // topAreaTextContainer.innerHTML = originalTopAreaTextContainerHTML;
@@ -511,7 +560,7 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, 
     h2Text.classList.toggle("h2Text-fade-in");
     setTimeout(() => {
         h2Text.classList.toggle("h2Text-fade-in");
-    }, 1000);
+    }, 3000);
     // Grab h2 spans as an array
     let h2SpanElements = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span"));
     let h2TextSpanContainers = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span-container"))
@@ -689,7 +738,7 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
                 if (gameOver && whoReallyWonRound === "cpu") {
                     // canvasDripWrapper.classList.remove("zero-opacity");
                     console.log("were doing it");
-                    h1Text.classList.add("center-area__h1Text--rotate-in--part2-gameOver")
+                    h1Text.classList.add("center-area__h1Text--rotate-in--cpuWon-part2")
                 } else {
                     h1Text.classList.add("center-area__h1Text--rotate-in--part2");
                 }
@@ -710,7 +759,7 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
 
 
                     // if (gameOver) {
-                    //     h1Text.classList.remove("center-area__h1Text--rotate-in--part2-gameOver")
+                    //     h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
                     // }
 
                 }, h1TextAnimDuration);
@@ -1019,12 +1068,12 @@ function restartGame(gameOver) {
         }, 4000);
 
         letsPlayButton.addEventListener("click", function () {
-            h1Text.classList.remove("center-area__h1Text--rotate-in--part2-gameOver")
+            h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
 
             newGame(gameOver)
             firework.reset();
 
-            h1Text.classList.remove("center-area__h1Text--rotate-in--part2-gameOver")
+            h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
 
             canvasDripWrapper.classList.add("zero-opacity")
             setTimeout(() => {
