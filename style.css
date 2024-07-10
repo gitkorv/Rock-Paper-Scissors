@@ -1081,7 +1081,7 @@ span.bold-anim.with-after.scissor::after {
 @media (max-width: 600px){
     .score-container {
         font-size: 1.5rem;
-        padding-left: 25px;
+        /* padding-left: 25px; */
     }
     .center-area__h2Text-container {
         height: 50px;

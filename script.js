@@ -173,7 +173,7 @@ function handleTouchStart(event) {
     event.target.classList.add("hovered");
 }
 function handleTouchMove(event) {
-    // console.log(event);
+    console.log(event);
     const touch = event.touches[0];
     const element = document.elementFromPoint(touch.clientX, touch.clientY);
 
@@ -198,10 +198,10 @@ function handleTouchMove(event) {
     }
 }
 function handleTouchEnd(event) {
-    console.log(event);
+    // console.log(event);
 
     if (lastTouchedElement) {
-        console.log("last touched ", lastTouchedElement.classList);
+        console.log("last touched ", lastTouchedElement.classList.add("active"));
     }
 
     // event.target.classList.add("active");
@@ -271,7 +271,7 @@ allButtons.forEach(button => {
             // this.style.outline = "";
             // this.style.color = "";
             this.classList.remove('hovered', "active");
-        }, 500); // Adjust the delay as needed
+        }, 500);
         // setTimeout(() => {
         //     allButtons.forEach(button => {
         //         button.classList.remove("btn-fade-out-and-back", "slower");
