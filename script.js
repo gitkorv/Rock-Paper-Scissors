@@ -831,9 +831,9 @@ function setWidthsForCurrentScoreSpans(playerScore, cpuScore) {
     console.log(widthOfPlayerScoreWrapper);
 
     // currentScoreSpans.forEach(player => player.style.width = widthOfPlayerScoreWrapper + "px")
-    console.log(playerScore);
-    currentScorePlayer.textContent = playerScore;
-    currentScoreCpu.textContent = cpuScore;
+    // console.log(playerScore);
+    // currentScorePlayer.textContent = playerScore;
+    // currentScoreCpu.textContent = cpuScore;
 }
 
 function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWonRound) {
@@ -863,6 +863,7 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
             changeMe.forEach(span => span.classList.toggle("no-trans"));
             currentScorePlayer.textContent = playerScore;
             currentScoreCpu.textContent = cpuScore;
+            console.log(playerScore);
         } else {
             changeMe.forEach(span => span.style.width = "0px");
         }
