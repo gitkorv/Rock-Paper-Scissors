@@ -107,6 +107,8 @@ On window load, Bring in h2Text etc
 */
 window.onload = function () {
     alignH1Background()
+    setWidthsForCurrentScoreSpans(playerScore, cpuScore);
+
 
     topAreaWrapper.classList.add("show-rounds");
     topAreaBorder.classList.add("opacity1");
@@ -136,16 +138,16 @@ let winningHand = "test";
 
 let currentScorePara = document.querySelector(".current-score-para");
 let currentScoreHeadline = document.querySelector(".current-score__headline");
-console.log(currentScoreHeadline);
+// console.log(currentScoreHeadline);
 let currentScorePlayer = currentScorePara.querySelector(".current-score__player-span-number");
 let currentScorePlayerWrapper = currentScorePlayer.parentElement;
-console.log(currentScorePlayerWrapper);
+// console.log(currentScorePlayerWrapper);
 let currentScoreCpu = currentScorePara.querySelector(".current-score__cpu-span-number");
 let currentScoreCpuWrapper = currentScoreCpu.parentElement;
 
 let currentScoreParaWidth = currentScorePara.getBoundingClientRect().width;
-console.log(currentScoreParaWidth);
-console.log(windowWidth);
+// console.log(currentScoreParaWidth);
+// console.log(windowWidth);
 // currentScorePara.style.left = (windowWidth - currentScoreParaWidth) / 2 + "px";
 
 let h1TextAnimDuration;
@@ -296,7 +298,7 @@ let gameInPlay = false;
 
 
 function newGame(gameOver, gameInPlay) {
-    console.log("gameOver is" + gameOver);
+    // console.log("gameOver is" + gameOver);
     currentScorePara.classList.add("zero-width");
 
     let h2TextSpanContainers = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span-container"));
@@ -312,7 +314,7 @@ function newGame(gameOver, gameInPlay) {
         currentScoreHeadline.textContent = "Current Score:";
 
 
-        console.log(currentScorePara);
+        // console.log(currentScorePara);
 
         // currentScorePara.addEventListener('transitionend', function(e) {
         //     console.log(e);
@@ -548,9 +550,9 @@ function setTopRoundTicker(keepGoing) {
 }
 
 function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, gameOver) {
-    console.log("gameOver is " + gameOver);
+    // console.log("gameOver is " + gameOver);
 
-    console.log(currentRound);
+    // console.log(currentRound);
 
     if (currentRound >= 1) {
         h2Text.classList.add("font-5rem");
@@ -647,7 +649,7 @@ const h1CanvasRect = h1Canvas.getBoundingClientRect();
 
 function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, gameInPlay) {
     alignH1Background()
-    console.log(gameOver);
+    // console.log(gameOver);
 
     h1Text.style.transitionDuration = "";
 
@@ -655,7 +657,7 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
 
     // h1Text.classList.toggle("color-fade");
 
-    console.log(gameInPlay);
+    // console.log(gameInPlay);
 
     h1Canvas.width = window.innerWidth;
     h1Canvas.height = window.innerHeight;
@@ -669,7 +671,7 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
 
     let pathLength = h1Text.getBoundingClientRect().width * 2 + h1Text.getBoundingClientRect().height * 2;
     let oneUnitOfPathLength = pathLength * 0.02;
-    console.log(pathLength);
+    // console.log(pathLength);
     let speed = 4;
     let dashOffset = 0;
     let lastTime = 0;
@@ -682,7 +684,7 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
         if (whoWonRound !== undefined) {
             whoReallyWonRound = whoWonRound;
         }
-        console.log(whoReallyWonRound);
+        // console.log(whoReallyWonRound);
 
         let elapsedTime = timestamp - lastTime;
 
@@ -728,7 +730,7 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
             h1TextAnimDuration = parseFloat(window.getComputedStyle(h1Text).animationDuration.split(", ")[0]) * 1000;
             h1TextAnimDelay = parseFloat(window.getComputedStyle(h1Text).animationDelay.split(", ")[0]) * 1000;
 
-            console.log(h1Text);
+            // console.log(h1Text);
             let h1TextWidth
             let currentH1TextContent = h1Text.textContent;
             h1Text.textContent = `${resultMessage}`;
@@ -736,11 +738,11 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
             // h1TextHeight = h1Text.getBoundingClientRect().height;
             h1Text.textContent = currentH1TextContent;
 
-            console.log(currentH1TextContent);
+            // console.log(currentH1TextContent);
 
             let containsRock = currentH1TextContent.includes("Rock");
 
-            console.log(containsRock);
+            // console.log(containsRock);
 
             if (containsRock) {
                 h1Text.style.fontSize = "2rem";
@@ -799,7 +801,7 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
 
 function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound) {
     h1Text.style.height = "";
-    console.log(resultMessage, h1Text);
+    // console.log(resultMessage, h1Text);
     // alignH1Background()
     setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, gameInPlay)
 }
@@ -818,24 +820,27 @@ function setWidthsForCurrentScoreSpans(playerScore, cpuScore) {
     // console.log(widthOfCurrentScoreHeadline);
     currentScoreHeadline.style.width = widthOfCurrentScoreHeadline + "px";
 
+    console.log(widthOfPlayerScoreWrapper);
+
     currentScorePlayerWrapper.style.width = "fit-content";
     currentScoreCpuWrapper.style.width = "fit-content";
-    widthOfPlayerScoreWrapper = currentScorePlayerWrapper.offsetWidth + 12;
+    widthOfPlayerScoreWrapper = currentScorePlayerWrapper.offsetWidth + 20;
     currentScorePlayerWrapper.style.width = widthOfPlayerScoreWrapper + "px";
     // currentScorePlayerWrapper.style.width = "100px";
     currentScoreCpuWrapper.style.width = widthOfPlayerScoreWrapper + "px";
+    console.log(widthOfPlayerScoreWrapper);
 
     // currentScoreSpans.forEach(player => player.style.width = widthOfPlayerScoreWrapper + "px")
-
+    console.log(playerScore);
     currentScorePlayer.textContent = playerScore;
     currentScoreCpu.textContent = cpuScore;
 }
 
 function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWonRound) {
-    console.log(currentRound);
+    console.log(keepGoing, currentRound, whoWonRound);
 
-    console.log(whoWonRound);
-    setWidthsForCurrentScoreSpans(playerScore, cpuScore);
+    // console.log(whoWonRound);
+    // setWidthsForCurrentScoreSpans(playerScore, cpuScore);
 
 
     if (currentRound === 0) {
@@ -850,10 +855,14 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
     function currentScoreAnims(changeMe, endWidth, playerScore, cpuScore, currentRound) {
         let timeoutTime = currentRound === 0 ? 750 : 500;
 
+        console.log(currentRound);
+
         if (currentRound === 0) {
             changeMe.forEach(span => span.classList.toggle("no-trans"));
             changeMe.forEach(span => span.style.width = "0px");
             changeMe.forEach(span => span.classList.toggle("no-trans"));
+            currentScorePlayer.textContent = playerScore;
+            currentScoreCpu.textContent = cpuScore;
         } else {
             changeMe.forEach(span => span.style.width = "0px");
         }
@@ -866,13 +875,14 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
     }
 
     if (keepGoing) {
+        console.log(widthOfPlayerScoreWrapper);
 
         if (whoWonRound === "player") {
             currentScoreAnims([currentScorePlayerWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore, currentRound)
         } else if (whoWonRound === "cpu") {
-            currentScoreAnims([currentScoreCpuWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore)
+            currentScoreAnims([currentScoreCpuWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore, currentRound)
         } else {
-            currentScoreAnims(currentScoreSpans, widthOfPlayerScoreWrapper, playerScore, cpuScore)
+            currentScoreAnims(currentScoreSpans, widthOfPlayerScoreWrapper, playerScore, cpuScore, currentRound)
         }
 
     } else {
@@ -886,7 +896,7 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
             // currentScoreHeadline.style.width = "0px";
             // currentScoreAnims([currentScoreCpuWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore)
         } else {
-            currentScoreAnims(currentScoreSpans, widthOfPlayerScoreWrapper, playerScore, cpuScore)
+            currentScoreAnims(currentScoreSpans, widthOfPlayerScoreWrapper, playerScore, cpuScore, currentRound)
         }
 
         setTimeout(() => {
@@ -1013,7 +1023,7 @@ class dripsEffect {
             this.dripArray.push(new drip(this));
             this.dripTipArray.push(new drip(this, i));
         }
-        console.log(this.dripArray);
+        // console.log(this.dripArray);
     }
     update() {
         for (let i = 0; i < this.dripArray.length; i++) {
@@ -1341,7 +1351,8 @@ function resizeH2TextSpanDivContainers() {
 
 
 
-window.addEventListener('resize', function () {
+window.addEventListener('resize', function (e) {
+    console.log(e);
     windowWidth = window.innerWidth;
     windowHeight = window.innerHeight;
     firework.reset();
