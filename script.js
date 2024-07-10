@@ -822,6 +822,7 @@ function setWidthsForCurrentScoreSpans(playerScore, cpuScore) {
     currentScoreCpuWrapper.style.width = "fit-content";
     widthOfPlayerScoreWrapper = currentScorePlayerWrapper.offsetWidth + 12;
     currentScorePlayerWrapper.style.width = widthOfPlayerScoreWrapper + "px";
+    // currentScorePlayerWrapper.style.width = "100px";
     currentScoreCpuWrapper.style.width = widthOfPlayerScoreWrapper + "px";
 
     // currentScoreSpans.forEach(player => player.style.width = widthOfPlayerScoreWrapper + "px")
@@ -831,12 +832,14 @@ function setWidthsForCurrentScoreSpans(playerScore, cpuScore) {
 }
 
 function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWonRound) {
-    // console.log(currentRound);
+    console.log(currentRound);
 
     console.log(whoWonRound);
+    setWidthsForCurrentScoreSpans(playerScore, cpuScore);
+
 
     if (currentRound === 0) {
-        setWidthsForCurrentScoreSpans(playerScore, cpuScore);
+        // setWidthsForCurrentScoreSpans(playerScore, cpuScore);
         // setTimeout(() => {
         //     currentScorePara.classList.remove("zero-width");
         // }, 500);
