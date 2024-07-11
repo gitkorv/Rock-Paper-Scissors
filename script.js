@@ -108,7 +108,7 @@ let topAreaBorder = document.querySelector(".top-area__border");
 On window load, Bring in h2Text etc
 */
 window.onload = function () {
-    alignH1Background()
+    // alignH1Background()
     setWidthsForCurrentScoreSpans(playerScore, cpuScore);
 
 
@@ -302,7 +302,9 @@ canvasDripWrapper.classList.add("trans");
 let gameInPlay = false;
 
 
-function newGame(gameOver, gameInPlay) {
+function newGame(gameOver, gameInPlay, waitForMainContExtension) {
+    mainContainer.classList.remove("player-won-height-extension");
+
     // console.log("gameOver is" + gameOver);
     currentScorePara.classList.add("zero-width");
 
@@ -312,11 +314,11 @@ function newGame(gameOver, gameInPlay) {
 
     btnWrapperAll.classList.add("zero-width")
     setTimeout(() => {
-        letsPlayButton.classList.add("zero-width");
+        // letsPlayButton.classList.add("zero-width");
 
-        btnWrapperAll.classList.remove("zero-width")
+        // btnWrapperAll.classList.remove("zero-width")
 
-        currentScoreHeadline.textContent = "Current Score:";
+        // currentScoreHeadline.textContent = "Current Score:";
 
 
         // console.log(currentScorePara);
@@ -331,13 +333,37 @@ function newGame(gameOver, gameInPlay) {
 
 
         // letsPlayButton.style.display = "none";
-        playerChoiceButtonArray.forEach(button => {
-            button.addEventListener("click", pickHand);
-            button.style.display = "";
-        })
-    }, 500);
+        // playerChoiceButtonArray.forEach(button => {
+        //     button.addEventListener("click", pickHand);
+        //     button.style.display = "";
+        // })
+    }, 4000);
 
+    h1Text.addEventListener("animationend", (e) => {
+        console.log(e.animationName);
+        if (e.animationName === "flipH1TextPart2") {
+            letsPlayButton.classList.add("zero-width");
 
+            btnWrapperAll.classList.remove("zero-width")
+    
+            currentScoreHeadline.textContent = "Current Score:";
+            
+            playerChoiceButtonArray.forEach(button => {
+                button.addEventListener("click", pickHand);
+                button.style.display = "";
+            })
+        }
+    })
+
+    // if (h1Text.classList.contains("center-area__h1Text--rotate-in--part2")) {
+    //     console.log("it has!!!");
+    //     h1Text.addEventListener("transitionend", () => {
+    //         console.log("that was the end");
+    //     })
+    //     setTimeout(() => {
+    //         h1Text.removeEventListener("transitionend")
+    //     }, 200);
+    // }
 
 
     // topAreaWrapper.classList.remove("hi-there-effect")
@@ -365,11 +391,19 @@ function newGame(gameOver, gameInPlay) {
     keepGoing = true;
 
     resultMessage = `Choose Your Weapon!`;
-    setH1AnimTimesAndMessages(resultMessage, gameInPlay);
+    
+    if (waitForMainContExtension) {
+        setTimeout(() => {
+            setH1AnimTimesAndMessages(resultMessage, gameInPlay);
+
+        }, 1200);
+    } else {
+        setH1AnimTimesAndMessages(resultMessage, gameInPlay);
+    }
     // h2Text.textContent = "";
     h2Text.appendChild(letsPLayAGameMessage);
     // letsPLayAGameMessage.textContent = `Great, here goes round ${currentRound + 1}`;
-    letsPLayAGameMessage.textContent = `Great, here goes round one!`;
+    letsPLayAGameMessage.textContent = `Here goes round one!`;
     letsPLayAGameMessage.classList.add("black");
     setTopRoundTicker();
     setH2TextEffects(keepGoing, undefined, winningHand, currentRound, gameOver)
@@ -479,7 +513,7 @@ function playRound(playerChoice) {
                 startFireWork();
 
             }, 1500);
-            restartGame(gameOver);
+            restartGame(gameOver, waitForMainContExtension);
 
         } else if (playerScore < cpuScore) {
             resultMessage = `The Computer won the game!`;
@@ -523,14 +557,27 @@ function playRound(playerChoice) {
             keepGoing = false;
         }
     }
-    setTopRoundTicker(keepGoing);
 
 
-    setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound)
+    function runAllVisualUpdates() {
+        setTopRoundTicker(keepGoing);
+        setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound)
+        setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWonRound);
+        currentRound++;
+        setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, gameOver)
+    }
 
-    setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWonRound);
-    currentRound++;
-    setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, gameOver)
+    if (waitForMainContExtension) {
+        setTimeout(() => {
+            runAllVisualUpdates()
+        }, 1200);
+    } else {
+        runAllVisualUpdates()
+
+    }
+
+
+
 
 
 }
@@ -643,24 +690,28 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, 
     
 }
 
-function alignH1Background(params) {
-    let bottomOfH1Text = h1Text.getBoundingClientRect().bottom
-    let h1TextBackground = document.querySelector(".center-area__h1Text--background");
-    let bottomOfH1TextBackground = h1TextBackground.getBoundingClientRect().bottom;
+// function alignH1Background(params) {
+//     let bottomOfH1Text = h1Text.getBoundingClientRect().bottom
+//     let h1TextBackground = document.querySelector(".center-area__h1Text--background");
+//     let bottomOfH1TextBackground = h1TextBackground.getBoundingClientRect().bottom;
 
-    if (bottomOfH1TextBackground !== bottomOfH1Text) {
-        let bottomDifference = bottomOfH1TextBackground - bottomOfH1Text;
-        let currentBottomOfH1TextBackground = parseInt(window.getComputedStyle(h1TextBackground).bottom);
-        h1TextBackground.style.bottom = currentBottomOfH1TextBackground + bottomDifference + "px";
-    }
-}
+//     if (bottomOfH1TextBackground !== bottomOfH1Text) {
+//         let bottomDifference = bottomOfH1TextBackground - bottomOfH1Text;
+//         let currentBottomOfH1TextBackground = parseInt(window.getComputedStyle(h1TextBackground).bottom);
+//         h1TextBackground.style.bottom = currentBottomOfH1TextBackground + bottomDifference + "px";
+//     }
+// }
 
+let h1CanvasContainer = document.querySelector(".center-area__h1Canvas-container");
 let h1Canvas = document.getElementById("center-area__h1Canvas");
 const h1CanvasCTX = h1Canvas.getContext("2d");
 
 const h1CanvasRect = h1Canvas.getBoundingClientRect();
 
-function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, gameInPlay) {
+let h1TextBackground = document.querySelector(".center-area__h1Text--background");
+
+
+function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound, gameInPlay) {
     // if (waitForMainContExtension) {
     //     mainContainer.addEventListener("transitionend", () => {
     //         alignH1Background()
@@ -672,7 +723,7 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
     // } else {
     //     alignH1Background()
     // }
-    alignH1Background();
+    // alignH1Background();
     // console.log(gameOver);
 
     h1Text.style.transitionDuration = "";
@@ -681,28 +732,50 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
 
     // h1Text.classList.toggle("color-fade");
 
-    // console.log(gameInPlay);
+    console.log(h1CanvasContainer.getBoundingClientRect());
 
-    h1Canvas.width = window.innerWidth;
-    h1Canvas.height = window.innerHeight;
+    h1Canvas.width = h1CanvasContainer.getBoundingClientRect().width;
+    h1Canvas.height = h1CanvasContainer.getBoundingClientRect().height;
+
+    console.log(h1TextBackground.getBoundingClientRect().left);
 
     let h1TextCorners = {
-        topLeft: [h1Text.getBoundingClientRect().x, h1Text.getBoundingClientRect().y],
-        topRight: [h1Text.getBoundingClientRect().right, h1Text.getBoundingClientRect().y],
-        bottomLeft: [h1Text.getBoundingClientRect().x, h1Text.getBoundingClientRect().bottom],
-        bottomRight: [h1Text.getBoundingClientRect().right, h1Text.getBoundingClientRect().bottom]
+        topLeft: [h1TextBackground.getBoundingClientRect().x - h1CanvasContainer.getBoundingClientRect().x, 
+                    h1TextBackground.getBoundingClientRect().y - h1CanvasContainer.getBoundingClientRect().y],
+
+        topRight: [h1TextBackground.getBoundingClientRect().right - h1CanvasContainer.getBoundingClientRect().left, 
+                    h1TextBackground.getBoundingClientRect().y - h1CanvasContainer.getBoundingClientRect().top],
+
+        bottomRight: [h1TextBackground.getBoundingClientRect().right - h1CanvasContainer.getBoundingClientRect().left, 
+                    h1TextBackground.getBoundingClientRect().bottom - h1CanvasContainer.getBoundingClientRect().top],
+
+        bottomLeft: [h1TextBackground.getBoundingClientRect().x - h1CanvasContainer.getBoundingClientRect().x, 
+                    h1TextBackground.getBoundingClientRect().bottom - h1CanvasContainer.getBoundingClientRect().top]
     }
+    // let h1TextCorners = {
+    //     topLeft: [h1Text.getBoundingClientRect().x, h1Text.getBoundingClientRect().y],
+    //     topRight: [h1Text.getBoundingClientRect().right, h1Text.getBoundingClientRect().y],
+    //     bottomLeft: [h1Text.getBoundingClientRect().x, h1Text.getBoundingClientRect().bottom],
+    //     bottomRight: [h1Text.getBoundingClientRect().right, h1Text.getBoundingClientRect().bottom]
+    // }
 
     let pathLength = h1Text.getBoundingClientRect().width * 2 + h1Text.getBoundingClientRect().height * 2;
     let oneUnitOfPathLength = pathLength * 0.02;
     // console.log(pathLength);
-    let speed = 4;
+    let speed = 40;
     let dashOffset = 0;
     let lastTime = 0;
     let whoReallyWonRound;
     // WhoWonRound is only passed on the first time animateH1Path is called, after that it becomes undefined due to being called by requestanimationframe //
 
     function animateH1Path(timestamp, whoWonRound) {
+
+        // h1TextCorners = {
+        //     topLeft: [h1Text.getBoundingClientRect().x, h1Text.getBoundingClientRect().y],
+        //     topRight: [h1Text.getBoundingClientRect().right, h1Text.getBoundingClientRect().y],
+        //     bottomLeft: [h1Text.getBoundingClientRect().x, h1Text.getBoundingClientRect().bottom],
+        //     bottomRight: [h1Text.getBoundingClientRect().right, h1Text.getBoundingClientRect().bottom]
+        // }
 
 
         if (whoWonRound !== undefined) {
@@ -749,6 +822,13 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
             } else {
                 h1Text.classList.add("center-area__h1Text--rotate-in")
             }
+            console.log(currentRound);
+
+            // console.log(h1Text);
+
+            // h1Text.addEventListener("animationend", (e) => {
+            //     console.log(e);
+            // })
 
 
             h1TextAnimDuration = parseFloat(window.getComputedStyle(h1Text).animationDuration.split(", ")[0]) * 1000;
@@ -817,18 +897,22 @@ function setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, ga
             }, h1TextAnimDuration);
         }
     }
-    setTimeout(() => {
-        animateH1Path(undefined, whoWonRound)
+    animateH1Path(undefined, whoWonRound)
 
-    }, 1500);
+
+    // setTimeout(() => {
+    //     animateH1Path(undefined, whoWonRound)
+
+    // }, 1500);
 }
 
-function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound) {
-    h1Text.style.height = "";
-    // console.log(resultMessage, h1Text);
-    // alignH1Background()
-    setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, gameInPlay)
-}
+// function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound) {
+//     h1Text.style.height = "";
+//     console.log(gameInPlay);
+//     // console.log(resultMessage, h1Text);
+//     // alignH1Background()
+//     setH1TextRotationAndCanvasLine(resultMessage, gameOver, whoWonRound, gameInPlay)
+// }
 
 let withOfPlayerScoreWrapper
 let currentScoreAllSpans = Array.from(currentScorePara.children)
@@ -1095,7 +1179,7 @@ function cpuWonGame(params) {
 }
 
 // Restart game, hide hands buttons, show play again button
-function restartGame(gameOver) {
+function restartGame(gameOver, waitForMainContExtension) {
     gameInPlay = false;
     console.log("gameOver is" + gameOver);
     console.log("now!!!");
@@ -1136,15 +1220,24 @@ function restartGame(gameOver) {
         }, 4000);
 
         letsPlayButton.addEventListener("click", function () {
-            h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
+            // h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
             // topArea.classList.remove("player-won-height-extension");
-            mainContainer.classList.remove("player-won-height-extension");
+            // mainContainer.classList.remove("player-won-height-extension");
+
+            // if (waitForMainContExtension) {
+            //     setTimeout(() => {
+            //         console.log("I waited");
+            //         newGame(gameOver)
+            //     }, 1200);
+            // } else {
+            //     newGame(gameOver)
+            // }
 
 
-            newGame(gameOver)
+            newGame(gameOver, gameInPlay, waitForMainContExtension)
+
             firework.reset();
-
-            h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
+            // h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
 
             canvasDripWrapper.classList.add("zero-opacity")
             setTimeout(() => {
@@ -1386,6 +1479,6 @@ window.addEventListener('resize', function (e) {
     firework.reset();
     setWidthsForCurrentScoreSpans(playerScore, cpuScore);
     resizeH2TextSpanDivContainers()
-    alignH1Background()
+    // alignH1Background()
 
 })
