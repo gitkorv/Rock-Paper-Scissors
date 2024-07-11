@@ -313,49 +313,36 @@ function newGame(gameOver, gameInPlay, waitForMainContExtension) {
 
 
     btnWrapperAll.classList.add("zero-width")
-    // setTimeout(() => {
-    //     // letsPlayButton.classList.add("zero-width");
+    setTimeout(() => {
+        letsPlayButton.classList.add("zero-width");
 
-    //     // btnWrapperAll.classList.remove("zero-width")
+        btnWrapperAll.classList.remove("zero-width")
 
-    //     // currentScoreHeadline.textContent = "Current Score:";
+        currentScoreHeadline.textContent = "Current Score:";
 
+        playerChoiceButtonArray.forEach(button => {
+            button.addEventListener("click", pickHand);
+            button.style.display = "";
+        })
+    }, 4000);
 
-    //     // console.log(currentScorePara);
+    // h1Text.addEventListener("animationend", (e) => {
+    //     console.log(e.animationName);
+    //     if (e.animationName === "flipH1TextPart2") {
+    //         requestAnimationFrame(() => {
+    //             letsPlayButton.classList.add("zero-width");
 
-    //     // currentScorePara.addEventListener('transitionend', function(e) {
-    //     //     console.log(e);
-    //     // })
+    //             btnWrapperAll.classList.remove("zero-width")
 
-    //     // currentScorePara.removeEventListener('transitionend', function(e) {
-    //     //     console.log(e);
-    //     // })
+    //             currentScoreHeadline.textContent = "Current Score:";
 
-
-    //     // letsPlayButton.style.display = "none";
-    //     // playerChoiceButtonArray.forEach(button => {
-    //     //     button.addEventListener("click", pickHand);
-    //     //     button.style.display = "";
-    //     // })
-    // }, 4000);
-
-    h1Text.addEventListener("animationend", (e) => {
-        console.log(e.animationName);
-        if (e.animationName === "flipH1TextPart2") {
-            requestAnimationFrame(() => {
-                letsPlayButton.classList.add("zero-width");
-
-                btnWrapperAll.classList.remove("zero-width")
-        
-                currentScoreHeadline.textContent = "Current Score:";
-    
-                playerChoiceButtonArray.forEach(button => {
-                    button.addEventListener("click", pickHand);
-                    button.style.display = "";
-                })
-            })
-        }
-    })
+    //             playerChoiceButtonArray.forEach(button => {
+    //                 button.addEventListener("click", pickHand);
+    //                 button.style.display = "";
+    //             })
+    //         })
+    //     }
+    // })
 
     // if (h1Text.classList.contains("center-area__h1Text--rotate-in--part2")) {
     //     console.log("it has!!!");
@@ -393,7 +380,7 @@ function newGame(gameOver, gameInPlay, waitForMainContExtension) {
     keepGoing = true;
 
     resultMessage = `Choose Your Weapon!`;
-    
+
     if (waitForMainContExtension) {
         setTimeout(() => {
             setH1AnimTimesAndMessages(resultMessage, gameInPlay);
@@ -639,10 +626,10 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, 
 
 
     h2Text.classList.toggle("h2Text-fade-in");
-    h2Text.addEventListener('animationend', function() {
+    h2Text.addEventListener('animationend', function () {
         console.log("h2 finished animation");
         h2Text.classList.toggle("h2Text-fade-in");
-    }, {once:true})
+    }, { once: true })
     // setTimeout(() => {
     //     h2Text.classList.toggle("h2Text-fade-in");
     // }, 3000);
@@ -659,7 +646,7 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, 
                 h2SpanElements[boldTextNumber].classList.add("bold-anim");
                 h2SpanElements[boldTextNumber].classList.add("with-after");
                 h2SpanElements[boldTextNumber].classList.add(`${winningHand.toLowerCase()}`);
-    
+
                 // console.log(boldTextNumber.toString());
                 switch (boldTextNumber.toString()) {
                     case "0":
@@ -685,11 +672,11 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, 
                 });
             }
             h2SpanElements[1].classList.add("vs-anim");
-    
+
         }
     }
 
-    
+
 }
 
 // function alignH1Background(params) {
@@ -742,17 +729,17 @@ function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound, gameInP
     console.log(h1TextBackground.getBoundingClientRect().left);
 
     let h1TextCorners = {
-        topLeft: [h1TextBackground.getBoundingClientRect().x - h1CanvasContainer.getBoundingClientRect().x, 
-                    h1TextBackground.getBoundingClientRect().y - h1CanvasContainer.getBoundingClientRect().y],
+        topLeft: [h1TextBackground.getBoundingClientRect().x - h1CanvasContainer.getBoundingClientRect().x,
+        h1TextBackground.getBoundingClientRect().y - h1CanvasContainer.getBoundingClientRect().y],
 
-        topRight: [h1TextBackground.getBoundingClientRect().right - h1CanvasContainer.getBoundingClientRect().left, 
-                    h1TextBackground.getBoundingClientRect().y - h1CanvasContainer.getBoundingClientRect().top],
+        topRight: [h1TextBackground.getBoundingClientRect().right - h1CanvasContainer.getBoundingClientRect().left,
+        h1TextBackground.getBoundingClientRect().y - h1CanvasContainer.getBoundingClientRect().top],
 
-        bottomRight: [h1TextBackground.getBoundingClientRect().right - h1CanvasContainer.getBoundingClientRect().left, 
-                    h1TextBackground.getBoundingClientRect().bottom - h1CanvasContainer.getBoundingClientRect().top],
+        bottomRight: [h1TextBackground.getBoundingClientRect().right - h1CanvasContainer.getBoundingClientRect().left,
+        h1TextBackground.getBoundingClientRect().bottom - h1CanvasContainer.getBoundingClientRect().top],
 
-        bottomLeft: [h1TextBackground.getBoundingClientRect().x - h1CanvasContainer.getBoundingClientRect().x, 
-                    h1TextBackground.getBoundingClientRect().bottom - h1CanvasContainer.getBoundingClientRect().top]
+        bottomLeft: [h1TextBackground.getBoundingClientRect().x - h1CanvasContainer.getBoundingClientRect().x,
+        h1TextBackground.getBoundingClientRect().bottom - h1CanvasContainer.getBoundingClientRect().top]
     }
     // let h1TextCorners = {
     //     topLeft: [h1Text.getBoundingClientRect().x, h1Text.getBoundingClientRect().y],
