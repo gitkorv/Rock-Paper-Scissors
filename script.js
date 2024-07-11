@@ -313,44 +313,46 @@ function newGame(gameOver, gameInPlay, waitForMainContExtension) {
 
 
     btnWrapperAll.classList.add("zero-width")
-    setTimeout(() => {
-        // letsPlayButton.classList.add("zero-width");
+    // setTimeout(() => {
+    //     // letsPlayButton.classList.add("zero-width");
 
-        // btnWrapperAll.classList.remove("zero-width")
+    //     // btnWrapperAll.classList.remove("zero-width")
 
-        // currentScoreHeadline.textContent = "Current Score:";
-
-
-        // console.log(currentScorePara);
-
-        // currentScorePara.addEventListener('transitionend', function(e) {
-        //     console.log(e);
-        // })
-
-        // currentScorePara.removeEventListener('transitionend', function(e) {
-        //     console.log(e);
-        // })
+    //     // currentScoreHeadline.textContent = "Current Score:";
 
 
-        // letsPlayButton.style.display = "none";
-        // playerChoiceButtonArray.forEach(button => {
-        //     button.addEventListener("click", pickHand);
-        //     button.style.display = "";
-        // })
-    }, 4000);
+    //     // console.log(currentScorePara);
+
+    //     // currentScorePara.addEventListener('transitionend', function(e) {
+    //     //     console.log(e);
+    //     // })
+
+    //     // currentScorePara.removeEventListener('transitionend', function(e) {
+    //     //     console.log(e);
+    //     // })
+
+
+    //     // letsPlayButton.style.display = "none";
+    //     // playerChoiceButtonArray.forEach(button => {
+    //     //     button.addEventListener("click", pickHand);
+    //     //     button.style.display = "";
+    //     // })
+    // }, 4000);
 
     h1Text.addEventListener("animationend", (e) => {
         console.log(e.animationName);
         if (e.animationName === "flipH1TextPart2") {
-            letsPlayButton.classList.add("zero-width");
+            requestAnimationFrame(() => {
+                letsPlayButton.classList.add("zero-width");
 
-            btnWrapperAll.classList.remove("zero-width")
+                btnWrapperAll.classList.remove("zero-width")
+        
+                currentScoreHeadline.textContent = "Current Score:";
     
-            currentScoreHeadline.textContent = "Current Score:";
-            
-            playerChoiceButtonArray.forEach(button => {
-                button.addEventListener("click", pickHand);
-                button.style.display = "";
+                playerChoiceButtonArray.forEach(button => {
+                    button.addEventListener("click", pickHand);
+                    button.style.display = "";
+                })
             })
         }
     })
