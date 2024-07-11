@@ -35,11 +35,13 @@ body {
 }
 
 .main-container {
-    display: flex;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr .5fr;
     flex-direction: column;
     height: 100dvh;
     width: 100dvw;
-    display: flex;
+    padding: 0px 10%;
+    /* display: flex; */
     justify-items: center;
     /* align-items: center; */
     flex-direction: column;
@@ -48,6 +50,16 @@ body {
     /* justify-content: center; */
     /* background-color: bisque; */
     z-index: -1000;
+    transition: grid-template-rows 1s;
+}
+
+.main-container.player-won-height-extension {
+    grid-template-rows: 2fr 1fr 1fr .5fr;
+
+}
+
+.main-container__fraction {
+    width: 100%;
 }
 
 .top-area {
@@ -56,20 +68,26 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 60px 10% 0px 10%;
+    padding-top: 60px;
+    /* padding: 60px 10% 0px 10%; */
     /* align-items: end; */
-    flex: 1;
+    flex: .75;
     overflow: hidden;
     /* background-color: rgb(255, 168, 127); */
     /* border-bottom: 1px solid red; */
     z-index: -500;
+    transition: flex 1s;
+}
+
+.top-area.player-won-height-extension {
+    flex: 1;
 }
 
 .top-area__border {
     bottom: 3px;
     position: absolute;
     height: 90%;
-    width: 80%;
+    width: 100%;
     border-bottom: 1px solid rgb(255, 255, 255);
     opacity: 0;
     transition: opacity 1s ease-out .4s;
@@ -131,14 +149,11 @@ body {
     /* background-color: #f72585; */
 }
 
-.current-score__player-span {
-    /* background-color: bisque; */
-}
 
 .current-score__player-span, .current-score__cpu-span {
     display: inline-block;
     width: fit-content;
-    background-color: #007F8D;
+    /* background-color: #007F8D; */
     /* transition: width .2s; */
 
 }
@@ -259,7 +274,7 @@ body {
     gap: 10px;
     /* justify-content: space-evenly; */
     padding: 20px 0px 60px 0px;
-    width: 100vw;
+    /* width: 100%; */
     overflow: visible;
     /* background-color: #654553; */
     transform-style: preserve-3d;
@@ -610,8 +625,8 @@ span.bold-anim.with-after.scissor::after {
     display: flex;
     justify-content: center;
     flex: 0.5;
-    width: auto;
-    margin: 0px 15%;
+    /* width: auto; */
+    /* margin: 0px 15%; */
     z-index: -10;
     /* background-color: pink; */
     /* height: 100%; */
@@ -715,6 +730,9 @@ span.bold-anim.with-after.scissor::after {
     from {
         opacity: 1;
     }
+    10% {
+        opacity: 0;
+    }
     50% {
         opacity: 0;
     }
@@ -729,8 +747,15 @@ span.bold-anim.with-after.scissor::after {
     from {
         opacity: 1;
     }
-    50% {
+    10% {
+        background-color: #7209b7;
         opacity: 1;
+    }
+    25% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
     }
     75% {
         opacity: 0;
@@ -742,7 +767,6 @@ span.bold-anim.with-after.scissor::after {
 
 
 .bottom-area {
-    flex: .25;
     display: flex;
     /* justify-content: center; */
     align-items: center;
