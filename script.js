@@ -11,6 +11,8 @@ console.log(topArea);
 let topAreaTextContainer = document.querySelector(".top-area__text-container");
 let topAreaTextContainerChildren = Array.from(topAreaTextContainer.children)
 let topAreaWrapper = document.querySelector(".top-area--wrapper");
+let topAreaBorderWrapper = document.querySelector(".top-area__border-wrapper");
+// console.log(topAreaBorderWrapper);
 
 // Hide round counter spans
 topAreaTextContainerChildren.forEach(child => child.classList.add("hidden"));
@@ -103,6 +105,8 @@ Select Score Tracker
 const scoreContainer = document.querySelector(".score-container");
 
 let topAreaBorder = document.querySelector(".top-area__border");
+let topAreaBorderWrapperChildren = Array.from(topAreaBorderWrapper.children);
+console.log(topAreaBorderWrapperChildren);
 
 /*
 On window load, Bring in h2Text etc
@@ -115,7 +119,17 @@ window.onload = function () {
 
 
     topAreaWrapper.classList.add("show-rounds");
-    topAreaBorder.classList.add("opacity1");
+    // topAreaBorder.classList.add("opacity1");
+
+    // console.log(window.getComputedStyle(topAreaTextContainer).width);
+    // topAreaBorderWrapper.style.gridTemplateColumns = `auto ${window.getComputedStyle(topAreaTextContainer).width} auto`;
+    // let startWidthForBorder = window.getComputedStyle(topAreaBorderWrapperChildren[0]).width;
+    // console.log(startWidthForBorder);
+    // topAreaBorderWrapper.style.gridTemplateColumns = `${startWidthForBorder} ${window.getComputedStyle(topAreaTextContainer).width} ${startWidthForBorder}`;
+
+    setBorderUnderRoundTicker()
+
+
     h2Text.style.visibility = "hidden";
     setTimeout(() => {
         h2Text.style.visibility = "";
@@ -364,11 +378,15 @@ function newGame(gameOver, gameInPlay, waitForMainContExtension) {
     topAreaWrapper.classList.remove("show-rounds");
 
     function handleTopAreaTransitionEnd(e) {
-        topAreaBorder.classList.remove("border-with-gap");
-        topAreaWrapper.removeEventListener("transitionend", handleTopAreaTransitionEnd)
+        setTimeout(() => {
+            topAreaBorderWrapper.style.gridTemplateColumns = "50% 0px 50%";
+
+        topAreaWrapper.removeEventListener("transitionstart", handleTopAreaTransitionEnd)
+        }, 200);
+        
     }
 
-    topAreaWrapper.addEventListener("transitionend", handleTopAreaTransitionEnd)
+    topAreaWrapper.addEventListener("transitionstart", handleTopAreaTransitionEnd)
 
     // letsPlayButton.style.display = "none";
     setTimeout(() => {
@@ -508,7 +526,7 @@ function playRound(playerChoice) {
             // topArea.classList.add("player-won-height-extension");
             mainContainer.classList.add("player-won-height-extension");
             waitForMainContExtension = true;
-            topAreaBorder.classList.add("border-with-gap");
+            // topAreaBorder.classList.add("border-with-gap");
 
 
 
@@ -564,11 +582,13 @@ function playRound(playerChoice) {
 
 
     function runAllVisualUpdates() {
-        setTopRoundTicker(keepGoing);
+        setTopRoundTicker(keepGoing, gameOver);
         setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound, gameInPlay)
         setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWonRound);
         setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, gameOver)
     }
+
+    // runAllVisualUpdates()
 
     if (waitForMainContExtension) {
         setTimeout(() => {
@@ -578,16 +598,48 @@ function playRound(playerChoice) {
         runAllVisualUpdates()
 
     }
-
-
-
-
-
 }
 
-function setTopRoundTicker(keepGoing) {
+function setBorderUnderRoundTicker() {
+    let totalTopAreaContainerWidth = parseFloat(window.getComputedStyle(topAreaWrapper).width);
+    console.log(parseFloat(window.getComputedStyle(topAreaWrapper).width));
+    let topAreaTextContainerWidth = parseFloat(window.getComputedStyle(topAreaTextContainer).width);
+    console.log(parseFloat(window.getComputedStyle(topAreaTextContainer).width));
+    let topAreaContainerPaddingRight = parseFloat(window.getComputedStyle(topAreaWrapper).paddingRight);
+    console.log(parseFloat(window.getComputedStyle(topAreaWrapper).paddingRight));
+
+    let leftFraction = topAreaTextContainer.getBoundingClientRect().left - topAreaBorderWrapper.getBoundingClientRect().left;
+    let rightFraction = totalTopAreaContainerWidth - leftFraction - topAreaTextContainerWidth;
+
+    // topAreaBorderWrapper.style.gridTemplateColumns = `${leftFraction}px ${topAreaTextContainerWidth}px 20px`
+    topAreaBorderWrapper.style.gridTemplateColumns = `${leftFraction}px ${topAreaTextContainerWidth}px ${rightFraction}px`
+}
+
+function setTopRoundTicker(keepGoing, gameOver) {
+    console.log(currentRound);
+    console.log(keepGoing);
+    console.log(gameOver);
+
+    if (currentRound > 0 && !gameOver) setBorderUnderRoundTicker();
+
+
+
+
+    console.log(keepGoing);
     if (keepGoing === true) {
         topAreaWrapper.classList.add("show-rounds");
+
+        // let topAreaBorderCenter = topAreaBorderWrapper.querySelector(".top-area__border-center");
+        // console.log(topAreaBorderCenter);
+
+        // function handleTopAreaBorderTransitionEnd() {
+        //     topAreaBorderWrapper.style.gridTemplateColumns = `100% ${topAreaTextContainerWidth * 2}px 20px`;
+        //     topAreaBorderWrapper.removeEventListener("transitionend", handleTopAreaBorderTransitionEnd)
+
+        // }
+
+        // topAreaBorderWrapper.addEventListener("transitionend", handleTopAreaBorderTransitionEnd)
+
         // let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
         // console.log(roundTextHeight);
         let topAreaRoundNumberContainer = document.querySelector(".top-area__text-container__number")
@@ -867,8 +919,6 @@ function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound, gameInP
                     if (gameInPlay || gameOver) h1Text.classList.remove("color-fade");
                 })
 
-
-
                 if (gameOver && whoReallyWonRound === "cpu") {
                     // canvasDripWrapper.classList.remove("zero-opacity");
                     console.log("were doing it");
@@ -977,7 +1027,7 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
         } else {
             setTimeout(() => {
                 changeMe.forEach(span => span.style.width = "0px");
-            }, timeoutTime * 0.9 );
+            }, timeoutTime * 0.9);
         }
 
         setTimeout(() => {
@@ -1197,6 +1247,9 @@ function restartGame(gameOver, waitForMainContExtension) {
         hiThere.textContent = `Final Score: ${playerScore} - ${cpuScore}`
         hiThere.classList.add("top-area__text-container__hi-there", "top-area__text-container__hi-there--cpu-won")
         topAreaTextContainer.appendChild(hiThere);
+
+        setBorderUnderRoundTicker();
+
         btnWrapperAll.classList.add("zero-width");
         setTimeout(() => {
             playerChoiceButtonArray.forEach(button => button.style.display = "none");
@@ -1215,7 +1268,7 @@ function restartGame(gameOver, waitForMainContExtension) {
             setTimeout(() => {
                 btnWrapperAll.style.transitionDuration = "";
             }, 1000);
-            topAreaBorder.classList.remove("border-with-gap");
+            // topAreaBorder.classList.remove("border-with-gap");
 
             // topAreaWrapper.classList.add("show-rounds");
         }, 4000);
@@ -1465,6 +1518,8 @@ function resizeH2TextSpanDivContainers() {
     let h2TextSpanContainers = Array.from(h2Text.querySelectorAll(".center-area__h2Text__span-container"))
 
     h2SpanElements.forEach(div => h2SpanElementWidths.push(div.offsetWidth))
+
+    setBorderUnderRoundTicker();
 
     for (let i = 0; i < h2SpanElementWidths.length; i++) {
         h2TextSpanContainers[i].style.width = h2SpanElementWidths[i] + "px";
