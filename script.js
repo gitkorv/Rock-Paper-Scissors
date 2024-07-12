@@ -161,6 +161,7 @@ let h1TextAnimDelay;
 
 let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
 topAreaTextContainer.style.height = roundTextHeight + "px";
+topAreaTextContainer.classList.add("padding-top");
 
 const allButtons = document.querySelectorAll("button");
 let lastTouchedElement = null;
@@ -357,6 +358,14 @@ function newGame(gameOver, gameInPlay, waitForMainContExtension) {
 
     // topAreaWrapper.classList.remove("hi-there-effect")
     topAreaWrapper.classList.remove("show-rounds");
+
+    function handleTopAreaTransitionEnd(e) {
+        topAreaBorder.classList.remove("border-with-gap");
+        topAreaWrapper.removeEventListener("transitionend", handleTopAreaTransitionEnd)
+    }
+
+    topAreaWrapper.addEventListener("transitionend", handleTopAreaTransitionEnd)
+
     // letsPlayButton.style.display = "none";
     setTimeout(() => {
         if (topAreaTextContainer.lastChild === hiThere) {
@@ -384,7 +393,6 @@ function newGame(gameOver, gameInPlay, waitForMainContExtension) {
     if (waitForMainContExtension) {
         setTimeout(() => {
             setH1AnimTimesAndMessages(resultMessage, gameInPlay);
-
         }, 1200);
     } else {
         setH1AnimTimesAndMessages(resultMessage, gameInPlay);
@@ -447,7 +455,7 @@ function playRound(playerChoice) {
         playerChoice === "Scissor" && computerChoice === "Paper"
     ) {
         resultMessage = "You Won the Round!"
-        vsSpan.textContent = "beats";
+        vsSpan.textContent = "vs";
         playerScore++;
         boldTextNumber.push(0);
         winningHand = playerChoice;
@@ -455,7 +463,7 @@ function playRound(playerChoice) {
 
     } else {
         resultMessage = "The Computer Won the Round!"
-        vsSpan.textContent = "lost to";
+        vsSpan.textContent = "vs";
         cpuScore++;
         boldTextNumber.push(2);
         winningHand = computerChoice;
@@ -496,12 +504,14 @@ function playRound(playerChoice) {
             // topArea.classList.add("player-won-height-extension");
             mainContainer.classList.add("player-won-height-extension");
             waitForMainContExtension = true;
+            topAreaBorder.classList.add("border-with-gap");
+
 
 
             setTimeout(() => {
                 startFireWork();
 
-            }, 1500);
+            }, 2000);
             restartGame(gameOver, waitForMainContExtension);
 
         } else if (playerScore < cpuScore) {
@@ -546,13 +556,13 @@ function playRound(playerChoice) {
             keepGoing = false;
         }
     }
+    currentRound++;
 
 
     function runAllVisualUpdates() {
         setTopRoundTicker(keepGoing);
-        setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound)
+        setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound, gameInPlay)
         setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound, whoWonRound);
-        currentRound++;
         setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, gameOver)
     }
 
@@ -583,8 +593,8 @@ function setTopRoundTicker(keepGoing) {
         let topAreaBottomRoundNumber = document.querySelector(".top-area__text-container__number--bottom")
         topAreaTopRoundNumber.textContent = 1;
         if (currentRound > 0) {
-            topAreaTopRoundNumber.textContent = currentRound;
-            topAreaBottomRoundNumber.textContent = currentRound + 1;
+            topAreaTopRoundNumber.textContent = currentRound - 1;
+            topAreaBottomRoundNumber.textContent = currentRound;
             topAreaRoundNumberContainer.classList.add("slide-up");
             let slideUpElement = topAreaTextContainer.querySelector(".top-area__text-container__number.slide-up")
             slideUpElement.style.transform = `translateY(-${roundTextHeight}px)`;
@@ -940,7 +950,7 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
     // setWidthsForCurrentScoreSpans(playerScore, cpuScore);
 
 
-    if (currentRound === 0) {
+    if (currentRound === 1) {
         // setWidthsForCurrentScoreSpans(playerScore, cpuScore);
         // setTimeout(() => {
         //     currentScorePara.classList.remove("zero-width");
@@ -950,19 +960,20 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
     };
 
     function currentScoreAnims(changeMe, endWidth, playerScore, cpuScore, currentRound) {
-        let timeoutTime = currentRound === 0 ? 750 : 500;
+        let timeoutTime = currentRound === 1 ? 750 : 4000;
 
         console.log(currentRound);
 
-        if (currentRound === 0) {
+        if (currentRound === 1) {
             changeMe.forEach(span => span.classList.toggle("no-trans"));
             changeMe.forEach(span => span.style.width = "0px");
             changeMe.forEach(span => span.classList.toggle("no-trans"));
             currentScorePlayer.textContent = playerScore;
             currentScoreCpu.textContent = cpuScore;
-            console.log(playerScore);
         } else {
-            changeMe.forEach(span => span.style.width = "0px");
+            setTimeout(() => {
+                changeMe.forEach(span => span.style.width = "0px");
+            }, timeoutTime * 0.9 );
         }
 
         setTimeout(() => {
@@ -984,15 +995,8 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
         }
 
     } else {
-        if (whoWonRound === "player") {
+        if (whoWonRound === "player" || whoWonRound === "cpu") {
             currentScorePara.classList.add("zero-width")
-            // currentScoreHeadline.style.width = "0px";
-            // currentScoreAnims([currentScorePlayerWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore)
-        } else if (whoWonRound === "cpu") {
-            currentScorePara.classList.add("zero-width")
-
-            // currentScoreHeadline.style.width = "0px";
-            // currentScoreAnims([currentScoreCpuWrapper], widthOfPlayerScoreWrapper, playerScore, cpuScore)
         } else {
             currentScoreAnims(currentScoreSpans, widthOfPlayerScoreWrapper, playerScore, cpuScore, currentRound)
         }
@@ -1173,12 +1177,14 @@ function restartGame(gameOver, waitForMainContExtension) {
     console.log("gameOver is" + gameOver);
     console.log("now!!!");
 
+
     playerChoiceButtons.forEach(button => {
         console.log("reset");
         button.classList.remove("btn-fade-out-and-back", "slower");
     })
 
     setTimeout(() => {
+
         // playerChoiceButtonArray.forEach(button => button.style.display = "none");
         topAreaWrapper.style.transitionDuration = "";
 
@@ -1205,6 +1211,8 @@ function restartGame(gameOver, waitForMainContExtension) {
             setTimeout(() => {
                 btnWrapperAll.style.transitionDuration = "";
             }, 1000);
+            topAreaBorder.classList.remove("border-with-gap");
+
             // topAreaWrapper.classList.add("show-rounds");
         }, 4000);
 
@@ -1226,7 +1234,7 @@ function restartGame(gameOver, waitForMainContExtension) {
             newGame(gameOver, gameInPlay, waitForMainContExtension)
 
             firework.reset();
-            // h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
+            h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
 
             canvasDripWrapper.classList.add("zero-opacity")
             setTimeout(() => {
