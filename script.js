@@ -111,6 +111,8 @@ window.onload = function () {
     // alignH1Background()
     setWidthsForCurrentScoreSpans(playerScore, cpuScore);
 
+    canvasDripWrapper.style.transition = "none";
+
 
     topAreaWrapper.classList.add("show-rounds");
     topAreaBorder.classList.add("opacity1");
@@ -119,6 +121,8 @@ window.onload = function () {
         h2Text.style.visibility = "";
 
         h2Text.classList.toggle("center-area__h2Text--wayOffLeft");
+        canvasDripWrapper.style.transition = "";
+
     }, 750);
 
     setTimeout(() => {
@@ -1237,7 +1241,9 @@ function restartGame(gameOver, waitForMainContExtension) {
             h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
 
             canvasDripWrapper.classList.add("zero-opacity")
+
             setTimeout(() => {
+
                 cancelAnimationFrame(dripFrames);
 
                 dripCTX.clearRect(0, 0, dripCanvas.width, dripCanvas.height);

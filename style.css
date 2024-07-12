@@ -772,7 +772,7 @@ span.bold-anim.with-after.scissor::after {
 }
 
 .btn-wrapper-all button.btn-fade-out-and-back {
-    animation: fade-out-and-back 4s ease-out;
+    animation: fade-out-and-back 2s ease-out;
 }
 
 .btn-wrapper-all button.btn-fade-out-and-back.slower {
@@ -856,7 +856,7 @@ span.bold-anim.with-after.scissor::after {
     opacity: 1;
     overflow: hidden;
     pointer-events: none;
-    /* transition: opacity 1s ease-out; */
+    transition: opacity 1s ease-out;
 }
 
 .canvas-wrapper-all-trans {
