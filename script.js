@@ -702,10 +702,8 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, 
 
     if (currentRound >= 1) {
         h2Text.classList.add("font-5rem");
-
     } else {
         h2Text.classList.remove("font-5rem");
-
     }
 
     // if (currentRound !== undefined && !gameOver) {
@@ -902,6 +900,9 @@ function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound, gameInP
             h1CanvasCTX.clearRect(0, 0, h1Canvas.width, h1Canvas.height);
 
             console.log(gameOver, whoReallyWonRound);
+
+            h1Text.style.backgroundColor = "";
+
 
             if (gameOver && whoReallyWonRound === "cpu") {
                 // canvasDripWrapper.classList.remove("zero-opacity");
@@ -1303,7 +1304,7 @@ function restartGame(gameOver, waitForMainContExtension, whoWonRound) {
             h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2");
 
             if (whoWonRound === "cpu") {
-                
+                h1Text.style.backgroundColor = "var(--colorPurple)";
             }
 
             // topArea.classList.remove("player-won-height-extension");

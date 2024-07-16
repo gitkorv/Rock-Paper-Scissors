@@ -8,6 +8,7 @@
 :root {
     --h2TextSize: 4rem;
     --colorPurple: hsl(276, 91%, 18%);
+    --colorPink: #FF66FF;
 }
 
 html {
@@ -639,19 +640,17 @@ span.bold-anim.with-after.scissor::after {
     }
     to {
         transform: rotate3d(0, 1, 0, 90deg);
-        background-color: rgba(84, 6, 136, .75);
+        background-color: rgba(84, 6, 136, .25);
     }
 }
 
 @keyframes flipH1TextCpuWonPart2 {
     from {
-        background-color: rgba(84, 6, 136, .5);
-
+        background-color: rgba(84, 6, 136, .25);
         transform: rotate3d(0, 1, 0, -90deg);
     }
     to {
         background-color: rgba(84, 6, 136, 0);
-
         transform: rotate3d(0, 0, 0, 0deg);
     }
 }
@@ -919,7 +918,7 @@ span.bold-anim.with-after.scissor::after {
     display: block;
     filter: blur(10px);
     background-color: black;
-    background-color: var(--colorPurple);
+    /* background-color: var(--colorPurple); */
     /* z-index: 200; */
 }
 
