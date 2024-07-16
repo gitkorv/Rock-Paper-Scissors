@@ -1272,7 +1272,7 @@ span.bold-anim.with-after.scissor::after {
 
 @media (max-width: 390px) {
     .center-area__h1Text-rpsAllText {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         /* color: #f72585; */
     }
 }
