@@ -1185,7 +1185,7 @@ span.bold-anim.with-after.scissor::after {
 }
 
 
-@media only screen and (min-width: 375px) and (max-width: 375px) {
+/* @media only screen and (min-width: 375px) and (max-width: 375px) {
     .center-area__h1Text-rpsAllText {
         font-size: 1.5rem;
         color: #FF66FF;
@@ -1198,10 +1198,10 @@ span.bold-anim.with-after.scissor::after {
         font-size: 1.8rem;
         color: rgb(218, 46, 27);
     }
-}
+} */
 
 
-@media (min-width: 421px) and (max-width: 600px){
+@media (min-width: 460px) and (max-width: 600px){
     .center-area__h1Text-rpsAllText {
         font-size: 2.2rem;
         color: rgb(67, 125, 125);
