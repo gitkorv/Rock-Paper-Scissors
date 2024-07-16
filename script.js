@@ -414,7 +414,7 @@ function newGame(gameOver, gameInPlay, waitForMainContExtension) {
     playerScore = 0;
     cpuScore = 0;
     roundsPlayed = 0;
-    roundsToPlay = 5;
+    roundsToPlay = 1;
     roundsLeftToPlay
     currentRound = 0;
     keepGoing = true;
@@ -601,14 +601,15 @@ function playRound(playerChoice) {
 
     // runAllVisualUpdates()
 
-    if (waitForMainContExtension) {
-        setTimeout(() => {
-            runAllVisualUpdates()
-        }, 1200);
-    } else {
-        runAllVisualUpdates()
+    // if (waitForMainContExtension) {
+    //     setTimeout(() => {
+    //         runAllVisualUpdates()
+    //     }, 1200);
+    // } else {
+    //     runAllVisualUpdates()
+    // }
+    runAllVisualUpdates()
 
-    }
 }
 
 function setBorderUnderRoundTicker(whoWonRound, gameOver, currentRound) {
@@ -641,11 +642,11 @@ function setBorderUnderRoundTicker(whoWonRound, gameOver, currentRound) {
     if (whoWonRound === "player" && gameOver) {
         setTimeout(() => {
             topAreaBorderWrapper.style.gridTemplateColumns = `0px 0px 49% 2% auto ${topAreaTextContainerWidth}px ${rightFraction}px`
-            // setTimeout(() => {
-            //     topAreaBorderWrapper.style.gridTemplateColumns = `0px 0px 0px 0px auto ${topAreaTextContainerWidth}px ${rightFraction}px`
+            setTimeout(() => {
+                topAreaBorderWrapper.style.gridTemplateColumns = `0px 0px 0px 0px auto ${topAreaTextContainerWidth}px ${rightFraction}px`
 
-            // }, 500);
-        }, 900);
+            }, 3200);
+        }, 1500);
 
         console.log("insert grid stuff here");
     }
@@ -721,9 +722,10 @@ function setH2TextEffects(keepGoing, boldTextNumber, winningHand, currentRound, 
     // }
 
 
-    h2Text.classList.toggle("h2Text-fade-in");
+    h2Text.classList.add("h2Text-fade-in");
     h2Text.addEventListener('animationend', function () {
-        h2Text.classList.toggle("h2Text-fade-in");
+        console.log("now");
+        h2Text.classList.remove("h2Text-fade-in");
     }, { once: true })
     // setTimeout(() => {
     //     h2Text.classList.toggle("h2Text-fade-in");
@@ -975,7 +977,7 @@ function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound, gameInP
                     h1Text.classList.remove("center-area__h1Text--rotate-in");
                     h1Text.classList.remove("center-area__h1Text--rotate-in--part2");
                     h1Text.classList.remove("center-area__h1Text--rotate-in-cpuWon");
-                    h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
+                    // h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
 
                     // if (gameOver) {
                     //     h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
@@ -1294,7 +1296,8 @@ function restartGame(gameOver, waitForMainContExtension, whoWonRound) {
         }, 4000);
 
         letsPlayButton.addEventListener("click", function () {
-            // h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
+            h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
+
             // topArea.classList.remove("player-won-height-extension");
             // mainContainer.classList.remove("player-won-height-extension");
 
