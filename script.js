@@ -559,7 +559,7 @@ function playRound(playerChoice) {
             gameOver = true;
             keepGoing = false;
             cpuWonGame();
-            restartGame(gameOver);
+            restartGame(gameOver, undefined, whoWonRound);
         } else {
             // setH2TextEffects(keepGoing, boldTextNumber, winningHand)
 
@@ -812,7 +812,7 @@ function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound, gameInP
     // alignH1Background();
     // console.log(gameOver);
 
-
+    console.log(whoWonRound, gameOver);
 
 
     h1Text.style.transitionDuration = "";
@@ -900,6 +900,8 @@ function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound, gameInP
             requestAnimationFrame(animateH1Path)
         } else {
             h1CanvasCTX.clearRect(0, 0, h1Canvas.width, h1Canvas.height);
+
+            console.log(gameOver, whoReallyWonRound);
 
             if (gameOver && whoReallyWonRound === "cpu") {
                 // canvasDripWrapper.classList.remove("zero-opacity");
@@ -1259,6 +1261,8 @@ function restartGame(gameOver, waitForMainContExtension, whoWonRound) {
         button.classList.remove("btn-fade-out-and-back", "slower");
     })
 
+    console.log(whoWonRound);
+
     setTimeout(() => {
 
         // playerChoiceButtonArray.forEach(button => button.style.display = "none");
@@ -1296,7 +1300,11 @@ function restartGame(gameOver, waitForMainContExtension, whoWonRound) {
         }, 4000);
 
         letsPlayButton.addEventListener("click", function () {
-            h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
+            h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2");
+
+            if (whoWonRound === "cpu") {
+                
+            }
 
             // topArea.classList.remove("player-won-height-extension");
             // mainContainer.classList.remove("player-won-height-extension");
