@@ -657,7 +657,7 @@ span.bold-anim.with-after.scissor::after {
 
 .center-area__h1Text-rpsAllText {
     opacity: 0;
-    font-size: 1rem;
+    font-size: 1.7rem;
     animation: rpsFadeIn .5s forwards;
     transition: font-size .2s;
 }
@@ -1185,18 +1185,20 @@ span.bold-anim.with-after.scissor::after {
 }
 
 
-/* @media (max-width: 375px) {
+@media (max-width: 375px) {
     .center-area__h1Text-rpsAllText {
         font-size: 1.5rem;
+        color: #FF66FF;
     }
-} */
+}
 
 
-/* @media (min-width: 376px) {
+@media (min-width: 376px) {
     .center-area__h1Text-rpsAllText {
         font-size: 2rem;
+        color: rgb(73, 86, 86);
     }
-} */
+}
 
 
 @media (max-width: 600px){
