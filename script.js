@@ -414,7 +414,7 @@ function newGame(gameOver, gameInPlay, waitForMainContExtension) {
     playerScore = 0;
     cpuScore = 0;
     roundsPlayed = 0;
-    roundsToPlay = 1;
+    roundsToPlay = 5;
     roundsLeftToPlay
     currentRound = 0;
     keepGoing = true;
