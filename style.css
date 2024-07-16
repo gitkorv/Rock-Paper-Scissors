@@ -1192,11 +1192,11 @@ span.bold-anim.with-after.scissor::after {
 } */
 
 
-@media (min-width: 376px) {
+/* @media (min-width: 376px) {
     .center-area__h1Text-rpsAllText {
         font-size: 2rem;
     }
-}
+} */
 
 
 @media (max-width: 600px){
