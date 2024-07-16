@@ -7,7 +7,7 @@
 
 :root {
     --h2TextSize: 4rem;
-    --colorPurple: #7209b7
+    --colorPurple: hsl(276, 91%, 18%);
 }
 
 html {
@@ -96,7 +96,7 @@ body {
     width: 100%;
     /* background-color: coral; */
     display: grid;
-    /* grid-template-columns: auto 0px auto; */
+    grid-template-columns: 0% 0px 0% 0px 50% 0px 50%;
     transition: all .2s ease-out;
 }
 
@@ -104,10 +104,14 @@ body {
     grid-template-columns: 2fr 1fr 2fr;
 } */
 
-.top-area__border-left, .top-area__border-right {
+.top-area__border {
     display: block;
     border-bottom: 1px solid white;
     /* background-color: #4cc9f0; */
+}
+
+.top-area__border--gap {
+    border-bottom: none;
 }
 
 .top-area__border-right {
@@ -285,7 +289,7 @@ body {
     
     /* height: 26px; */
     font-size: .8rem;
-    overflow: hidden;
+    overflow: visible;
     /* overflow: visible; */
     
     /* box-shadow: 2px 2px 2px black; */
@@ -326,6 +330,7 @@ body {
 
 .top-area__text-container.padding-top, .top-area__text-container__number.padding-top {
     padding-top: 2px;
+    /* background-color: #4cc9f0; */
 
 }
 
@@ -543,10 +548,12 @@ span.bold-anim.with-after.scissor::after {
     align-items: center;
     color: rgba(76, 201, 240, 1);
     position: relative;
+    gap: 7px;
     /* margin-top: 6px; */
     /* mix-blend-mode: difference; */
     /* background-color: #bcb0b5; */
-    background-color: hsl(276, 91%, 38%);
+    /* background-color: hsl(276, 91%, 38%); */
+    background-color: var(--colorPurple);
     /* background-color: #FFFFFF; */
     /* background-image: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
     /* transform: translateZ(200px); */
@@ -566,9 +573,9 @@ span.bold-anim.with-after.scissor::after {
     color: rgba(76, 201, 240, .1);
 }
 
-.center-area__h1Text__paper {
+/* .center-area__h1Text__paper {
     margin: 0 7px;
-}
+} */
 
 .center-area__h1Text.with-margins {
     margin: 0 40px 0 40px;
@@ -577,84 +584,74 @@ span.bold-anim.with-after.scissor::after {
 
 .center-area__h1Text--rotate-in {
     animation: flipH1Text .5s linear forwards;
-    /* animation-delay: 1.5s; */
 }
-.center-area__h1Text--rotate-in-cpuWon {
-    animation: flipH1TextCpuWon .5s linear forwards;
-    /* animation-delay: 1.5s; */
-}
+
 .center-area__h1Text--rotate-in--part2 {
     animation-name: flipH1TextPart2;
-    /* animation-duration: 5s; */
     animation-timing-function: linear forwards;
     transform: rotate3d(0, 1, 0, -90deg);
+}
+
+.center-area__h1Text--rotate-in-cpuWon {
+    animation: flipH1TextCpuWon .5s linear forwards;
 }
 
 .center-area__h1Text--rotate-in--cpuWon-part2 {
     animation-name: flipH1TextCpuWonPart2;
     animation-timing-function: linear forwards;
-
     background-color: rgba(0, 0, 0, 0);
 }
 
 @keyframes flipH1Text {
     from {
         transform: rotate3d(0, 0, 0, 0deg);
-        background-color: hsl(276, 91%, 38%);
-        /* background-image: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
+        background-color: hsl(276, 91%, 18%);
     }
     25% {
-        background-color: hsl(276, 91%, 38%);
-        /* background-image: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
+        background-color: hsl(276, 91%, 18%);
     }
     to {
         transform: rotate3d(0, 1, 0, 90deg);
-        background-color: hsl(276, 91%, 48%);
-        /* background-image: linear-gradient(to right, hsl(276, 91%, 58%), hsl(276, 91%, 18%)); */
-    }
-}
-@keyframes flipH1TextCpuWon {
-    from {
-        transform: rotate3d(0, 0, 0, 0deg);
-        background-color: hsl(276, 91%, 38%);
-    }
-    /* 50% {
-        background-color: hsl(276, 91%, 33%);
-    } */
-    to {
-        transform: rotate3d(0, 1, 0, 90deg);
-        background-color: hsl(276, 91%, 0%);
+        background-color: hsl(276, 91%, 28%);
     }
 }
 
 @keyframes flipH1TextPart2 {
     from {
         transform: rotate3d(0, 1, 0, -90deg);
-        background-color: hsl(276, 91%, 48%);
-        /* background-image: linear-gradient(to left, hsl(276, 91%, 58%), hsl(276, 91%, 18%)); */
+        background-color: hsl(276, 91%, 28%);
     }
     75% {
-        background-color: hsl(276, 91%, 38%);
-        /* background-image: linear-gradient(to right,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
+        background-color: hsl(276, 91%, 18%);
     }
     to {
         transform: rotate3d(0, 0, 0, 0deg);
-        background-color: hsl(276, 91%, 38%);
-
-        /* background-image: linear-gradient(to left,  hsl(276, 91%, 38%),  hsl(276, 91%, 38%)); */
+        background-color: hsl(276, 91%, 18%);
     }
 }
+
+@keyframes flipH1TextCpuWon {
+    from {
+        transform: rotate3d(0, 0, 0, 0deg);
+        background-color: rgba(84, 6, 136, 1);
+
+    }
+    to {
+        transform: rotate3d(0, 1, 0, 90deg);
+        background-color: rgba(84, 6, 136, .75);
+    }
+}
+
 @keyframes flipH1TextCpuWonPart2 {
     from {
+        background-color: rgba(84, 6, 136, .5);
+
         transform: rotate3d(0, 1, 0, -90deg);
-        /* background-color: hsl(276, 91%, 23%); */
     }
-    /* 50% {
-        background-color: hsl(276, 91%, 18%);
-    } */
     to {
+        background-color: rgba(84, 6, 136, 0);
+
         transform: rotate3d(0, 0, 0, 0deg);
-        /* background-color: hsl(276, 91%, 0%); */
     }
 }
 
@@ -744,7 +741,7 @@ span.bold-anim.with-after.scissor::after {
     height: 100%;
     border-radius: 8px;
     padding: .2em .2em .4em .2em;
-    background-color: hsl(276, 91%, 45%);
+    background-color: hsl(276, 91%, 35%);
     width: 100%;
     transform-origin: center;
     text-wrap: nowrap;
@@ -759,7 +756,7 @@ span.bold-anim.with-after.scissor::after {
     /* background-color: black; */
     /* box-shadow: inset 0em 0em 0em 1.2em black; */
     color: #f72585;
-    background-color: hsl(276, 91%, 50%);
+    background-color: hsl(276, 91%, 40%);
     box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, .1);
 
     scale: 105%;
@@ -801,7 +798,7 @@ span.bold-anim.with-after.scissor::after {
 }
 
 .btn-wrapper-all button.btn-fade-out-and-back {
-    animation: fade-out-and-back 2s ease-out;
+    animation: fade-out-and-back 4s ease-out;
 }
 
 .btn-wrapper-all button.btn-fade-out-and-back.slower {
@@ -1186,11 +1183,16 @@ span.bold-anim.with-after.scissor::after {
 
 }
 
-
+@media (max-width: 375px) {
+    .center-area__h1Text-rpsAllText {
+        font-size: 1.7rem;
+        /* color: #f72585; */
+    }
+}
 
 @media (max-width: 600px){
     .center-area__h1Text, .center-area__h1Text--background {
-        width: 90%;
+        width: 95%;
     }
     .score-container {
         font-size: 1.25rem;
