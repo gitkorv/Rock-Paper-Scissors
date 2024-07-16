@@ -657,7 +657,7 @@ span.bold-anim.with-after.scissor::after {
 
 .center-area__h1Text-rpsAllText {
     opacity: 0;
-    font-size: 1.5rem;
+    font-size: 1rem;
     animation: rpsFadeIn .5s forwards;
     transition: font-size .2s;
 }

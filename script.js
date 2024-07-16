@@ -613,7 +613,6 @@ function playRound(playerChoice) {
 }
 
 function setBorderUnderRoundTicker(whoWonRound, gameOver, currentRound) {
-    console.log(currentRound);
     let totalTopAreaContainerWidth = parseFloat(window.getComputedStyle(topAreaWrapper).width);
     let topAreaTextContainerWidth = parseFloat(window.getComputedStyle(topAreaTextContainer).width);
     let topAreaContainerPaddingRight = parseFloat(window.getComputedStyle(topAreaWrapper).paddingRight);
@@ -1563,7 +1562,6 @@ function resizeH2TextSpanDivContainers() {
 
 
 window.addEventListener('resize', function (e) {
-    console.log(e);
     windowWidth = window.innerWidth;
     windowHeight = window.innerHeight;
     firework.reset();
