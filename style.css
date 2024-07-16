@@ -1199,9 +1199,46 @@ span.bold-anim.with-after.scissor::after {
         color: rgb(218, 46, 27);
     }
 } */
+@media (max-width: 460px){
+    .center-area__h1Text, .center-area__h1Text--background {
+        width: 98%;
+    }
+    .score-container {
+        font-size: 1.25rem;
+        /* padding-left: 25px; */
+    }
+    .center-area__h2Text-container {
+        height: 100px;
+    }
+    .center-area__h2Text.font-5rem {
+        font-size: calc(var(--h2TextSize) * 0.5);
+        gap: 8px;
+    }
+    @keyframes bold-choice {
+        25% {
+            font-size: calc(var(--h2TextSize) * 0.25);
+        }
+        50% {
+            z-index: 200;
+            color: #FFFFFF;
+            font-size: var(--h2TextSize);
+            font-variation-settings: "wght"500, "wdth"125;
+        }
+    }
+    @keyframes bold-choice-double {
+        25% {
+            font-size: calc(var(--h2TextSize) * 0.25);
+        }
+        50% {
+            z-index: 200;
+            color: #FFFFFF;
+            font-size: var(--h2TextSize);
+            font-variation-settings: "wght"500, "wdth"75;
+        }
+    }
+}
 
-
-@media (min-width: 460px) and (max-width: 600px){
+@media (min-width: 461px) and (max-width: 600px){
     .center-area__h1Text-rpsAllText {
         font-size: 2.2rem;
         color: rgb(67, 125, 125);
