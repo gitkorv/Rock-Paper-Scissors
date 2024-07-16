@@ -535,7 +535,7 @@ span.bold-anim.with-after.scissor::after {
     /* position: absolute; */
     /* bottom: 60px; */
     background-color: rgba(0, 0, 0, 0.2);
-    width: 100%;
+    width: 98%;
     height: 60px;
     mix-blend-mode: difference;
     z-index: -10;
