@@ -402,7 +402,7 @@ h2 {
     color: hsl(333, 93%, 66%);
     font-family: "scale-variable", sans-serif;
     font-variation-settings: "wght"600, "wdth"100;
-    font-size: calc(var(--h2TextSize) * .5);
+    font-size: calc(var(--h2TextSize) * .4);
 }
 
 .center-area__h2Text.font-5rem {
@@ -1211,9 +1211,10 @@ span.bold-anim.with-after.scissor::after {
         height: 100px;
     }
     .center-area__h2Text.font-5rem {
-        font-size: calc(var(--h2TextSize) * 0.5);
+        font-size: calc(var(--h2TextSize) * 0.65);
         gap: 8px;
     }
+
     @keyframes bold-choice {
         25% {
             font-size: calc(var(--h2TextSize) * 0.25);
@@ -1257,6 +1258,9 @@ span.bold-anim.with-after.scissor::after {
         font-size: calc(var(--h2TextSize) * 0.75);
         gap: 8px;
     }
+    .center-area__h2Text__vs-container {
+        font-size: calc(var(--h2TextSize) * .5);
+    }
     @keyframes bold-choice {
         25% {
             font-size: calc(var(--h2TextSize) * 0.25);
@@ -1298,8 +1302,11 @@ span.bold-anim.with-after.scissor::after {
         height: 100px;
     }
     .center-area__h2Text.font-5rem {
-        font-size: 4rem;
+        font-size: calc(var(--h2TextSize) * 0.8);
         gap: 9px;
+    }
+    .center-area__h2Text__vs-container {
+        font-size: calc(var(--h2TextSize) * .6);
     }
     @keyframes bold-choice {
         25% {
@@ -1330,8 +1337,15 @@ span.bold-anim.with-after.scissor::after {
         font-size: 2.8rem;
         color: rgb(73, 86, 86);
     }
+    .center-area__h2Text.font-5rem {
+        font-size: calc(var(--h2TextSize));
+        gap: 9px;
+    }
+    .center-area__h2Text__vs-container {
+        font-size: calc(var(--h2TextSize) * .7);
+    }
     .score-container {
-        font-size: 3rem;
+        font-size: 2.2rem;
     }
     .center-area__h1Text--background, .center-area__h1Text {
         width: 60%;
