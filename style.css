@@ -324,6 +324,9 @@ body {
 .top-area__text-container__number.slide-up {
     transition: transform .75s cubic-bezier(.05,1,.94,1.58);
 }
+.top-area__text-container__number.slide-up-round1 {
+    transition: transform .75s 1s cubic-bezier(.05,1,.94,1.58);
+}
 
 .top-area__text-container span {
     opacity: 1;
