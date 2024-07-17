@@ -1200,6 +1200,9 @@ span.bold-anim.with-after.scissor::after {
     }
 } */
 @media (max-width: 460px){
+    h2 {
+        font-size: 1.6rem;
+    }
     .center-area__h1Text, .center-area__h1Text--background {
         width: 98%;
     }
@@ -1207,8 +1210,14 @@ span.bold-anim.with-after.scissor::after {
         font-size: 1.25rem;
         /* padding-left: 25px; */
     }
+    .center-area {
+        gap: 8px;
+    }
+    .center-area__h1Text--background {
+        transform: translateY(calc(-100% - 8px));
+    }
     .center-area__h2Text-container {
-        height: 100px;
+        height: 75px;
     }
     .center-area__h2Text.font-5rem {
         font-size: calc(var(--h2TextSize) * 0.65);
@@ -1242,7 +1251,7 @@ span.bold-anim.with-after.scissor::after {
 @media (min-width: 461px) and (max-width: 600px){
     .center-area__h1Text-rpsAllText {
         font-size: 2.2rem;
-        color: rgb(67, 125, 125);
+        /* color: rgb(67, 125, 125); */
     }
     .center-area__h1Text, .center-area__h1Text--background {
         width: 95%;
@@ -1290,7 +1299,7 @@ span.bold-anim.with-after.scissor::after {
 @media (min-width: 601px) and (max-width: 1024px){
     .center-area__h1Text-rpsAllText {
         font-size: 2.4rem;
-        color: rgb(157, 52, 159);
+        /* color: rgb(157, 52, 159); */
     }
     .center-area__h1Text--background, .center-area__h1Text {
         width: 70%;
@@ -1335,7 +1344,7 @@ span.bold-anim.with-after.scissor::after {
 @media (min-width: 1025px) {
     .center-area__h1Text-rpsAllText {
         font-size: 2.8rem;
-        color: rgb(73, 86, 86);
+        /* color: rgb(73, 86, 86); */
     }
     .center-area__h2Text.font-5rem {
         font-size: calc(var(--h2TextSize));
