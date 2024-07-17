@@ -601,7 +601,7 @@ span.bold-anim.with-after.scissor::after {
 .center-area__h1Text--rotate-in--cpuWon-part2 {
     animation-name: flipH1TextCpuWonPart2;
     animation-timing-function: linear forwards;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, .5);
 }
 
 @keyframes flipH1Text {
