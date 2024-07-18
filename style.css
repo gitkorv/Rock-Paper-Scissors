@@ -565,7 +565,7 @@ span.bold-anim.with-after.scissor::after {
     /* border: 1px solid red; */
     width: 98%;
     z-index: 1000;
-    transition: color 2s;
+    transition: color 2s, background-color 1s;
     /* transform: rotate3d(0, 1, 0, 15deg); */
 }
 
@@ -574,7 +574,8 @@ span.bold-anim.with-after.scissor::after {
 }
 
 .center-area__h1Text.cpu-won {
-    background-color: rgba(54, 4, 88, 2);
+    background-color: rgba(54, 4, 88, 0);
+    /* transition: background-color 1s; */
 
 }
 

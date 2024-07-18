@@ -127,7 +127,16 @@ function adjustRPSFontSizeToWidth() {
 /*
 On window load, Bring in h2Text etc
 */
+
+let roundTextHeight;
+
 window.onload = function () {
+
+    roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
+    console.log(roundTextHeight);
+    topAreaTextContainer.style.height = roundTextHeight + "px";
+    topAreaTextContainer.classList.add("padding-top");
+
     adjustRPSFontSizeToWidth()
     // alignH1Background()
     setWidthsForCurrentScoreSpans(playerScore, cpuScore);
@@ -192,9 +201,10 @@ let h1TextAnimDelay;
 // cpuWonGame()
 
 
-let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
-topAreaTextContainer.style.height = roundTextHeight + "px";
-topAreaTextContainer.classList.add("padding-top");
+// let roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
+// console.log(roundTextHeight);
+// topAreaTextContainer.style.height = roundTextHeight + "px";
+// topAreaTextContainer.classList.add("padding-top");
 
 const allButtons = document.querySelectorAll("button");
 let lastTouchedElement = null;
@@ -881,7 +891,7 @@ function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound, gameInP
                     h1Text.classList.remove("center-area__h1Text--rotate-in");
                     h1Text.classList.remove("center-area__h1Text--rotate-in--part2");
                     h1Text.classList.remove("center-area__h1Text--rotate-in-cpuWon");
-                    // h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
+                    h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
 
                     // if (gameOver) {
                     //     h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2")
@@ -929,12 +939,12 @@ function setCurrentScoreMessages(playerScore, cpuScore, keepGoing, currentRound,
     if (currentRound === 1) {
         setTimeout(() => {
             currentScorePara.classList.remove("zero-width");
-        }, 2500);
+        }, 2000);
 
     };
 
     function currentScoreAnims(changeMe, endWidth, playerScore, cpuScore, currentRound) {
-        let timeoutTime = currentRound === 1 ? 3000 : 4000;
+        let timeoutTime = currentRound === 1 ? 2500 : 4000;
 
         if (currentRound === 1) {
             changeMe.forEach(span => span.classList.toggle("no-trans"));
@@ -1161,6 +1171,8 @@ function restartGame(gameOver, waitForMainContExtension, whoWonRound) {
         hiThere.classList.add("top-area__text-container__hi-there", "top-area__text-container__hi-there--cpu-won")
         topAreaTextContainer.appendChild(hiThere);
 
+        h1Text.classList.add("cpu-won")
+
         setBorderUnderRoundTicker(whoWonRound, gameOver, currentRound);
 
         btnWrapperAll.classList.add("zero-width");
@@ -1189,6 +1201,8 @@ function restartGame(gameOver, waitForMainContExtension, whoWonRound) {
         letsPlayButton.addEventListener("click", function () {
 
             h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2");
+            h1Text.classList.remove("cpu-won");
+
 
             console.log(h2Text);
 
