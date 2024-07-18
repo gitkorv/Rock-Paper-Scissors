@@ -575,7 +575,7 @@ span.bold-anim.with-after.scissor::after {
 
 .center-area__h1Text.cpu-won {
     background-color: rgba(54, 4, 88, 0);
-    /* transition: background-color 1s; */
+    transition: background-color 1s;
 
 }
 
