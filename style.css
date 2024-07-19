@@ -9,6 +9,8 @@
     --h2TextSize: 4rem;
     --colorPurple: hsl(276, 91%, 18%);
     --colorPink: #FF66FF;
+    --scaleFont: "scale-variable", sans-serif;
+
 }
 
 html {
@@ -71,9 +73,132 @@ body {
     grid-template-rows: 50% 2fr 1fr .5fr;
 }
 
+
+
 .main-container--page2 {
+    display: flex;
+    /* height: auto; */
+    padding: 40px 20px 20px;
+    /* display: block; */
     /* scroll-snap-align: top; */
     background-color: #f72585;
+}
+
+.page2text--rps-game {
+    margin: 5px 0px;
+}
+
+.page2__header-container {
+    margin-bottom: 20px;
+}
+
+.page2__header {
+    justify-self: start;
+    text-align: start;
+}
+
+.page2__header-container:first-child, .page2--header-container:last-child {
+    font-family: var(--scaleFont);
+    font-variation-settings: "wght"400, "wdth"90;
+    font-size: 1.25rem;
+}
+
+.page2__header-container:last-child {
+    background-color: #7209b7;
+    font-size: .5rem;
+    letter-spacing: 2px;
+    font-variation-settings: "wght"900, "wdth"90;
+}
+
+.page2__content {
+    display: grid;
+    position: relative;
+    grid-template-rows: auto 1fr 1fr;
+    grid-template-columns: auto;
+    grid-template-areas: 
+    "para para para"
+    "months commits experience"
+    "content content ."
+    ;
+    height: 100%;
+    width: 100%;
+    background-color: #FFFFFF;
+}
+
+.page2__content__item {
+    position: relative;
+    display: grid;
+    grid-template-rows: 0fr 0fr 0fr;
+    flex-direction: column;
+    padding: 20px 20px 0px;
+    /* border: 1px solid black; */
+    /* transition: color 1s ease-out; */
+    height: fit-content;
+    overflow: hidden;
+    transition: grid-template-rows .5s;
+}
+.page2__content__item:hover {
+    /* color: white; */
+    background-color: #7209b7;
+    /* overflow: visible; */
+    grid-template-rows: 0fr 0fr 1fr;
+    padding-bottom: 20px;
+
+}
+/* .page2__content__item::after {
+    color: transparent;
+    position: absolute;
+    top: 110px;
+    left: 0px;
+    height: 0px;
+    padding: 0px 20px 20px;
+    opacity: 1;
+    transition: height .5s ease-out;
+}
+.page2__content__item:hover::after {
+    color: white;
+    background-color: #7209b7;
+    height: 50px;
+} */
+
+.grid-number {
+    margin-bottom: -10px;
+    font-family: var(--scaleFont);
+    font-size: 5rem;
+    font-variation-settings: "wght"900, "wdth"90;
+}
+.grid-text {
+    font-family: var(--scaleFont);
+    font-size: 1rem;
+    font-variation-settings: "wght"600, "wdth"90;
+}
+
+.grid-text-hidden {
+    overflow: hidden;
+}
+
+.page2__content-header {
+    grid-area: para;
+    height: fit-content;
+}
+.page2__content-months {
+    grid-area: months;
+}
+/* .page2__content-months::after {
+    content: "Yes it really took this long, I both struggled and had a lot of fun";
+} */
+.page2__content-commits {
+    grid-area: commits;
+}
+.page2__content-experience {
+    grid-area: experience;
+}
+/* .page2__content-commits:hover {
+    background-color: #7209b7;
+} */
+
+.page2text-the-odin-project span {
+    font-variation-settings: "wght"600, "wdth"90;
 }
 
 .main-container__fraction {
