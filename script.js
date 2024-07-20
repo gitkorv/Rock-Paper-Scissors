@@ -55,6 +55,178 @@ letsPLayAGameMessage.classList.add("center-area__h2Text")
 letsPLayAGameMessage.textContent = "Let's play a game of"
 h2Text.appendChild(letsPLayAGameMessage)
 
+
+
+let aboutPageGridItems = document.querySelectorAll(".page2__content__item");
+console.log(aboutPageGridItems);
+
+let aboutPageGridHeader = document.querySelector(".page2__content-header");
+let aboutPageGridHeaderWidth = document.querySelector(".page2__content-header").offsetWidth;
+aboutPageGridHeader.style.height = aboutPageGridHeaderWidth + "px";
+console.log(aboutPageGridHeaderWidth);
+
+let heightOfEachHiddenTextOnAboutPage;
+
+function setAboutPageGrid() {
+    heightOfEachHiddenTextOnAboutPage = [];
+    for (let i = 0; i < aboutPageGridItems.length; i++) {
+        let hiddenText = aboutPageGridItems[i].querySelector(".grid-text-hidden");
+        hiddenText.style.transitionDuration = "0s";
+
+        hiddenText.style.height = "fit-content";
+        let hiddenTextHeight = window.getComputedStyle(hiddenText).height;
+        heightOfEachHiddenTextOnAboutPage.push(hiddenTextHeight);
+        hiddenText.style.height = "";
+        hiddenText.style.transitionDuration = "";
+
+        let bottomOfGridText = aboutPageGridItems[i].querySelector(".grid-text").getBoundingClientRect().bottom;
+        let topOfGridItem = aboutPageGridItems[i].getBoundingClientRect().top;
+
+        let startRollDownHere = bottomOfGridText - topOfGridItem;
+
+        let gridNumber = aboutPageGridItems[i].querySelector(".grid-number");
+        let gridText = aboutPageGridItems[i].querySelector(".grid-text");
+
+
+        hiddenText.style.top = startRollDownHere + "px";
+
+
+        aboutPageGridItems[i].addEventListener("mouseenter", (e) => {
+            hiddenText.style.transitionDuration = ".25s";
+            hiddenText.style.height = heightOfEachHiddenTextOnAboutPage[i];
+            hiddenText.style.opacity = "1"
+            gridNumber.classList.add("hover");
+            gridText.classList.add("hover");
+
+
+            
+        })
+        aboutPageGridItems[i].addEventListener("mouseleave", (e) => {
+            hiddenText.style.transitionDuration = "";
+            hiddenText.style.height = "0px";
+            gridNumber.classList.remove("hover");
+            gridText.classList.remove("hover");
+
+            // hiddenText.style.opacity = "0"
+
+
+            
+        })
+
+    }
+}
+console.log(heightOfEachHiddenTextOnAboutPage);
+
+setAboutPageGrid();
+
+
+// for (let i = 0; i < aboutPageGridItems.length; i++) {
+//     let hiddenText = aboutPageGridItems[i].querySelector(".grid-text-hidden");
+
+//     aboutPageGridItems[i].addEventListener("mouseenter", (e) => {
+//         console.log(hiddenText);
+//         hiddenText.style.height = heightOfEachHiddenTextOnAboutPage[i];
+        
+//     })
+//     aboutPageGridItems[i].addEventListener("mouseleave", (e) => {
+//         hiddenText.style.height = "0px"
+        
+//     })
+    
+// }
+
+function setAboutPageGridOld() {
+    aboutPageGridItems.forEach(item => {
+        let hiddenText = item.querySelector(".grid-text-hidden");
+        let widthOfGridItem = item.getBoundingClientRect().width;
+        // hiddenText.style.width = widthOfGridItem - 40 + "px";
+
+        let gridNumber = item.querySelector(".grid-number");
+        let gridText = item.querySelector(".grid-text");
+
+        let hiddenTextHeight
+        requestAnimationFrame(() => {
+            hiddenTextHeight = hiddenText.getBoundingClientRect().height;
+            hiddenText.classList.remove("show");
+            hiddenText.style.transitionDuration = "";
+            hiddenText.style.top = startRollDownHere + "px";
+
+        })
+        console.log(hiddenTextHeight);
+
+        let bottomOfGridText = item.querySelector(".grid-text").getBoundingClientRect().bottom;
+
+        let bottomOfGridItem = item.getBoundingClientRect().bottom;
+        let topOfGridItem = item.getBoundingClientRect().top;
+        console.log(widthOfGridItem);
+
+        let startRollDownHere = bottomOfGridText - topOfGridItem;
+
+
+
+
+
+        // console.log(hiddenTextHeight);
+
+        item.addEventListener("mouseenter", () => {
+            hiddenText.style.height = hiddenTextHeight;
+            hiddenText.classList.add("show")
+            gridNumber.classList.add("hover");
+            gridText.classList.add("hover");
+        })
+        item.addEventListener("mouseleave", () => {
+            hiddenText.style.height = "0px";
+            hiddenText.classList.remove("show")
+            gridNumber.classList.remove("hover");
+            gridText.classList.remove("hover");
+
+        })
+    })
+}
+
+
+// const debounceUpdateAboutPage = debounce()
+
+
+// function debounce(cb, delay = 1000) {
+//     let timeout
+
+//     return (...args) => {
+//         clearTimeout(timeout)
+//         timeout = setTimeout(() => {
+//             cb(...args)
+//         }, delay);
+//     }
+// }
+
+// window.addEventListener('resize', debounceUpdateAboutPage)
+
+
+function debounce(func, delay) {
+    let timeoutId;
+    return function (...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    };
+}
+
+// Function to handle resize event
+function onResize() {
+    setAboutPageGrid();
+    // setAboutPageGrid()
+    console.log('Window resized to', window.innerWidth, 'x', window.innerHeight);
+}
+
+// Debounced resize event handler
+const debouncedResize = debounce(onResize, 1000);
+
+// Attach debounced handler to the window resize event
+window.addEventListener('resize', debouncedResize);
+
+
+
 /* 
 Select playing buttons
 */
@@ -113,7 +285,7 @@ function adjustRPSFontSizeToWidth() {
     // let allSpansWidth = [];
     // h1TextRPSAllChildren.forEach(span => {allSpansWidth.push(span.offsetWidth)})
     let widthOfRPSSpans = h1TextRPSAllChildren.reduce((acc, current) => acc + current.offsetWidth, gapTotal);
-    
+
     if (widthOfH1Text < widthOfRPSSpans) {
         console.log("it's wider");
     }
@@ -131,6 +303,9 @@ On window load, Bring in h2Text etc
 let roundTextHeight;
 
 window.onload = function () {
+
+    // setAboutPageGrid();
+
 
     roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
     console.log(roundTextHeight);
@@ -347,7 +522,7 @@ function newGame(gameOver, gameInPlay, waitForMainContExtension) {
     // topAreaWrapper.classList.remove("hi-there-effect")
     topAreaWrapper.classList.remove("show-rounds");
 
-    
+
 
     // letsPlayButton.style.display = "none";
     setTimeout(() => {
@@ -419,7 +594,7 @@ function playRound(playerChoice) {
     playerHand.textContent = playerChoice;
     cpuHand.textContent = computerChoice;
 
-    
+
 
 
     if (playerChoice === computerChoice) {
@@ -554,7 +729,7 @@ function playRound(playerChoice) {
 
 function setBorderUnderRoundTicker(whoWonRound, gameOver, currentRound, theGameIsTied) {
 
-    console.log(theGameIsTied);
+    // console.log(theGameIsTied);
 
     let totalTopAreaContainerWidth;
     let topAreaTextContainerWidth;
@@ -569,11 +744,11 @@ function setBorderUnderRoundTicker(whoWonRound, gameOver, currentRound, theGameI
         rightFraction = totalTopAreaContainerWidth - leftFraction - topAreaTextContainerWidth;
         totalWidthMinusRightFraction = totalTopAreaContainerWidth - rightFraction;
     }
-    
+
     // doThisThing();
 
-    console.log(topAreaTextContainerWidth);
-    
+    // console.log(topAreaTextContainerWidth);
+
     function handleTopAreaTransitionEnd(e) {
         setTimeout(() => {
             topAreaBorderWrapper.style.gridTemplateColumns = "0px 0px 0px 0px 100% 0px 0px";
@@ -581,7 +756,7 @@ function setBorderUnderRoundTicker(whoWonRound, gameOver, currentRound, theGameI
         }, 200);
     }
 
-    console.log(currentRound);
+    // console.log(currentRound);
     if (currentRound === 0) {
         doThisThing();
 
@@ -872,7 +1047,7 @@ function setH1AnimTimesAndMessages(resultMessage, gameOver, whoWonRound, gameInP
 
                 if (gameOver && whoReallyWonRound === "cpu") {
                     h1Text.classList.add("center-area__h1Text--rotate-in--cpuWon-part2")
-                } else if (gameOver && whoReallyWonRound === "player") { 
+                } else if (gameOver && whoReallyWonRound === "player") {
                     h1Text.classList.add("center-area__h1Text--rotate-in--part2");
                 } else {
                     h1Text.classList.add("center-area__h1Text--rotate-in--part2");
@@ -1453,6 +1628,7 @@ function resizeH2TextSpanDivContainers() {
 
 
 window.addEventListener('resize', function (e) {
+
     windowWidth = window.innerWidth;
     windowHeight = window.innerHeight;
     firework.reset();
