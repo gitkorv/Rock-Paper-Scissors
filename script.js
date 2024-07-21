@@ -134,7 +134,7 @@ function setAboutPageGrid() {
         aboutPageGridItems[i].addEventListener("mouseenter", (e) => {
             hiddenText.style.transitionDuration = ".25s";
             hiddenText.style.height = heightOfEachHiddenTextOnAboutPage[i];
-            hiddenText.style.opacity = "1"
+            hiddenText.style.opacity = "1";
             gridNumber.classList.add("hover");
             gridText.classList.add("hover");
 
@@ -142,8 +142,12 @@ function setAboutPageGrid() {
             
         })
         aboutPageGridItems[i].addEventListener("mouseleave", (e) => {
-            hiddenText.style.transitionDuration = "";
+            let time = 500;
+            hiddenText.style.transitionDuration = time + "ms";
             hiddenText.style.height = "0px";
+            setTimeout(() => {
+                hiddenText.style.opacity = "0";
+            }, time);
             gridNumber.classList.remove("hover");
             gridText.classList.remove("hover");
 
@@ -1302,6 +1306,8 @@ function cpuWonGame(params) {
 function restartGame(gameOver, waitForMainContExtension, whoWonRound) {
     gameInPlay = false;
 
+    console.log(whoWonRound);
+
     playerChoiceButtons.forEach(button => {
         button.classList.remove("btn-fade-out-and-back", "slower");
     })
@@ -1314,10 +1320,12 @@ function restartGame(gameOver, waitForMainContExtension, whoWonRound) {
         topAreaWrapper.classList.remove("no-transition");
         topAreaTextContainerChildren.forEach(child => child.classList.add("hidden"));
         hiThere.textContent = `Final Score: ${playerScore} - ${cpuScore}`
-        hiThere.classList.add("top-area__text-container__hi-there", "top-area__text-container__hi-there--cpu-won")
+        hiThere.classList.add("top-area__text-container__hi-there", "top-area__text-container__hi-there--cpu-won");
         topAreaTextContainer.appendChild(hiThere);
 
-        h1Text.classList.add("cpu-won")
+        if (whoWonRound === "cpu") {
+            h1Text.classList.add("cpu-won")
+        }
 
         setBorderUnderRoundTicker(whoWonRound, gameOver, currentRound);
 
@@ -1329,7 +1337,6 @@ function restartGame(gameOver, waitForMainContExtension, whoWonRound) {
         letsPlayButton.classList.add("play-again");
 
         topAreaWrapper.classList.add("show-rounds");
-
 
         setTimeout(() => {
             letsPlayButton.classList.toggle("zero-width");
@@ -1347,8 +1354,12 @@ function restartGame(gameOver, waitForMainContExtension, whoWonRound) {
         letsPlayButton.addEventListener("click", function () {
 
             h1Text.classList.remove("center-area__h1Text--rotate-in--cpuWon-part2");
-            h1Text.classList.remove("cpu-won");
 
+            if (whoWonRound === "cpu") {
+                h1Text.classList.remove("cpu-won");
+            }
+
+            // hiThere.classList.remove("top-area__text-container__hi-there", "top-area__text-container__hi-there--cpu-won")
 
             console.log(h2Text);
 
