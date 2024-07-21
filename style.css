@@ -134,34 +134,75 @@ body {
     /* background-color: #FFFFFF; */
 }
 
-.page2__content-header-container {
+.page2__content__header-container {
     display: flex;
+    position: relative;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     text-align: center;
     /* background-color: #8965a2; */
-    width: 100%;
-    height: 100%;
+    /* rotate: 90deg; */
+    /* width: 100%;
+    height: 100%; */
     /* transform: translateY(-50%); */
 }
-.page2__content-header {
+
+.header__letter-div {
+    position: absolute;
     display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.header__letter-div1 {
+    align-items: end;
+    padding-bottom: 4px;
+    width: fit-content;
+    text-align: center;
+}
+
+.header__letter-div2 {
+    /* background-color: #3a0ca3; */
+    align-items: start;
+}
+
+.page2__content__header-circle {
+    display: flex;
+    position: relative;
+    font-size: .75rem;
+    /* left: -25px;
+    top: -10px; */
     flex-direction: column;
     align-items: center;
     justify-content: center;
     /* justify-items: center; */
     text-align: center;
-    background-color: #000000;
-    color: #4cc9f0;
+    /* background-color: #c60f0f; */
+    color: #000000;
     border-radius: 50%;
-    width: 80%;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    animation: rotate-circle 10s infinite linear;
     /* transform: translateY(-50%); */
 }
 
-.page2__content-header:last-child {
-    font-size: larger;
+@keyframes rotate-circle {
+    from {
+        rotate: 0deg;
+    }
+    to {
+        rotate: 360deg;
+    }
 }
 
+.page2__content__header-inner-circle {
+    height: 70%;
+    width: 70%;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: black;
+}
 
 .page2__content__item {
     position: relative;
@@ -179,10 +220,12 @@ body {
     font-size: 5rem;
     font-variation-settings: "wght"900, "wdth"90;
     overflow: hidden;
-    transition: color .5s;
+    transition: all .5s;
 }
 .grid-number.hover {
     color: #7209b7;
+    font-variation-settings: "wght"900, "wdth"75;
+
 }
 .grid-number.narrow {
     font-variation-settings: "wght"900, "wdth"20;
