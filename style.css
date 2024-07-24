@@ -269,11 +269,11 @@ body {
     /* top: 105px; */
     padding: 0px 5px 10px 5px;
     overflow: hidden;
-    height: 0;
+    height: 0px;
     opacity: 0;
     /* width: calc(100% - 40px);
     width: 50%; */
-    transition: height 1s;
+    transition: height;
     z-index: 100;
     /* background-color: #bcb7c8; */
     border-left: 1px solid black;

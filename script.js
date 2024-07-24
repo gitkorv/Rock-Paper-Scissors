@@ -58,8 +58,11 @@ h2Text.appendChild(letsPLayAGameMessage)
 
 // About page
 
-let aboutPageGridItems = document.querySelectorAll(".page2__content__item");
+let aboutPageGridItems = Array.from(document.querySelectorAll(".page2__content__item"));
 console.log(aboutPageGridItems);
+
+let hiddenAboutPageGridText = Array.from(document.querySelectorAll(".grid-text-hidden"))
+console.log(hiddenAboutPageGridText);
 
 let aboutPageGridHeaderCircle = document.querySelector(".page2__content__header-circle");
 let aboutPageGridHeaderCircleWidth = document.querySelector(".page2__content__header-circle").offsetWidth;
@@ -98,28 +101,97 @@ function createCircleText(string, container, angle, myClassArray, trueOrFalse, s
 createCircleText(aboutPageContentHeaderString, aboutPageGridHeaderCircle, angle, ["header__letter-div", "header__letter-div1"], false, 0)
 // createCircleText(aboutPageContentHeaderString2, aboutPageGridHeaderCircle, angle, ["header__letter-div", "header__letter-div2"], true, 200)
 
+let heightOfEachHiddenTextOnAboutPage;
 
+function getHeightOfAboutPageHiddenTexts() {
+    heightOfEachHiddenTextOnAboutPage = [];
+    for (let i = 0; i < hiddenAboutPageGridText.length; i++) {
+        hiddenAboutPageGridText[i].style.transitionDuration = "0s";
+
+        hiddenAboutPageGridText[i].style.height = "fit-content";
+        let hiddenTextHeight = window.getComputedStyle(hiddenAboutPageGridText[i]).height;
+        heightOfEachHiddenTextOnAboutPage.push(hiddenTextHeight);
+        hiddenAboutPageGridText[i].style.height = "";
+        hiddenAboutPageGridText[i].style.transitionDuration = "";
+    }
+}
+
+getHeightOfAboutPageHiddenTexts()
+
+let startRollDownHereArray = [];
+
+function startAboutPageHiddenTextRollDownHere(params) {
+    aboutPageGridItems.forEach(gridItem => {
+        let bottomOfGridText = gridItem.querySelector(".grid-text").getBoundingClientRect().bottom;
+        let topOfGridItem = gridItem.getBoundingClientRect().top;
+        let startRollDownHere = bottomOfGridText - topOfGridItem;
+        startRollDownHereArray.push(startRollDownHere);
+    })   
+}
+
+startAboutPageHiddenTextRollDownHere();
+
+console.log(startRollDownHereArray);
 
 // let circleTextContainer = document.querySelector("")
 
+hiddenAboutPageGridText.forEach(item => {
+    item.style.top = startRollDownHereArray[0] + "px";
+})
+
+function handleHiddenGridText(gridItem) {
+    let myGridIndex = aboutPageGridItems.indexOf(gridItem);
+    let timeToRetract = "1000";
+    hiddenAboutPageGridText.forEach(text => {
+        if (text.style.opacity === "1") {
+            text.style.transitionDuration = timeToRetract + "ms";
+            text.style.height = "";
+            setTimeout(() => {
+                text.style.opacity = "0";
+            }, timeToRetract);
+        }
+
+    })
+    hiddenAboutPageGridText[myGridIndex].style.transition = "height .25s";
+    hiddenAboutPageGridText[myGridIndex].style.height = heightOfEachHiddenTextOnAboutPage[myGridIndex];
+    hiddenAboutPageGridText[myGridIndex].style.opacity = "1";
+}
+
 function handleGridTouchStart() {
-    this.classList.add("hover");
-    console.log("I'm being hovered");
+    handleHiddenGridText(this);
 }
 
 function handleGridTouchMove() {
     console.log("it's moving");
 }
 function handleGridTouchEnd() {
-    this.classList.remove("hover")
+    // let allMyChildren = Array.from(this.children)
+    // allMyChildren.forEach(child => {
+    //     child.classList.remove("hover")
+    // })
 }
 function handleGridTouchCancel() {
-    this.classList.remove("hover");
-    console.log("I'm stopped being hovered");
+    // this.classList.remove("hover");
+    // console.log("I'm stopped being hovered");
 }
 
 
-let heightOfEachHiddenTextOnAboutPage;
+// for (let i = 0; i < aboutPageGridItems.length; i++) {
+//     aboutPageGridItems[i].addEventListener('touchstart', handleGridTouchStart);
+//     aboutPageGridItems[i].addEventListener('touchmove', handleGridTouchMove);
+//     aboutPageGridItems[i].addEventListener('touchend', handleGridTouchEnd);
+//     aboutPageGridItems[i].addEventListener('touchcancel', handleGridTouchCancel);
+    
+// }
+
+aboutPageGridItems.forEach(item => {
+    item.addEventListener('touchstart', handleGridTouchStart);
+    item.addEventListener('touchmove', handleGridTouchMove);
+    item.addEventListener('touchend', handleGridTouchEnd);
+    item.addEventListener('touchcancel', handleGridTouchCancel);
+})
+
+
 
 function setAboutPageGrid() {
     heightOfEachHiddenTextOnAboutPage = [];
@@ -144,41 +216,31 @@ function setAboutPageGrid() {
 
         hiddenText.style.top = startRollDownHere + "px";
 
-        aboutPageGridItems.forEach(item => {
-            // item.addEventListener('mouseover', handleMouseOver);
-            // item.addEventListener('mouseout', handleMouseOut);
-            item.addEventListener('touchstart', handleGridTouchStart);
-            item.addEventListener('touchmove', handleGridTouchMove);
-            item.addEventListener('touchend', handleGridTouchEnd);
-            item.addEventListener('touchcancel', handleGridTouchCancel);
-        })
+        // aboutPageGridItems[i].addEventListener("mouseenter", (e) => {
+        //     hiddenText.style.transitionDuration = ".25s";
+        //     hiddenText.style.height = heightOfEachHiddenTextOnAboutPage[i];
+        //     hiddenText.style.opacity = "1";
+        //     gridNumber.classList.add("hover");
+        //     gridText.classList.add("hover");            
+        // })
 
+        // aboutPageGridItems[i].addEventListener("mouseleave", (e) => {
+        //     let time = 500;
+        //     hiddenText.style.transitionDuration = time + "ms";
+        //     hiddenText.style.height = "0px";
+        //     setTimeout(() => {
+        //         hiddenText.style.opacity = "0";
+        //     }, time);
+        //     gridNumber.classList.remove("hover");
+        //     gridText.classList.remove("hover");
 
-        aboutPageGridItems[i].addEventListener("mouseenter", (e) => {
-            hiddenText.style.transitionDuration = ".25s";
-            hiddenText.style.height = heightOfEachHiddenTextOnAboutPage[i];
-            hiddenText.style.opacity = "1";
-            gridNumber.classList.add("hover");
-            gridText.classList.add("hover");            
-        })
-
-        aboutPageGridItems[i].addEventListener("mouseleave", (e) => {
-            let time = 500;
-            hiddenText.style.transitionDuration = time + "ms";
-            hiddenText.style.height = "0px";
-            setTimeout(() => {
-                hiddenText.style.opacity = "0";
-            }, time);
-            gridNumber.classList.remove("hover");
-            gridText.classList.remove("hover");
-
-            // hiddenText.style.opacity = "0"            
-        })
+        //     // hiddenText.style.opacity = "0"            
+        // })
     }
 }
-console.log(heightOfEachHiddenTextOnAboutPage);
+// console.log(heightOfEachHiddenTextOnAboutPage);
 
-setAboutPageGrid();
+// setAboutPageGrid();
 
 
 // const debounceUpdateAboutPage = debounce()
@@ -210,7 +272,8 @@ function debounce(func, delay) {
 
 // Function to handle resize event
 function onResize() {
-    setAboutPageGrid();
+    getHeightOfAboutPageHiddenTexts()
+    // setAboutPageGrid();
     // setAboutPageGrid()
     console.log('Window resized to', window.innerWidth, 'x', window.innerHeight);
 }
