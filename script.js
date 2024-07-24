@@ -102,7 +102,21 @@ createCircleText(aboutPageContentHeaderString, aboutPageGridHeaderCircle, angle,
 
 // let circleTextContainer = document.querySelector("")
 
+function handleGridTouchStart() {
+    this.classList.add("hover");
+    console.log("I'm being hovered");
+}
 
+function handleGridTouchMove() {
+    console.log("it's moving");
+}
+function handleGridTouchEnd() {
+    this.classList.remove("hover")
+}
+function handleGridTouchCancel() {
+    this.classList.remove("hover");
+    console.log("I'm stopped being hovered");
+}
 
 
 let heightOfEachHiddenTextOnAboutPage;
@@ -130,17 +144,24 @@ function setAboutPageGrid() {
 
         hiddenText.style.top = startRollDownHere + "px";
 
+        aboutPageGridItems.forEach(item => {
+            // item.addEventListener('mouseover', handleMouseOver);
+            // item.addEventListener('mouseout', handleMouseOut);
+            item.addEventListener('touchstart', handleGridTouchStart);
+            item.addEventListener('touchmove', handleGridTouchMove);
+            item.addEventListener('touchend', handleGridTouchEnd);
+            item.addEventListener('touchcancel', handleGridTouchCancel);
+        })
+
 
         aboutPageGridItems[i].addEventListener("mouseenter", (e) => {
             hiddenText.style.transitionDuration = ".25s";
             hiddenText.style.height = heightOfEachHiddenTextOnAboutPage[i];
             hiddenText.style.opacity = "1";
             gridNumber.classList.add("hover");
-            gridText.classList.add("hover");
-
-
-            
+            gridText.classList.add("hover");            
         })
+
         aboutPageGridItems[i].addEventListener("mouseleave", (e) => {
             let time = 500;
             hiddenText.style.transitionDuration = time + "ms";
