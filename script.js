@@ -181,6 +181,7 @@ function handleGridTouchMove() {
     console.log("it's moving");
 }
 function handleGridTouchEnd() {
+    deactivateGridItem(this)
     // let allMyChildren = Array.from(this.children)
     // allMyChildren.forEach(child => {
     //     child.classList.remove("hover")
