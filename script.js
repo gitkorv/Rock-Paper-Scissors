@@ -139,26 +139,42 @@ hiddenAboutPageGridText.forEach(item => {
     item.style.top = startRollDownHereArray[0] + "px";
 })
 
-function handleHiddenGridText(gridItem) {
+function activateGridItem(gridItem) {
     let myGridIndex = aboutPageGridItems.indexOf(gridItem);
-    let timeToRetract = "1000";
-    hiddenAboutPageGridText.forEach(text => {
-        if (text.style.opacity === "1") {
-            text.style.transitionDuration = timeToRetract + "ms";
-            text.style.height = "";
-            setTimeout(() => {
-                text.style.opacity = "0";
-            }, timeToRetract);
-        }
-
+    let numberAndHeadline = [gridItem.children[0], gridItem.children[1]];
+    numberAndHeadline.forEach(child => {
+        child.classList.add("hover")
     })
-    hiddenAboutPageGridText[myGridIndex].style.transition = "height .25s";
+
+    // let timeToRetract = "1000";
+    // hiddenAboutPageGridText.forEach(text => {
+    //     if (text.style.opacity === "1") {
+    //         text.style.transitionDuration = timeToRetract + "ms";
+    //         text.style.height = "";
+    //         text.style.opacity = "0";
+    //     }
+
+    // })
+    hiddenAboutPageGridText[myGridIndex].style.transitionDuration = ".25s";
     hiddenAboutPageGridText[myGridIndex].style.height = heightOfEachHiddenTextOnAboutPage[myGridIndex];
     hiddenAboutPageGridText[myGridIndex].style.opacity = "1";
 }
 
+function deactivateGridItem(gridItem) {
+    let numberAndHeadline = [gridItem.children[0], gridItem.children[1]];
+    numberAndHeadline.forEach(child => {
+        child.classList.remove("hover")
+    })
+
+    let timeToRetract = "1000";
+
+    gridItem.children[2].style.transitionDuration = timeToRetract + "ms";
+    gridItem.children[2].style.height = "";
+    gridItem.children[2].style.opacity = "0";
+}
+
 function handleGridTouchStart() {
-    handleHiddenGridText(this);
+    activateGridItem(this);
 }
 
 function handleGridTouchMove() {
@@ -174,6 +190,14 @@ function handleGridTouchCancel() {
     // this.classList.remove("hover");
     // console.log("I'm stopped being hovered");
 }
+function handleGridMouseEnter() {
+    activateGridItem(this);
+
+}
+function handleGridMouseLeave() {
+    deactivateGridItem(this)
+
+}
 
 
 // for (let i = 0; i < aboutPageGridItems.length; i++) {
@@ -185,6 +209,8 @@ function handleGridTouchCancel() {
 // }
 
 aboutPageGridItems.forEach(item => {
+    item.addEventListener('mouseenter', handleGridMouseEnter);
+    item.addEventListener('mouseleave', handleGridMouseLeave);
     item.addEventListener('touchstart', handleGridTouchStart);
     item.addEventListener('touchmove', handleGridTouchMove);
     item.addEventListener('touchend', handleGridTouchEnd);

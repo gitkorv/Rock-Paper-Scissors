@@ -273,7 +273,7 @@ body {
     opacity: 0;
     /* width: calc(100% - 40px);
     width: 50%; */
-    transition: height;
+    transition: height, opacity;
     z-index: 100;
     /* background-color: #bcb7c8; */
     border-left: 1px solid black;
