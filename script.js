@@ -160,12 +160,7 @@ function activateGridItem(gridItem) {
     hiddenAboutPageGridText[myGridIndex].style.opacity = "1";
 }
 
-function deactivateGridItem(gridItem) {
-    let numberAndHeadline = [gridItem.children[0], gridItem.children[1]];
-    numberAndHeadline.forEach(child => {
-        child.classList.remove("hover")
-    })
-
+function retractHiddenText(gridItem) {
     let timeToRetract = "1000";
 
     gridItem.children[2].style.transitionDuration = timeToRetract + "ms";
@@ -173,7 +168,28 @@ function deactivateGridItem(gridItem) {
     gridItem.children[2].style.opacity = "0";
 }
 
+function deactivateGridItem(gridItem) {
+    let numberAndHeadline = [gridItem.children[0], gridItem.children[1]];
+    numberAndHeadline.forEach(child => {
+        child.classList.remove("hover")
+    })
+
+    retractHiddenText(gridItem)
+
+    // let timeToRetract = "1000";
+
+    // gridItem.children[2].style.transitionDuration = timeToRetract + "ms";
+    // gridItem.children[2].style.height = "";
+    // gridItem.children[2].style.opacity = "0";
+}
+
 function handleGridTouchStart() {
+    aboutPageGridItems.forEach(gridItem => {
+        gridItem.children[0].classList.remove("hover");
+        gridItem.children[1].classList.remove("hover");
+        retractHiddenText(gridItem)
+
+    })
     activateGridItem(this);
 }
 
@@ -181,7 +197,7 @@ function handleGridTouchMove() {
     console.log("it's moving");
 }
 function handleGridTouchEnd() {
-    deactivateGridItem(this)
+    // deactivateGridItem(this)
     // let allMyChildren = Array.from(this.children)
     // allMyChildren.forEach(child => {
     //     child.classList.remove("hover")
