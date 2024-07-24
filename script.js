@@ -58,6 +58,13 @@ h2Text.appendChild(letsPLayAGameMessage)
 
 // About page
 
+let page2 = document.querySelector(".main-container--page2")
+console.log(page2);
+
+// page2.addEventListener("click", () => {
+//     console.log("Page is clicked");
+// })
+
 let aboutPageGridItems = Array.from(document.querySelectorAll(".page2__content__item"));
 console.log(aboutPageGridItems);
 
@@ -146,15 +153,6 @@ function activateGridItem(gridItem) {
         child.classList.add("hover")
     })
 
-    // let timeToRetract = "1000";
-    // hiddenAboutPageGridText.forEach(text => {
-    //     if (text.style.opacity === "1") {
-    //         text.style.transitionDuration = timeToRetract + "ms";
-    //         text.style.height = "";
-    //         text.style.opacity = "0";
-    //     }
-
-    // })
     hiddenAboutPageGridText[myGridIndex].style.transitionDuration = ".25s";
     hiddenAboutPageGridText[myGridIndex].style.height = heightOfEachHiddenTextOnAboutPage[myGridIndex];
     hiddenAboutPageGridText[myGridIndex].style.opacity = "1";
@@ -173,30 +171,67 @@ function deactivateGridItem(gridItem) {
     numberAndHeadline.forEach(child => {
         child.classList.remove("hover")
     })
-
     retractHiddenText(gridItem)
-
-    // let timeToRetract = "1000";
-
-    // gridItem.children[2].style.transitionDuration = timeToRetract + "ms";
-    // gridItem.children[2].style.height = "";
-    // gridItem.children[2].style.opacity = "0";
 }
 
-function handleGridTouchStart() {
+let lastTouchedAboutPageGridElement;
+
+function handleGridTouchStart(event) {
+    lastTouchedAboutPageGridElement = event.target.parentElement;
+    console.log(lastTouchedAboutPageGridElement);
     aboutPageGridItems.forEach(gridItem => {
         gridItem.children[0].classList.remove("hover");
         gridItem.children[1].classList.remove("hover");
         retractHiddenText(gridItem)
-
     })
     activateGridItem(this);
 }
 
-function handleGridTouchMove() {
-    console.log("it's moving");
+function handleGridTouchMove(e) {
+    // console.log("it's moving");
+
+    const touch = e.touches[0];
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    const elementParent = element.parentElement;
+
+    console.log(element.parentElement);
+
+    if (elementParent && elementParent.classList.contains("page2__content__item")) {
+        console.log("it sure does");
+
+        if (lastTouchedAboutPageGridElement && lastTouchedAboutPageGridElement !== elementParent) {
+            lastTouchedAboutPageGridElement.children[0].classList.remove("hover");
+            lastTouchedAboutPageGridElement.children[1].classList.remove("hover");
+        }
+        lastTouchedAboutPageGridElement = elementParent;
+        activateGridItem(lastTouchedAboutPageGridElement)
+    } else {
+        if (lastTouchedAboutPageGridElement) {
+            lastTouchedAboutPageGridElement.children[0].classList.remove("hover");
+            lastTouchedAboutPageGridElement.children[1].classList.remove("hover");
+            retractHiddenText(lastTouchedAboutPageGridElement);
+        }
+        lastTouchedAboutPageGridElement = null;
+        console.log("it does not");
+    }
+
+
+
 }
-function handleGridTouchEnd() {
+function handleGridTouchEnd(e) {
+
+    const touch = e.touches[0];
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    const elementParent = element.parentElement;
+
+    if (lastTouchedAboutPageGridElement && lastTouchedAboutPageGridElement === elementParent) {
+        activateGridItem(lastTouchedAboutPageGridElement);
+    } else {
+        aboutPageGridItems.forEach(gridItem => {
+            deactivateGridItem(gridItem);
+        })
+    }
+
     // deactivateGridItem(this)
     // let allMyChildren = Array.from(this.children)
     // allMyChildren.forEach(child => {
