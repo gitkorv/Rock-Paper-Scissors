@@ -78,11 +78,22 @@ body {
 .main-container--page2 {
     display: flex;
     height: min(100dvh);
-    padding: 100px 20px 20px;
+    height: auto;
+    padding: 70px 20px 20px;
     overflow-y: scroll;
+    overflow-x: hidden;
     /* display: block; */
     /* scroll-snap-align: top; */
     background-color: #f72585;
+}
+
+.page2__header-container {
+    /* color: #FF66FF; */
+    font-family: var(--scaleFont);
+    font-variation-settings: "wght"400, "wdth"90;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+
 }
 
 .page2text-the-odin-project {
@@ -91,25 +102,14 @@ body {
 
 .page2text--rps-game {
     color: #3a0ca3;
-    /* color: #7209b7; */
-
+    font-variation-settings: "wght"700, "wdth"90;
+    color: #7209b7;
     margin: 10px 0px;
-}
-
-.page2__header-container {
-    margin-bottom: 40px;
 }
 
 .page2__header {
     justify-self: start;
     text-align: start;
-}
-
-.page2__header-container {
-    /* color: #FF66FF; */
-    font-family: var(--scaleFont);
-    font-variation-settings: "wght"400, "wdth"90;
-    font-size: 1.25rem;
 }
 
 .page2text-by-me {
@@ -127,31 +127,18 @@ body {
     font-variation-settings: "wght"300, "wdth"90;
 }
 
-.page2__content {
-    display: grid;
-    gap: 10px;
-    margin: 0px 20px;
-    
-    position: relative;
-    grid-template-rows: repeat(auto-fit, 1fr);
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    /* height: auto; */
-    width: auto;
-    /* background-color: #FFFFFF; */
-}
-
-.page2__content__header-container {
+.page2__circle__header-container {
     display: flex;
     position: absolute;
-    right: 20px;
-    top: -15px;
+    right: 10px;
+    top: -10px;
     align-items: start;
     justify-content: end;
     text-align: center;
     /* background-color: #8965a2; */
     /* rotate: 90deg; */
-    width: 250px;
-    height: 250px;
+    width: 150px;
+    height: 150px;
     /* transform: translateY(-50%); */
 }
 
@@ -174,10 +161,10 @@ body {
     align-items: start;
 }
 
-.page2__content__header-circle {
+.page2__circle__header-circle {
     display: flex;
     position: relative;
-    font-size: 1rem;
+    font-size: .5rem;
     /* left: -25px;
     top: -10px; */
     flex-direction: column;
@@ -204,12 +191,62 @@ body {
     }
 }
 
-.page2__content__header-inner-circle {
+.page2__circle__header-inner-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 70%;
     width: 70%;
     border: 1px solid black;
     border-radius: 50%;
     /* background-color: black; */
+}
+
+.page2__circle__center-circle {
+    position: absolute;
+    width: 55%;
+    height: 55%;
+    /* background-color: #3a0ca3; */
+    border-radius: 50%;
+    border: 6px solid #7209b7;
+    animation: inner-circle-blob 2s infinite alternate-reverse;
+}
+
+.page2__circle__center-circle3 {
+    /* border-color: #4361ee; */
+    border-width: 3px;
+    animation-delay: .5s;
+}
+
+.page2__circle__center-circle2 {
+    /* border-color: #4cc9f0; */
+    width: 45%;
+    height: 45%;
+    rotate: 90deg;
+    border-width: 4px;
+    animation-delay: 1s;
+}
+
+@keyframes inner-circle-blob {
+    to {
+        height: 0%;
+        border-width: 0px;
+    }
+}
+
+
+.page2__content-grid {
+    /* flex: 2; */
+    display: grid;
+    gap: 10px;
+    margin: 0px 0px 50% 25%;
+    
+    position: relative;
+    grid-template-rows: repeat(auto-fit, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    /* height: auto; */
+    width: auto;
+    /* background-color: #FFFFFF; */
 }
 
 .page2__content__grid-item {
@@ -227,7 +264,7 @@ body {
     padding-top: 20px;
     margin-bottom: -10px;
     font-family: var(--scaleFont);
-    font-size: 5rem;
+    font-size: 4rem;
     font-variation-settings: "wght"900, "wdth"90;
     overflow: hidden;
     transition: all .5s;
@@ -245,12 +282,10 @@ body {
     font-variation-settings: "wght"900, "wdth"75;
 
 }
-.grid-number.narrow {
-    /* font-variation-settings: "wght"900, "wdth"20; */
-}
+
 .grid-text {
     font-family: var(--scaleFont);
-    font-size: 1rem;
+    font-size: .75rem;
     font-variation-settings: "wght"300, "wdth"90;
     transition: font-variation-settings 1s;
     pointer-events: none;
@@ -294,6 +329,23 @@ body {
 
 .page2text-the-odin-project span {
     font-variation-settings: "wght"600, "wdth"90;
+}
+
+.page2__footer {
+    /* flex: 1; */
+    display: flex;
+    align-items: center;
+    border-top: 1px solid black;
+    height: 50px;
+    width: 100%;
+    /* background-color: #3a0ca3; */
+}
+
+.page2__footer-text-container {
+
+    font-size: .6rem;
+    font-style: italic;
+
 }
 
 .main-container__fraction {

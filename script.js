@@ -71,9 +71,9 @@ console.log(aboutPageGridItems);
 let hiddenAboutPageGridText = Array.from(document.querySelectorAll(".grid-text-hidden"))
 console.log(hiddenAboutPageGridText);
 
-let aboutPageGridHeaderCircle = document.querySelector(".page2__content__header-circle");
-let aboutPageGridHeaderCircleWidth = document.querySelector(".page2__content__header-circle").offsetWidth;
-let aboutPageGridHeaderCircleHeight = document.querySelector(".page2__content__header-circle").offsetHeight;
+let aboutPageGridHeaderCircle = document.querySelector(".page2__circle__header-circle");
+let aboutPageGridHeaderCircleWidth = document.querySelector(".page2__circle__header-circle").offsetWidth;
+let aboutPageGridHeaderCircleHeight = document.querySelector(".page2__circle__header-circle").offsetHeight;
 
 let smallestHeightOrWidth = aboutPageGridHeaderCircleHeight > aboutPageGridHeaderCircleWidth ? aboutPageGridHeaderCircleWidth * .9 : aboutPageGridHeaderCircleHeight * .9;
 console.log(smallestHeightOrWidth);
@@ -181,9 +181,6 @@ function handleGridTouchStart(event) {
     console.log(lastTouchedAboutPageGridElement);
     aboutPageGridItems.forEach(gridItem => {
         deactivateGridItem(gridItem)
-        // gridItem.children[0].classList.remove("hover");
-        // gridItem.children[1].classList.remove("hover");
-        // retractHiddenText(gridItem)
     })
     activateGridItem(this);
 }
@@ -200,45 +197,21 @@ function handleGridTouchMove(e) {
         console.log("it sure does");
 
         if (lastTouchedAboutPageGridElement && lastTouchedAboutPageGridElement !== element) {
-            // lastTouchedAboutPageGridElement.children[0].classList.remove("hover");
-            // lastTouchedAboutPageGridElement.children[1].classList.remove("hover");
             deactivateGridItem(lastTouchedAboutPageGridElement)
         }
         lastTouchedAboutPageGridElement = element;
         activateGridItem(lastTouchedAboutPageGridElement)
     } else {
         if (lastTouchedAboutPageGridElement) {
-            // lastTouchedAboutPageGridElement.children[0].classList.remove("hover");
-            // lastTouchedAboutPageGridElement.children[1].classList.remove("hover");
-            // retractHiddenText(lastTouchedAboutPageGridElement);
             deactivateGridItem(lastTouchedAboutPageGridElement)
         }
         lastTouchedAboutPageGridElement = null;
         console.log("it does not");
     }
-
-
-
 }
+
 function handleGridTouchEnd(e) {
 
-    // const touch = e.touches[0];
-    // const element = document.elementFromPoint(touch.clientX, touch.clientY);
-    // const elementParent = element.parentElement;
-
-    // if (lastTouchedAboutPageGridElement && lastTouchedAboutPageGridElement === elementParent) {
-    //     activateGridItem(lastTouchedAboutPageGridElement);
-    // } else {
-    //     aboutPageGridItems.forEach(gridItem => {
-    //         deactivateGridItem(gridItem);
-    //     })
-    // }
-
-    // deactivateGridItem(this)
-    // let allMyChildren = Array.from(this.children)
-    // allMyChildren.forEach(child => {
-    //     child.classList.remove("hover")
-    // })
 }
 function handleGridTouchCancel() {
     // this.classList.remove("hover");
@@ -250,20 +223,9 @@ function handleGridMouseEnter() {
 }
 function handleGridMouseLeave() {
     deactivateGridItem(this)
-
 }
 
-
-// for (let i = 0; i < aboutPageGridItems.length; i++) {
-//     aboutPageGridItems[i].addEventListener('touchstart', handleGridTouchStart);
-//     aboutPageGridItems[i].addEventListener('touchmove', handleGridTouchMove);
-//     aboutPageGridItems[i].addEventListener('touchend', handleGridTouchEnd);
-//     aboutPageGridItems[i].addEventListener('touchcancel', handleGridTouchCancel);
-    
-// }
-
 const debounceHandleGridTouchMove = debounce(handleGridTouchMove, 50)
-
 
 aboutPageGridItems.forEach(item => {
     item.addEventListener('mouseenter', handleGridMouseEnter);
@@ -273,8 +235,6 @@ aboutPageGridItems.forEach(item => {
     item.addEventListener('touchend', handleGridTouchEnd);
     item.addEventListener('touchcancel', handleGridTouchCancel);
 })
-
-
 
 function setAboutPageGrid() {
     heightOfEachHiddenTextOnAboutPage = [];
