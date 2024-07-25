@@ -177,6 +177,8 @@ function deactivateGridItem(gridItem) {
 let lastTouchedAboutPageGridElement;
 
 function handleGridTouchStart(event) {
+    // getHeightOfAboutPageHiddenTexts();
+    // startAboutPageHiddenTextRollDownHere();
     lastTouchedAboutPageGridElement = event.target;
     console.log(lastTouchedAboutPageGridElement);
     aboutPageGridItems.forEach(gridItem => {
@@ -218,6 +220,7 @@ function handleGridTouchCancel() {
     // console.log("I'm stopped being hovered");
 }
 function handleGridMouseEnter() {
+    // startAboutPageHiddenTextRollDownHere();
     activateGridItem(this);
 
 }
@@ -316,6 +319,7 @@ function debounce(func, delay) {
 // Function to handle resize event
 function onResize() {
     getHeightOfAboutPageHiddenTexts()
+    startAboutPageHiddenTextRollDownHere();
     // setAboutPageGrid();
     // setAboutPageGrid()
     console.log('Window resized to', window.innerWidth, 'x', window.innerHeight);
