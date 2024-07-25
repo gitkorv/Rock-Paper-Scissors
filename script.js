@@ -65,7 +65,7 @@ console.log(page2);
 //     console.log("Page is clicked");
 // })
 
-let aboutPageGridItems = Array.from(document.querySelectorAll(".page2__content__item"));
+let aboutPageGridItems = Array.from(document.querySelectorAll(".page2__content__grid-item"));
 console.log(aboutPageGridItems);
 
 let hiddenAboutPageGridText = Array.from(document.querySelectorAll(".grid-text-hidden"))
@@ -158,12 +158,12 @@ function activateGridItem(gridItem) {
     hiddenAboutPageGridText[myGridIndex].style.opacity = "1";
 }
 
-function retractHiddenText(gridItem) {
+function retractHiddenText(parentElement) {
     let timeToRetract = "1000";
 
-    gridItem.children[2].style.transitionDuration = timeToRetract + "ms";
-    gridItem.children[2].style.height = "";
-    gridItem.children[2].style.opacity = "0";
+    parentElement.children[2].style.transitionDuration = timeToRetract + "ms";
+    parentElement.children[2].style.height = "";
+    parentElement.children[2].style.opacity = "0";
 }
 
 function deactivateGridItem(gridItem) {
@@ -177,12 +177,13 @@ function deactivateGridItem(gridItem) {
 let lastTouchedAboutPageGridElement;
 
 function handleGridTouchStart(event) {
-    lastTouchedAboutPageGridElement = event.target.parentElement;
+    lastTouchedAboutPageGridElement = event.target;
     console.log(lastTouchedAboutPageGridElement);
     aboutPageGridItems.forEach(gridItem => {
-        gridItem.children[0].classList.remove("hover");
-        gridItem.children[1].classList.remove("hover");
-        retractHiddenText(gridItem)
+        deactivateGridItem(gridItem)
+        // gridItem.children[0].classList.remove("hover");
+        // gridItem.children[1].classList.remove("hover");
+        // retractHiddenText(gridItem)
     })
     activateGridItem(this);
 }
@@ -192,24 +193,25 @@ function handleGridTouchMove(e) {
 
     const touch = e.touches[0];
     const element = document.elementFromPoint(touch.clientX, touch.clientY);
-    const elementParent = element.parentElement;
 
-    console.log(element.parentElement);
+    console.log(element);
 
-    if (elementParent && elementParent.classList.contains("page2__content__item")) {
+    if (element && element.classList.contains("page2__content__grid-item")) {
         console.log("it sure does");
 
-        if (lastTouchedAboutPageGridElement && lastTouchedAboutPageGridElement !== elementParent) {
-            lastTouchedAboutPageGridElement.children[0].classList.remove("hover");
-            lastTouchedAboutPageGridElement.children[1].classList.remove("hover");
+        if (lastTouchedAboutPageGridElement && lastTouchedAboutPageGridElement !== element) {
+            // lastTouchedAboutPageGridElement.children[0].classList.remove("hover");
+            // lastTouchedAboutPageGridElement.children[1].classList.remove("hover");
+            deactivateGridItem(lastTouchedAboutPageGridElement)
         }
-        lastTouchedAboutPageGridElement = elementParent;
+        lastTouchedAboutPageGridElement = element;
         activateGridItem(lastTouchedAboutPageGridElement)
     } else {
         if (lastTouchedAboutPageGridElement) {
-            lastTouchedAboutPageGridElement.children[0].classList.remove("hover");
-            lastTouchedAboutPageGridElement.children[1].classList.remove("hover");
-            retractHiddenText(lastTouchedAboutPageGridElement);
+            // lastTouchedAboutPageGridElement.children[0].classList.remove("hover");
+            // lastTouchedAboutPageGridElement.children[1].classList.remove("hover");
+            // retractHiddenText(lastTouchedAboutPageGridElement);
+            deactivateGridItem(lastTouchedAboutPageGridElement)
         }
         lastTouchedAboutPageGridElement = null;
         console.log("it does not");
@@ -220,17 +222,17 @@ function handleGridTouchMove(e) {
 }
 function handleGridTouchEnd(e) {
 
-    const touch = e.touches[0];
-    const element = document.elementFromPoint(touch.clientX, touch.clientY);
-    const elementParent = element.parentElement;
+    // const touch = e.touches[0];
+    // const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    // const elementParent = element.parentElement;
 
-    if (lastTouchedAboutPageGridElement && lastTouchedAboutPageGridElement === elementParent) {
-        activateGridItem(lastTouchedAboutPageGridElement);
-    } else {
-        aboutPageGridItems.forEach(gridItem => {
-            deactivateGridItem(gridItem);
-        })
-    }
+    // if (lastTouchedAboutPageGridElement && lastTouchedAboutPageGridElement === elementParent) {
+    //     activateGridItem(lastTouchedAboutPageGridElement);
+    // } else {
+    //     aboutPageGridItems.forEach(gridItem => {
+    //         deactivateGridItem(gridItem);
+    //     })
+    // }
 
     // deactivateGridItem(this)
     // let allMyChildren = Array.from(this.children)
@@ -260,11 +262,14 @@ function handleGridMouseLeave() {
     
 // }
 
+const debounceHandleGridTouchMove = debounce(handleGridTouchMove, 50)
+
+
 aboutPageGridItems.forEach(item => {
     item.addEventListener('mouseenter', handleGridMouseEnter);
     item.addEventListener('mouseleave', handleGridMouseLeave);
     item.addEventListener('touchstart', handleGridTouchStart);
-    item.addEventListener('touchmove', handleGridTouchMove);
+    item.addEventListener('touchmove', debounceHandleGridTouchMove);
     item.addEventListener('touchend', handleGridTouchEnd);
     item.addEventListener('touchcancel', handleGridTouchCancel);
 })
