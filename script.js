@@ -72,20 +72,11 @@ let hiddenAboutPageGridText = Array.from(document.querySelectorAll(".grid-text-h
 console.log(hiddenAboutPageGridText);
 
 let aboutPageGridHeaderCircle = document.querySelector(".page2__circle__header-circle");
-let aboutPageGridHeaderCircleWidth = document.querySelector(".page2__circle__header-circle").offsetWidth;
-let aboutPageGridHeaderCircleHeight = document.querySelector(".page2__circle__header-circle").offsetHeight;
 
-let smallestHeightOrWidth = aboutPageGridHeaderCircleHeight > aboutPageGridHeaderCircleWidth ? aboutPageGridHeaderCircleWidth * .9 : aboutPageGridHeaderCircleHeight * .9;
-console.log(smallestHeightOrWidth);
-
-aboutPageGridHeaderCircle.style.height = smallestHeightOrWidth + "px";
-aboutPageGridHeaderCircle.style.width = smallestHeightOrWidth + "px";
-console.log(aboutPageGridHeaderCircleWidth);
 
 let aboutPageContentHeaderContainer = document.querySelector(".page2__content__header-container");
 console.log(aboutPageContentHeaderContainer);
 let aboutPageContentHeaderString = "• How I made this • By the Numbers".split("");
-let aboutPageContentHeaderString2 = "By the numbers •".split("");
 console.log(aboutPageContentHeaderString);
 let angle = 360 / (aboutPageContentHeaderString.length + 1 );
 
@@ -106,7 +97,6 @@ function createCircleText(string, container, angle, myClassArray, trueOrFalse, s
 }
 
 createCircleText(aboutPageContentHeaderString, aboutPageGridHeaderCircle, angle, ["header__letter-div", "header__letter-div1"], false, 0)
-// createCircleText(aboutPageContentHeaderString2, aboutPageGridHeaderCircle, angle, ["header__letter-div", "header__letter-div2"], true, 200)
 
 let heightOfEachHiddenTextOnAboutPage;
 
