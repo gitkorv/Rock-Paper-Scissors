@@ -61,9 +61,36 @@ h2Text.appendChild(letsPLayAGameMessage)
 let page2 = document.querySelector(".main-container--page2")
 console.log(page2);
 
-// page2.addEventListener("click", () => {
-//     console.log("Page is clicked");
+// page2.addEventListener("scroll", (e) => {
+//     console.log(e);
 // })
+
+let page2CircleHeaderContainer = document.querySelector(".page2__circle__header-container")
+
+let page2TextRPS = document.querySelector(".page2text--rps-game")
+
+const callback = (entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            console.log("intersecting");
+            page2CircleHeaderContainer.classList.remove("left")
+
+        } else {
+            console.log("no intersection");
+            page2CircleHeaderContainer.classList.add("left")
+        }
+    });
+};
+
+const options = {
+    root: page2,
+    rootMargin: "0px 0px 0px 0px",
+    threshold: 1
+}
+
+const observer = new IntersectionObserver(callback, options);
+
+observer.observe(page2TextRPS)
 
 let aboutPageGridItems = Array.from(document.querySelectorAll(".page2__content__grid-item"));
 console.log(aboutPageGridItems);
@@ -73,10 +100,7 @@ console.log(hiddenAboutPageGridText);
 
 let aboutPageGridHeaderCircle = document.querySelector(".page2__circle__header-circle");
 
-
-let aboutPageContentHeaderContainer = document.querySelector(".page2__content__header-container");
-console.log(aboutPageContentHeaderContainer);
-let aboutPageContentHeaderString = "• How I made this • By the Numbers".split("");
+let aboutPageContentHeaderString = "• How I made this •  By the Numbers".split("");
 console.log(aboutPageContentHeaderString);
 let angle = 360 / (aboutPageContentHeaderString.length + 1 );
 
