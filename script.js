@@ -100,7 +100,7 @@ console.log(hiddenAboutPageGridText);
 
 let aboutPageGridHeaderCircle = document.querySelector(".page2__circle__header-circle");
 
-let aboutPageContentHeaderString = "• How I made this •  By the Numbers".split("");
+let aboutPageContentHeaderString = "•  How I made this •  By the Numbers ".split("");
 console.log(aboutPageContentHeaderString);
 let angle = 360 / (aboutPageContentHeaderString.length + 1 );
 
@@ -142,12 +142,22 @@ getHeightOfAboutPageHiddenTexts()
 let startRollDownHereArray = [];
 
 function startAboutPageHiddenTextRollDownHere(params) {
-    aboutPageGridItems.forEach(gridItem => {
-        let bottomOfGridText = gridItem.querySelector(".grid-text").getBoundingClientRect().bottom;
-        let topOfGridItem = gridItem.getBoundingClientRect().top;
-        let startRollDownHere = bottomOfGridText - topOfGridItem;
-        startRollDownHereArray.push(startRollDownHere);
-    })   
+    let bottomOfGridTextNew = aboutPageGridItems[0].querySelector(".grid-text").getBoundingClientRect().bottom;
+    let topOfGridItemNew = aboutPageGridItems[0].getBoundingClientRect().top;
+    let startRollDownHereNew = bottomOfGridTextNew - topOfGridItemNew;
+
+    hiddenAboutPageGridText.forEach(item => {
+        item.style.top = startRollDownHereNew + "px";
+    })
+    // aboutPageGridItems.forEach(gridItem => {
+    //     let bottomOfGridText = gridItem.querySelector(".grid-text").getBoundingClientRect().bottom;
+    //     let topOfGridItem = gridItem.getBoundingClientRect().top;
+    //     let startRollDownHere = bottomOfGridText - topOfGridItem;
+    //     startRollDownHereArray.push(startRollDownHere);
+    // })   
+    // hiddenAboutPageGridText.forEach(item => {
+    //     item.style.top = startRollDownHereArray[0] + "px";
+    // })
 }
 
 startAboutPageHiddenTextRollDownHere();
@@ -156,9 +166,9 @@ console.log(startRollDownHereArray);
 
 // let circleTextContainer = document.querySelector("")
 
-hiddenAboutPageGridText.forEach(item => {
-    item.style.top = startRollDownHereArray[0] + "px";
-})
+// hiddenAboutPageGridText.forEach(item => {
+//     item.style.top = startRollDownHereArray[0] + "px";
+// })
 
 function activateGridItem(gridItem) {
     let myGridIndex = aboutPageGridItems.indexOf(gridItem);
@@ -697,10 +707,20 @@ function getCpuChoice() {
     return hands[dice];
 }
 
+let footerText = document.querySelector(".footer-text");
+
+let lightUpFooter = false;
+
 function playRound(playerChoice) {
     gameInPlay = true;
     h2Text.classList.remove("black");
     roundsPlayed++;
+
+    if (roundsPlayed > 2) {
+        lightUpFooter = true;
+        footerText.classList.add("light-up");
+
+    }
 
     // let computerChoice = getCpuChoice();
     let computerChoice = "Rock";
