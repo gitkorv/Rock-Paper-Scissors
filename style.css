@@ -1800,6 +1800,9 @@ span.bold-anim.with-after.scissor::after {
     .page2text-intro {
         font-size: .75rem;
     }
+    .number-thin {
+        font-size: 3rem;
+    }
 }
 
 @media (min-width: 769px) {
