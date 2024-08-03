@@ -257,6 +257,12 @@ body {
     background-color: #7209b7;
 }
 
+.page2__circle__header-circle, .page2__circle__header-inner-circle, .page2__circle__center-circle, 
+.page2__circle__center-circle2, .page2__circle__center-circle3, .page2__circle__center-circle4, 
+.page2__circle__center-circle5 {
+    border-color:  #4361ee;
+}
+
 @keyframes inner-circle-blob {
     to {
         height: 0%;
