@@ -1783,6 +1783,13 @@ span.bold-anim.with-after.scissor::after {
     }
 }
 
+@media (max-width: 600px) {
+    .page2text--rps-game {
+        margin: 5px 25% 5px 0px;
+    }
+
+}
+
 @media (min-width: 600px) {
     .main-container--page2{
     padding: 100px 40px 40px;
@@ -1833,28 +1840,6 @@ span.bold-anim.with-after.scissor::after {
     }
 }
 
-@media (max-width: 600px) {
-    .page2text--rps-game {
-        margin: 5px 25% 5px 0px;
-    }
-
-}
-
-@media (min-width: 900px) {
-    .page2__circle__header-circle {
-        font-size: 2rem;
-    }
-    .header__letter-div1 {
-        padding-bottom: 15px;
-    }
-    .page2__circle__header-container {
-        top: -5%;
-        left: 30%;
-    }
-    .page2__content-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
-}
 
 
 @media (min-width: 461px) and (max-width: 768px) {
@@ -1965,6 +1950,22 @@ span.bold-anim.with-after.scissor::after {
             font-size: 5rem;
             font-variation-settings: "wght"500, "wdth"75;
         }
+    }
+}
+
+@media (min-width: 900px) {
+    .page2__circle__header-circle {
+        font-size: 2rem;
+    }
+    .header__letter-div1 {
+        padding-bottom: 15px;
+    }
+    .page2__circle__header-container {
+        top: -5%;
+        left: 30%;
+    }
+    .page2__content-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
 }
 
