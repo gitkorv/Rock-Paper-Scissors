@@ -22,12 +22,18 @@ html {
 }
 
 body {
+    display: block;
+
     z-index: -500;
     background-color: var(--colorPurple);
     position: absolute;
     top: 0;
-    left: 0;
-    display: block;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+
+    /* flex-direction: column;
+    align-items: center; */
     /* grid-template-rows: 1fr 1fr; */
     /* align-items: center; */
     font-family: "trade-gothic-next", sans-serif;
@@ -36,17 +42,23 @@ body {
     /* font-size: 1em; */
     height: 100dvh;
     width: 100%;
+    max-width: 2400px;
+    /* margin: 0 auto; */
+    /* width: 50%; */
     scroll-snap-type: y mandatory;
     /* scroll-behavior: smooth; */
     /* overflow: hidden; */
     overflow-x: hidden;
     overflow-y: scroll;
+    /* background-color: #4361ee; */
     /* scrollbar-width: none; */
     /* scroll-behavior: none; */
     /* pointer-events: none; */
     /* overflow: -moz-hidden-unscrollable; */
     /* border: 1px solid red; */
 }
+
+
 
 .main-container {
     position: relative;
@@ -56,7 +68,9 @@ body {
     justify-content: stretch;
     /* flex-direction: column; */
     height: 100%;
+    /* min-height: 100dvh; */
     width: 100%;
+    /* max-width: 2400px; */
     /* padding: 0px 10%; */
     /* display: flex; */
     justify-items: center;
@@ -319,6 +333,7 @@ body {
 
 .page2text-intro {
     position: absolute;
+    max-width: 1400px;
     font-family: antonia-variable, sans-serif;
     font-style: italic;
     font-variation-settings: "opsz" 28, "wght" 300;
@@ -476,6 +491,7 @@ body {
 
 .main-container__fraction {
     width: 80%;
+    /* margin: 0 10%; */
 }
 
 .top-area {
@@ -2001,7 +2017,37 @@ span.bold-anim.with-after.scissor::after {
         font-size: 1.5rem;
         height: 100px;
     }
+
+}
+
+@media (min-width: 1240px) {
     .page2text-intro {
-        padding-right: 15%;
+        padding-right: 180px;
+        hyphens: none;
     }
+}
+
+@media (min-width: 1400px) {
+    .center-area {
+        padding-top: 60px;
+    }
+    .center-area__h1Text-container {
+        padding-top: 40px;
+    }
+    .btn-wrapper-all {
+        gap: 25px;
+        width: 75%;
+    }
+    .bottom-area {
+        padding-right: 10%;
+    }
+}
+
+@media (min-width: 1600px) {
+    .center-area {
+        padding-top: 80px;
+    }
+    /* .center-area__h1Text-container {
+        padding-top: 60px;
+    } */
 }
