@@ -671,7 +671,7 @@ function newGame(gameOver, gameInPlay, waitForMainContExtension) {
     playerScore = 0;
     cpuScore = 0;
     roundsPlayed = 0;
-    roundsToPlay = 5;
+    roundsToPlay = 1;
     roundsLeftToPlay
     currentRound = 0;
     keepGoing = true;
@@ -1566,6 +1566,7 @@ class FireworkPath {
     constructor(firework) {
         this.firework = firework;
         this.startX = this.firework.width / 2;
+        // this.startX = 0;
         this.startY = this.firework.height / 2;
         this.bendX = this.firework.width / 2;
         this.bendY = this.firework.height / 3 - 150;
@@ -1579,6 +1580,7 @@ class FireworkPath {
 
     }
     drawPath() {
+        console.log(this.firework.width);
         this.path = document.createElementNS("http://www.w3.org/2000/svg", "path");
         this.path.classList.add("fireworks-path");
         this.pathData = `M${this.startX},${this.startY} Q${this.bendX},${this.bendY} ${this.endX},${this.endY}`;
@@ -1723,7 +1725,7 @@ class Firework {
     }
 
     reset() {
-        this.width = window.innerWidth;
+        this.width = fireworkWindowWidth(windowWidth)
         this.height = window.innerHeight;
         this.fireworkPathArray = [];
         this.pathAnimTimeArray = [];
@@ -1735,7 +1737,9 @@ class Firework {
     }
 }
 
-const firework = new Firework(windowWidth, windowHeight);
+let fireworkWindowWidth = (windowWidth) => windowWidth < 2400 ? windowWidth : 2400;
+
+const firework = new Firework(fireworkWindowWidth(windowWidth), windowHeight);
 
 function startFireWork() {
     // firework.reset();
