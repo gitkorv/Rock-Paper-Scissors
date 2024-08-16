@@ -255,7 +255,7 @@ body {
     max-width: 1400px;
     font-family: antonia-variable, sans-serif;
     font-style: italic;
-    font-variation-settings: "opsz" 28, "wght" 300;
+    font-variation-settings: "opsz" 28, "wght" 400;
     line-height: .9rem;
     font-size: .6rem;
     margin: 30px 70% 0px 0px;
@@ -332,16 +332,17 @@ body {
 }
 
 .grid-text {
-    font-family: var(--scaleFont);
-    font-size: .75rem;
-    font-variation-settings: "wght"300, "wdth"90;
+    font-family: antonia-variable, sans-serif;
+    font-style: regular;
+    font-variation-settings: "opsz" 26, "wght" 400;
+
     transition: font-variation-settings 1s;
     pointer-events: none;
     text-wrap: nowrap;
 }
 
 .grid-text.hover {
-    font-variation-settings: "wght"600, "wdth"90;
+    font-variation-settings: "opsz" 48, "wght" 400;
 }
 
 .grid-text-hidden {
@@ -350,9 +351,9 @@ body {
     color: #3a0ca3;
     position: absolute;
     left: 15%;
-    font-family: antonia-variable, sans-serif;
-    font-style: regular;
-    font-variation-settings: "opsz" 48, "wght" 600;
+    font-family: var(--scaleFont);
+    font-size: .75rem;
+    font-variation-settings: "wght"900, "wdth"146;
     font-size: .75rem;
     line-height: 1rem;
     padding: 5px 5px 10px 5px;

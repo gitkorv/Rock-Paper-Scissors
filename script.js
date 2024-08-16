@@ -67,7 +67,11 @@ console.log(page2);
 
 let page2CircleHeaderContainer = document.querySelector(".page2__circle__header-container")
 
-let page2TextRPS = document.querySelector(".page2text--rps-game")
+let page2TextRPS = document.querySelector(".page2text--rps-game");
+let page2TextIntro = document.querySelector(".page2text-intro");
+let page2ContentGrid = document.querySelector(".page2__content-grid")
+let page2ContentGridItem1 = document.querySelector("body > div.main-container.main-container--page2 > div.page2__content-grid > div:nth-child(1)");
+console.log(page2ContentGridItem1);
 
 const callback = (entries, observer) => {
     entries.forEach(entry => {
@@ -83,14 +87,13 @@ const callback = (entries, observer) => {
 };
 
 const options = {
-    root: page2,
     rootMargin: "0px 0px 0px 0px",
     threshold: 1
 }
 
-const observer = new IntersectionObserver(callback, options);
+const aboutPageObserver = new IntersectionObserver(callback, options);
 
-observer.observe(page2TextRPS)
+aboutPageObserver.observe(page2ContentGridItem1)
 
 let aboutPageGridItems = Array.from(document.querySelectorAll(".page2__content__grid-item"));
 console.log(aboutPageGridItems);
