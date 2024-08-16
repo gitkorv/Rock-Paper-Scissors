@@ -285,6 +285,7 @@ body {
     justify-content: end;
     flex-direction: column;
     padding-top: 10px;
+    /* background-color: #360458; */
 }
 
 .grid-number {
@@ -296,6 +297,12 @@ body {
     overflow: hidden;
     transition: all .5s;
     pointer-events: none;
+    /* background-color: #4361ee; */
+}
+
+.grid-number>sup {
+    position: absolute;
+    bottom: 25%;
 }
 
 
@@ -305,6 +312,7 @@ body {
 }
 .number-thin.exp {
     position: relative;
+    margin-top: -50px;
     /* top: -25px; */
     font-size: 2rem;
     font-variation-settings: "wght"300, "wdth"25;
