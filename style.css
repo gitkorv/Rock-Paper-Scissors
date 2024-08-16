@@ -298,9 +298,18 @@ body {
     pointer-events: none;
 }
 
+
 .number-thin {
     font-size: 2rem;
     font-variation-settings: "wght"300, "wdth"25;
+}
+.number-thin.exp {
+    position: relative;
+    /* top: -25px; */
+    font-size: 2rem;
+    font-variation-settings: "wght"300, "wdth"25;
+    /* background-color: #360458; */
+    
 }
 .number-thin.dott {
     margin: 0px -2px;
