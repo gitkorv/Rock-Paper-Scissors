@@ -96,15 +96,12 @@ const aboutPageObserver = new IntersectionObserver(callback, options);
 aboutPageObserver.observe(page2ContentGridItem1)
 
 let aboutPageGridItems = Array.from(document.querySelectorAll(".page2__content__grid-item"));
-console.log(aboutPageGridItems);
 
 let hiddenAboutPageGridText = Array.from(document.querySelectorAll(".grid-text-hidden"))
-console.log(hiddenAboutPageGridText);
 
 let aboutPageGridHeaderCircle = document.querySelector(".page2__circle__header-circle");
 
 let aboutPageContentHeaderString = "•  How I made this •  By the Numbers ".split("");
-console.log(aboutPageContentHeaderString);
 let angle = 360 / (aboutPageContentHeaderString.length + 1 );
 
 function createCircleText(string, container, angle, myClassArray, trueOrFalse, startAngle) {
