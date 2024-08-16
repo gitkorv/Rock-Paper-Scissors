@@ -59,7 +59,6 @@ h2Text.appendChild(letsPLayAGameMessage)
 // About page
 
 let page2 = document.querySelector(".main-container--page2")
-console.log(page2);
 
 // page2.addEventListener("scroll", (e) => {
 //     console.log(e);

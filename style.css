@@ -217,16 +217,16 @@ body {
     }
 }
 
-.page2__header-container h1{
+.page2__header-container {
     font-family: var(--scaleFont);
     font-variation-settings: "wght"400, "wdth"90;
-    --page2rpsFontSize: 2.2rem;
+    --page2rpsFontSize: 1.2rem;
     font-size: var(--page2rpsFontSize);
-
 }
 
 .page2text--rps-game {
     color: #3a0ca3;
+    font-size: 2em;
     font-variation-settings: "wght"700, "wdth"90;
     color: #7209b7;
     margin: 10px 0px;
@@ -246,7 +246,7 @@ body {
 .page2text--rps-game>span.game {
     color: #3a0ca3;
     font-variation-settings: "wght"200, "wdth"75;
-    font-size: calc(var(--page2rpsFontSize) * .5);
+    font-size: .5em
 }
 .page2text--rps-game > span.game > dash {
     color: black;
@@ -1444,15 +1444,15 @@ span.bold-anim.with-after.scissor::after {
         text-indent: 10px;
 
     }
-    h1.page2text--rps-game {
-        font-size: calc(var(--page2rpsFontSize) * 1.2);
+    .page2text--rps-game {
+        font-size: 2.5em;
         padding-right: 15%;
     }
 }
 
 @media (max-width: 600px) {
     .page2text--rps-game {
-        margin: 5px 25% 5px 0px;
+        margin: 5px 0px;
     }
 
 }
@@ -1461,8 +1461,8 @@ span.bold-anim.with-after.scissor::after {
     .main-container--page2{
     padding: 100px 40px 40px;
     }
-    h1.page2text--rps-game {
-        font-size: calc(var(--page2rpsFontSize) * 1.8);
+    .page2text--rps-game {
+        font-size: 3em;
         padding-right: 15%;
     }
     .page2__content-grid {
@@ -1493,24 +1493,6 @@ span.bold-anim.with-after.scissor::after {
 
     }
 }
-
-@media (min-width: 769px) {
-    h1.page2text--rps-game {
-        font-size: calc(var(--page2rpsFontSize) * 2.2);
-        padding-right: 25%;
-    }
-    .page2text--rps-game>span.game {
-        font-size: calc(var(--page2rpsFontSize) * .75);
-    }
-    .page2text-intro {
-        font-size: 1rem;
-        line-height: 1.5rem;
-        text-indent: 15px;
-
-    }
-}
-
-
 
 @media (min-width: 461px) and (max-width: 768px) {
     .center-area__h1Text-rpsAllText {
@@ -1565,7 +1547,21 @@ span.bold-anim.with-after.scissor::after {
     }
 }
 
+@media (min-width: 769px) {
+    .page2text--rps-game {
+        font-size: 3.5em;
+        padding-right: 25%;
+    }
+    /* .page2text--rps-game>span.game {
+        font-size: calc(var(--page2rpsFontSize) * .75);
+    } */
+    .page2text-intro {
+        font-size: 1rem;
+        line-height: 1.5rem;
+        text-indent: 15px;
 
+    }
+}
 
 @media (min-width: 601px) and (max-width: 1024px) {
     .center-area__h1Text-rpsAllText {
@@ -1638,11 +1634,8 @@ span.bold-anim.with-after.scissor::after {
 
 @media (min-width: 1025px) {
     h1.page2text--rps-game {
-        font-size: calc(var(--page2rpsFontSize) * 3);
+        font-size: 4.5em;
         padding-right: 25%;
-    }
-    .page2text--rps-game>span.game {
-        font-size: calc(var(--page2rpsFontSize) * 1);
     }
 
     .center-area__h1Text-rpsAllText {
@@ -1677,6 +1670,9 @@ span.bold-anim.with-after.scissor::after {
         padding-right: 160px;
         hyphens: none;
     }
+    /* .page2__circle__header-container {
+        left: 10%;
+    } */
 }
 
 @media (min-width: 1400px) {
