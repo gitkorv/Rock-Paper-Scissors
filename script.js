@@ -101,10 +101,10 @@ let hiddenAboutPageGridText = Array.from(document.querySelectorAll(".grid-text-h
 let aboutPageGridHeaderCircle = document.querySelector(".page2__circle__header-circle");
 
 let aboutPageContentHeaderString = "•  How I made this •  By the Numbers ".split("");
-let angle = 360 / (aboutPageContentHeaderString.length + 1 );
+let angle = 360 / (aboutPageContentHeaderString.length + 1);
 
 function createCircleText(string, container, angle, myClassArray, trueOrFalse, startAngle) {
-    let plusOrMinus = trueOrFalse ? "+" : "-" ;
+    let plusOrMinus = trueOrFalse ? "+" : "-";
     for (let i = 0; i < string.length; i++) {
         let letterDiv = document.createElement("div");
         letterDiv.textContent = string[i];
@@ -114,7 +114,7 @@ function createCircleText(string, container, angle, myClassArray, trueOrFalse, s
         // letterDiv.classList.add(myClass);
         // letterDiv.style.left = smallestHeightOrWidth / 2 + "px";
         container.appendChild(letterDiv);
-        letterDiv.style.rotate =`${plusOrMinus}${angle * i + startAngle}deg`;
+        letterDiv.style.rotate = `${plusOrMinus}${angle * i + startAngle}deg`;
         console.log(angle);
     }
 }
@@ -148,33 +148,27 @@ function startAboutPageHiddenTextRollDownHere(params) {
     hiddenAboutPageGridText.forEach(item => {
         item.style.top = startRollDownHereNew + "px";
     })
-    // aboutPageGridItems.forEach(gridItem => {
-    //     let bottomOfGridText = gridItem.querySelector(".grid-text").getBoundingClientRect().bottom;
-    //     let topOfGridItem = gridItem.getBoundingClientRect().top;
-    //     let startRollDownHere = bottomOfGridText - topOfGridItem;
-    //     startRollDownHereArray.push(startRollDownHere);
-    // })   
-    // hiddenAboutPageGridText.forEach(item => {
-    //     item.style.top = startRollDownHereArray[0] + "px";
-    // })
 }
 
-startAboutPageHiddenTextRollDownHere();
+// startAboutPageHiddenTextRollDownHere();
 
 console.log(startRollDownHereArray);
 
-// let circleTextContainer = document.querySelector("")
+let normalNumbers;
+let classVariants = ["hover", "hover-thin", "hover-thinner", "hover-wide"];
 
-// hiddenAboutPageGridText.forEach(item => {
-//     item.style.top = startRollDownHereArray[0] + "px";
-// })
 
 function activateGridItem(gridItem) {
     let myGridIndex = aboutPageGridItems.indexOf(gridItem);
     let numberAndHeadline = [gridItem.children[0], gridItem.children[1]];
-    numberAndHeadline.forEach(child => {
-        child.classList.add("hover")
+
+    normalNumbers = Array.from(numberAndHeadline[0].querySelectorAll(".number-normal"));
+
+    normalNumbers.forEach(number => {
+        number.classList.add("hover");
+        number.classList.add(classVariants[Math.floor(Math.random() * classVariants.length + 1)])
     })
+    numberAndHeadline[1].classList.add("hover")
 
     hiddenAboutPageGridText[myGridIndex].style.transitionDuration = ".25s";
     hiddenAboutPageGridText[myGridIndex].style.height = heightOfEachHiddenTextOnAboutPage[myGridIndex];
@@ -194,6 +188,16 @@ function deactivateGridItem(gridItem) {
     numberAndHeadline.forEach(child => {
         child.classList.remove("hover")
     })
+
+    normalNumbers.forEach(number => {
+        classVariants.forEach(className => {
+            number.classList.remove(className)
+
+        })
+    })
+
+    numberAndHeadline[1].classList.remove("hover");
+
     retractHiddenText(gridItem)
 }
 
@@ -285,48 +289,8 @@ function setAboutPageGrid() {
 
         hiddenText.style.top = startRollDownHere + "px";
 
-        // aboutPageGridItems[i].addEventListener("mouseenter", (e) => {
-        //     hiddenText.style.transitionDuration = ".25s";
-        //     hiddenText.style.height = heightOfEachHiddenTextOnAboutPage[i];
-        //     hiddenText.style.opacity = "1";
-        //     gridNumber.classList.add("hover");
-        //     gridText.classList.add("hover");            
-        // })
-
-        // aboutPageGridItems[i].addEventListener("mouseleave", (e) => {
-        //     let time = 500;
-        //     hiddenText.style.transitionDuration = time + "ms";
-        //     hiddenText.style.height = "0px";
-        //     setTimeout(() => {
-        //         hiddenText.style.opacity = "0";
-        //     }, time);
-        //     gridNumber.classList.remove("hover");
-        //     gridText.classList.remove("hover");
-
-        //     // hiddenText.style.opacity = "0"            
-        // })
     }
 }
-// console.log(heightOfEachHiddenTextOnAboutPage);
-
-// setAboutPageGrid();
-
-
-// const debounceUpdateAboutPage = debounce()
-
-
-// function debounce(cb, delay = 1000) {
-//     let timeout
-
-//     return (...args) => {
-//         clearTimeout(timeout)
-//         timeout = setTimeout(() => {
-//             cb(...args)
-//         }, delay);
-//     }
-// }
-
-// window.addEventListener('resize', debounceUpdateAboutPage)
 
 
 function debounce(func, delay) {
