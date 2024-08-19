@@ -150,7 +150,7 @@ function startAboutPageHiddenTextRollDownHere(params) {
     })
 }
 
-// startAboutPageHiddenTextRollDownHere();
+
 
 console.log(startRollDownHereArray);
 
@@ -164,11 +164,31 @@ function activateGridItem(gridItem) {
 
     normalNumbers = Array.from(numberAndHeadline[0].querySelectorAll(".number-normal"));
 
+    let hoverWideIsUsed = false;
+
     normalNumbers.forEach(number => {
         number.classList.add("hover");
-        number.classList.add(classVariants[Math.floor(Math.random() * classVariants.length + 1)])
+        let newClass;
+        if (!hoverWideIsUsed) {
+            newClass = classVariants[Math.floor(Math.random() * classVariants.length)];
+            hoverWideIsUsed = newClass === "hover-wide" ? true : false;
+        } else {
+            newClass = classVariants[Math.floor(Math.random() * classVariants.length - 1)];
+        }
+        number.classList.add(newClass);
     })
     numberAndHeadline[1].classList.add("hover")
+
+    if (windowWidth > 460) {
+        startAboutPageHiddenTextRollDownHere();
+        page2TextIntro.classList.remove("hide");
+        page2.removeEventListener('touchend', handlePage2TouchEnd);
+    } else {
+        hiddenAboutPageGridText.forEach(text => {
+            text.style.top = 0;
+        });
+        page2.addEventListener('touchend', handlePage2TouchEnd)
+    }
 
     hiddenAboutPageGridText[myGridIndex].style.transitionDuration = ".25s";
     hiddenAboutPageGridText[myGridIndex].style.height = heightOfEachHiddenTextOnAboutPage[myGridIndex];
@@ -181,6 +201,9 @@ function retractHiddenText(parentElement) {
     parentElement.children[2].style.transitionDuration = timeToRetract + "ms";
     parentElement.children[2].style.height = "";
     parentElement.children[2].style.opacity = "0";
+
+    // console.log("retracting");
+
 }
 
 function deactivateGridItem(gridItem) {
@@ -188,30 +211,30 @@ function deactivateGridItem(gridItem) {
     numberAndHeadline.forEach(child => {
         child.classList.remove("hover")
     })
+    normalNumbers = Array.from(numberAndHeadline[0].querySelectorAll(".number-normal"));
 
     normalNumbers.forEach(number => {
-        classVariants.forEach(className => {
-            number.classList.remove(className)
-
-        })
+        number.className = "number-normal";
     })
 
-    numberAndHeadline[1].classList.remove("hover");
+    let allNumberNormals = document.querySelectorAll(".number-normal");
+    // console.log(allNumberNormals);
 
+    numberAndHeadline[1].classList.remove("hover");
     retractHiddenText(gridItem)
 }
 
 let lastTouchedAboutPageGridElement;
 
 function handleGridTouchStart(event) {
-    // getHeightOfAboutPageHiddenTexts();
-    // startAboutPageHiddenTextRollDownHere();
     lastTouchedAboutPageGridElement = event.target;
-    console.log(lastTouchedAboutPageGridElement);
     aboutPageGridItems.forEach(gridItem => {
         deactivateGridItem(gridItem)
     })
     activateGridItem(this);
+
+    event.target.removeEventListener("mouseenter", handleGridMouseEnter);
+
 }
 
 function handleGridTouchMove(e) {
@@ -234,12 +257,23 @@ function handleGridTouchMove(e) {
         if (lastTouchedAboutPageGridElement) {
             deactivateGridItem(lastTouchedAboutPageGridElement)
         }
+        page2TextIntro.classList.remove("hide");
         lastTouchedAboutPageGridElement = null;
         console.log("it does not");
     }
 }
 
 function handleGridTouchEnd(e) {
+    // let allNormalGridNumbers = document.querySelectorAll(".number-normal")
+    // // console.log(allNormalGridNumbers);
+
+    // allNormalGridNumbers.forEach(number => {
+    //     if (number.className.includes("hover")) {
+    //         console.log("does");
+    //     } else {
+    //         console.log("does not");
+    //     }
+    // })
 
 }
 function handleGridTouchCancel() {
@@ -249,13 +283,30 @@ function handleGridTouchCancel() {
 function handleGridMouseEnter() {
     // startAboutPageHiddenTextRollDownHere();
     activateGridItem(this);
-
 }
 function handleGridMouseLeave() {
     deactivateGridItem(this)
 }
 
-const debounceHandleGridTouchMove = debounce(handleGridTouchMove, 50)
+function handlePage2TouchEnd(e) {
+
+    const srcElement = e.srcElement;
+    // const element = document.elementFromPoint(touch.clientX, touch.clientY);
+
+    if (srcElement.classList.contains("page2__content__grid-item")) {
+        page2TextIntro.classList.add("hide");
+
+    } else {
+        page2TextIntro.classList.remove("hide");
+
+    }
+
+}
+
+
+const debounceHandleGridTouchMove = debounce(handleGridTouchMove, 50);
+
+
 
 aboutPageGridItems.forEach(item => {
     item.addEventListener('mouseenter', handleGridMouseEnter);
@@ -317,8 +368,6 @@ const debouncedResize = debounce(onResize, 1000);
 
 // Attach debounced handler to the window resize event
 window.addEventListener('resize', debouncedResize);
-
-
 
 /* 
 Select playing buttons
