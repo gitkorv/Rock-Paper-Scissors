@@ -222,6 +222,12 @@ body {
     font-variation-settings: "wght"400, "wdth"90;
     --page2rpsFontSize: 1.2rem;
     font-size: var(--page2rpsFontSize);
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+.page2__header-container.hide {
+    opacity: 0;
 }
 
 .page2text--rps-game {

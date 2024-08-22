@@ -92,7 +92,10 @@ const options = {
 
 const aboutPageObserver = new IntersectionObserver(callback, options);
 
-aboutPageObserver.observe(page2ContentGridItem1)
+aboutPageObserver.observe(page2ContentGridItem1);
+
+let page2HeaderContainer = document.querySelector(".page2__header-container");
+console.log(page2HeaderContainer);
 
 let aboutPageGridItems = Array.from(document.querySelectorAll(".page2__content__grid-item"));
 
@@ -150,8 +153,6 @@ function startAboutPageHiddenTextRollDownHere(params) {
     })
 }
 
-
-
 console.log(startRollDownHereArray);
 
 let normalNumbers;
@@ -181,7 +182,9 @@ function activateGridItem(gridItem) {
 
     if (windowWidth > 460) {
         startAboutPageHiddenTextRollDownHere();
-        page2TextIntro.classList.remove("hide");
+        // page2TextIntro.classList.remove("hide");
+        page2HeaderContainer.classList.remove("hide");
+
         page2.removeEventListener('touchend', handlePage2TouchEnd);
     } else {
         hiddenAboutPageGridText.forEach(text => {
@@ -201,9 +204,7 @@ function retractHiddenText(parentElement) {
     parentElement.children[2].style.transitionDuration = timeToRetract + "ms";
     parentElement.children[2].style.height = "";
     parentElement.children[2].style.opacity = "0";
-
     // console.log("retracting");
-
 }
 
 function deactivateGridItem(gridItem) {
@@ -232,9 +233,7 @@ function handleGridTouchStart(event) {
         deactivateGridItem(gridItem)
     })
     activateGridItem(this);
-
     event.target.removeEventListener("mouseenter", handleGridMouseEnter);
-
 }
 
 function handleGridTouchMove(e) {
@@ -257,7 +256,9 @@ function handleGridTouchMove(e) {
         if (lastTouchedAboutPageGridElement) {
             deactivateGridItem(lastTouchedAboutPageGridElement)
         }
-        page2TextIntro.classList.remove("hide");
+        // page2TextIntro.classList.remove("hide");
+        page2HeaderContainer.classList.remove("hide");
+
         lastTouchedAboutPageGridElement = null;
         console.log("it does not");
     }
@@ -294,10 +295,13 @@ function handlePage2TouchEnd(e) {
     // const element = document.elementFromPoint(touch.clientX, touch.clientY);
 
     if (srcElement.classList.contains("page2__content__grid-item")) {
-        page2TextIntro.classList.add("hide");
+        // page2TextIntro.classList.add("hide");
+        page2HeaderContainer.classList.add("hide");
 
     } else {
-        page2TextIntro.classList.remove("hide");
+        // page2TextIntro.classList.remove("hide");
+        page2HeaderContainer.classList.remove("hide");
+
         aboutPageGridItems.forEach(gridItem => {
             retractHiddenText(gridItem);
         })
