@@ -298,8 +298,8 @@ function handlePage2TouchEnd(e) {
 
     } else {
         page2TextIntro.classList.remove("hide");
-        hiddenAboutPageGridText.forEach(text => {
-            text.classList.remove("hover");
+        aboutPageGridItems.forEach(gridItem => {
+            retractHiddenText(gridItem);
         })
 
     }
