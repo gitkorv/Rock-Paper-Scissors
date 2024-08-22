@@ -1456,7 +1456,7 @@ span.bold-anim.with-after.scissor::after {
         }
     }
     .page2__circle__header-container.left {
-        left: -30%;
+        /* left: 20%; */
         top: 90%;
     }
 }
