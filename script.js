@@ -69,7 +69,7 @@ let page2CircleHeaderContainer = document.querySelector(".page2__circle__header-
 let page2TextRPS = document.querySelector(".page2text--rps-game");
 let page2TextIntro = document.querySelector(".page2text-intro");
 let page2ContentGrid = document.querySelector(".page2__content-grid")
-let page2ContentGridItem1 = document.querySelector("body > div.main-container.main-container--page2 > div.page2__content-grid > div:nth-child(1)");
+let page2ContentGridItem1 = document.querySelector("body > div.main-container.main-container--page2 > div.page2-introAndGridContainer > div.page2__content-grid > div:nth-child(1)")
 console.log(page2ContentGridItem1);
 
 const callback = (entries, observer) => {

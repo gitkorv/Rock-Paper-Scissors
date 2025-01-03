@@ -32,6 +32,7 @@ body {
     width: 100%;
     max-width: 2400px;
     scroll-snap-type: y mandatory;
+    /* pointer-events: all; */
     overflow-x: hidden;
     overflow-y: scroll;
 }
@@ -59,7 +60,7 @@ body {
 }
 
 .main-container--page2 {
-    display: block;
+    display: flex;
     position: relative;
     padding: 70px 20px 20px;
     overflow-x: hidden;
@@ -224,6 +225,8 @@ body {
     font-size: var(--page2rpsFontSize);
     opacity: 1;
     transition: opacity 1s;
+    width: 100%;
+    /* background-color: yellow; */
 }
 
 .page2__header-container.hide {
@@ -275,20 +278,38 @@ body {
     font-variation-settings: "opsz" 28, "wght" 600;
 }
 
+.page2-introAndGridContainer {
+    /* position: relative; */
+    /* background-color: orange; */
+    display: flex;
+    width: 100%;
+    grid-template-columns: 30% 1fr;
+    margin-top: 14px;
+    /* margin-top: 10px; */
+
+}
 .page2text-intro {
-    position: absolute;
-    max-width: 1400px;
+    position: relative;
+    flex: 0.25;
+    /* position: absolute; */
+    min-width: 100px;
     font-family: antonia-variable, sans-serif;
     font-style: italic;
     font-variation-settings: "opsz" 28, "wght" 400;
     line-height: .9rem;
     font-size: .6rem;
-    margin: 30px 70% 0px 0px;
-    padding-right: 10px;
+    /* margin: 30px 70% 0px 0px; */
+    margin-top: 30px;
+    /* width: 30%; */
+    /* min-width: 100px; */
+    /* padding-top: 40px; */
+    padding-right: 16px;
     text-indent: 5px;
     hyphens: auto;
     hyphenate-limit-chars: 5 3 3;
     transition: opacity 1s;
+    /* background-color: blue; */
+    z-index: 100;
 }
 
 .page2text-intro.hide {
@@ -296,18 +317,24 @@ body {
 }
 
 .page2__content-grid {
-    flex: 1;
-    display: grid;
-    align-content: start;
-    gap: 10px;
-    margin: 14px 0px 0px 30%;
     position: relative;
+    flex: 1;
+    /* flex: 1; */
+    display: grid;
+    /* align-content: start; */
+    gap: 10px;
+    margin-top: 14px;
+    /* margin-left: 30%; */
+    /* width: 30%; */
+    /* margin: 14px 0px 0px 30px; */
+    /* position: relative; */
     /* grid-template-rows: repeat(auto-fit, 1fr); */
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    width: auto;
-    overflow: visible;
+    /* width: auto; */
+    /* overflow: visible; */
     --gridNumberFontSize: 48px;
-    --gridHeadFontSize: 32px
+    --gridHeadFontSize: 32px;
+    /* background-color: green; */
 }
 
 .page2__content__grid-item {
@@ -1462,9 +1489,13 @@ span.bold-anim.with-after.scissor::after {
 }
 
 @media (min-width: 461px) {
+    .page2-introAndGridContainer {
+        flex-direction: column;
+    }
     .page2__content-grid {
         margin-left: 0;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        width: 100%;
     }
     .page2__content__grid-item {
         font-size: 4em;
@@ -1476,7 +1507,7 @@ span.bold-anim.with-after.scissor::after {
         position: absolute;
         left: 0;
         font-size: .75rem;
-        font-variation-settings: "wght"900, "wdth"146;
+        font-variation-settings: "wght"900, "wdth"120;
         border-left: 1px solid black;
         border-right: none;
         /* background-color: #360458; */
@@ -1493,6 +1524,7 @@ span.bold-anim.with-after.scissor::after {
         font-size: .65rem;
         margin: 10px 0px -30px 0px;
         text-indent: 10px;
+        width: 100%;
 
     }
     .page2text--rps-game {
@@ -1516,11 +1548,11 @@ span.bold-anim.with-after.scissor::after {
         font-size: 3em;
         padding-right: 15%;
     }
-    .page2__content-grid {
+    /* .page2__content-grid {
         margin-left: 0px;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 15px;
-    }
+    } */
     .grid-text-hidden {
         font-size: 1rem;
         line-height: 1.25rem;
@@ -1593,6 +1625,11 @@ span.bold-anim.with-after.scissor::after {
 }
 
 @media (min-width: 769px) {
+    .page2__content-grid {
+        margin-left: 0;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        width: 100%;
+    }
     .page2text--rps-game {
         font-size: 3.5em;
         padding-right: 25%;
@@ -1723,7 +1760,7 @@ span.bold-anim.with-after.scissor::after {
     }
     .page2__content-grid {
         padding-top: 50px;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 30px;
     }
 }
