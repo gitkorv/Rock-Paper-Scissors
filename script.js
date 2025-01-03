@@ -139,7 +139,7 @@ function getHeightOfAboutPageHiddenTexts() {
     }
 }
 
-getHeightOfAboutPageHiddenTexts()
+// getHeightOfAboutPageHiddenTexts()
 
 let startRollDownHereArray = [];
 
@@ -233,6 +233,7 @@ function handleGridTouchStart(event) {
         deactivateGridItem(gridItem)
     })
     activateGridItem(this);
+    console.log(this);
     event.target.removeEventListener("mouseenter", handleGridMouseEnter);
 }
 
@@ -284,6 +285,7 @@ function handleGridTouchCancel() {
 function handleGridMouseEnter() {
     // startAboutPageHiddenTextRollDownHere();
     activateGridItem(this);
+    // console.log(this);
 }
 function handleGridMouseLeave() {
     deactivateGridItem(this)
@@ -295,11 +297,11 @@ function handlePage2TouchEnd(e) {
     // const element = document.elementFromPoint(touch.clientX, touch.clientY);
 
     if (srcElement.classList.contains("page2__content__grid-item")) {
-        // page2TextIntro.classList.add("hide");
+        page2TextIntro.classList.add("hide");
         page2HeaderContainer.classList.add("hide");
 
     } else {
-        // page2TextIntro.classList.remove("hide");
+        page2TextIntro.classList.remove("hide");
         page2HeaderContainer.classList.remove("hide");
 
         aboutPageGridItems.forEach(gridItem => {
@@ -454,7 +456,7 @@ let roundTextHeight;
 window.onload = function () {
 
     // setAboutPageGrid();
-
+    getHeightOfAboutPageHiddenTexts()
 
     roundTextHeight = topAreaTextContainer.getBoundingClientRect().height;
     console.log(roundTextHeight);

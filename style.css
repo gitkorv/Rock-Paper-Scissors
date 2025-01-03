@@ -285,6 +285,8 @@ body {
     width: 100%;
     grid-template-columns: 30% 1fr;
     margin-top: 14px;
+    /* pointer-events: none; */
+    /* z-index: -1000; */
     /* margin-top: 10px; */
 
 }
