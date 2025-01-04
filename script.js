@@ -81,6 +81,14 @@ const callback = (entries, observer) => {
         } else {
             console.log("no intersection");
             page2CircleHeaderContainer.classList.add("left")
+            aboutPageGridItems.forEach(gridItem => {
+                deactivateGridItem(gridItem)
+            })
+            page2HeaderContainer.classList.remove("hide");
+            page2TextIntro.classList.remove("hide");
+            // numberAndHeadline.forEach(child => {
+            //     child.classList.remove("hover")
+            // })
         }
     });
 };
@@ -163,6 +171,8 @@ function activateGridItem(gridItem) {
     let myGridIndex = aboutPageGridItems.indexOf(gridItem);
     let numberAndHeadline = [gridItem.children[0], gridItem.children[1]];
 
+    console.log(myGridIndex);
+
     normalNumbers = Array.from(numberAndHeadline[0].querySelectorAll(".number-normal"));
 
     let hoverWideIsUsed = false;
@@ -186,11 +196,15 @@ function activateGridItem(gridItem) {
         page2HeaderContainer.classList.remove("hide");
 
         page2.removeEventListener('touchend', handlePage2TouchEnd);
+        // gridItem.addEventListener('mouseleave', handleGridMouseLeave);
+
     } else {
         hiddenAboutPageGridText.forEach(text => {
             text.style.top = 0;
         });
         page2.addEventListener('touchend', handlePage2TouchEnd)
+        // gridItem.removeEventListener('mouseleave', handleGridMouseLeave);
+
     }
 
     hiddenAboutPageGridText[myGridIndex].style.transitionDuration = ".25s";
@@ -292,6 +306,7 @@ function handleGridMouseLeave() {
 }
 
 function handlePage2TouchEnd(e) {
+    // console.log(e.srcElement);
 
     const srcElement = e.srcElement;
     // const element = document.elementFromPoint(touch.clientX, touch.clientY);
@@ -299,6 +314,7 @@ function handlePage2TouchEnd(e) {
     if (srcElement.classList.contains("page2__content__grid-item")) {
         page2TextIntro.classList.add("hide");
         page2HeaderContainer.classList.add("hide");
+        console.log("here");
 
     } else {
         page2TextIntro.classList.remove("hide");
@@ -306,6 +322,7 @@ function handlePage2TouchEnd(e) {
 
         aboutPageGridItems.forEach(gridItem => {
             retractHiddenText(gridItem);
+            console.log("not here");
         })
 
     }
@@ -1800,6 +1817,11 @@ function resizeH2TextSpanDivContainers() {
 
 
 window.addEventListener('resize', function (e) {
+    console.log("resize");
+    aboutPageGridItems.forEach(item => {
+        item.addEventListener('mouseleave', handleGridMouseLeave);
+
+    })
 
     windowWidth = window.innerWidth;
     windowHeight = window.innerHeight;

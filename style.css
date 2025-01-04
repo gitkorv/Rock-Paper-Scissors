@@ -292,7 +292,7 @@ body {
 }
 .page2text-intro {
     position: relative;
-    flex: 0.25;
+    flex: .25;
     /* position: absolute; */
     min-width: 100px;
     font-family: antonia-variable, sans-serif;
@@ -316,6 +316,10 @@ body {
 
 .page2text-intro.hide {
     opacity: 0;
+}
+
+p {
+    margin-bottom: 8px;
 }
 
 .page2__content-grid {
@@ -1561,6 +1565,7 @@ span.bold-anim.with-after.scissor::after {
     }
     .page2text-intro {
         font-size: .75rem;
+        width: 80%;
     }
     .number-thin {
         font-size: 3rem;
