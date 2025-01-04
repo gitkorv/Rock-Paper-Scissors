@@ -740,7 +740,7 @@ function pickHand(event) {
 }
 
 function getCpuChoice() {
-    let hands = ["Rock", "Paper", "Scissor"]
+    let hands = ["Rock", "Paper", "Scissors"]
     let dice = Math.floor(Math.random() * 3);
     return hands[dice];
 }
@@ -783,9 +783,9 @@ function playRound(playerChoice) {
         winningHand = playerChoice;
         whoWonRound = "both";
     } else if (
-        playerChoice === "Rock" && computerChoice === "Scissor" ||
+        playerChoice === "Rock" && computerChoice === "Scissors" ||
         playerChoice === "Paper" && computerChoice === "Rock" ||
-        playerChoice === "Scissor" && computerChoice === "Paper"
+        playerChoice === "Scissors" && computerChoice === "Paper"
     ) {
         resultMessage = "You Won the Round!"
         vsSpan.textContent = "vs";
