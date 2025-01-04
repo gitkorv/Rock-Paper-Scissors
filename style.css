@@ -253,12 +253,12 @@ body {
 
 
 .page2text--rps-game>span.game {
-    color: #3a0ca3;
+    /* color: #3a0ca3; */
     font-variation-settings: "wght"200, "wdth"75;
     font-size: .5em
 }
 .page2text--rps-game > span.game > dash {
-    color: black;
+    color: #3a0ca3;
     font-variation-settings: "wght"200, "wdth"50;
 
 }
@@ -374,12 +374,6 @@ p {
     /* col or: black; */
 }
 
-.grid-number > sup {
-    position: absolute;
-    bottom: 25%;
-}
-
-
 .number-thin {
     font-size: 2rem;
     font-variation-settings: "wght"300, "wdth"25;
@@ -458,7 +452,7 @@ p {
     z-index: 100;
     border-right: 1px solid black;
     pointer-events: none;
-    hyphens: auto;
+    hyphens: none;
 }
 
 
@@ -1513,7 +1507,7 @@ span.bold-anim.with-after.scissor::after {
         position: absolute;
         left: 0;
         font-size: .75rem;
-        font-variation-settings: "wght"900, "wdth"120;
+        font-variation-settings: "wght"600, "wdth"120;
         border-left: 1px solid black;
         border-right: none;
         /* background-color: #360458; */
