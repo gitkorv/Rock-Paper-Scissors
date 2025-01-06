@@ -603,6 +603,9 @@ p {
     transition: top 1s, opacity 1s;
     opacity: 1;
     overflow: hidden;
+    /* background-color: orange; */
+    min-height: 16px;
+    z-index: 2000;
 }
 
 .top-area--wrapper.justify-content-center {
@@ -1789,4 +1792,21 @@ span.bold-anim.with-after.scissor::after {
     /* .center-area__h1Text-container {
         padding-top: 60px;
     } */
+}
+
+@media (max-height: 560px) {
+    .score-container {
+        font-size: 1rem;
+    }
+}
+@media (min-height: 561px) and (max-height: 700px) {
+    .score-container {
+        font-size: 1.25rem;
+    }
+}
+
+@media (min-height: 701px) and (max-height: 900px) {
+    .score-container {
+        font-size: 1.5rem;
+    }
 }
